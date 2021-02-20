@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <vector>
 
 
 struct range {
@@ -15,7 +16,9 @@ struct range {
 
 class search_methods {
     double epsilon;
+    std::vector<int> F;
 
+    void init_fibonacci(double uncertainty);
 
 public:
 
@@ -28,7 +31,7 @@ public:
 
     double golden_ratio(std::function<double(double)> &func, range &r);
 
-    double fibonacci(std::function<double(double)> &func, range &r);
+    range fibonacci(std::function<double(double)> &func, range &r);
 
     double parabolas(std::function<double(double)> &func, range &r);
 

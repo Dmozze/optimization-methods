@@ -32,7 +32,52 @@ double search_methods::dichotomy_recursive(std::function<double(double)> &func, 
     return dichotomy_recursive(func, new_r);
 }
 
-double search_methods::fibonacci(std::function<double(double)> &func, range &r) {
-    return 0.;
+void search_methods::init_fibonacci(double uncertainty) {
+    F.reserve(10);
+    F.push_back(1);
+    F.push_back(1);
+    while (F.back() <= static_cast<int>(uncertainty)) {
+        F.push_back(F.back() + F[F.size() - 2]);
+    }
+}
+
+range search_methods::fibonacci(std::function<double(double)> &func, range &r) {
+    init_fibonacci(r.delta() / epsilon);
+    int n = F.size() - 1;
+    double a = r.left;
+    double b = r.right;
+    double lambda = a + 1. * F[n - 2] / F[n] * (b - a);
+    double mu = a + 1. * F[n - 1] / F[n] * (b - a);
+    double f_lambda = func(lambda);
+    double f_mu = func(mu);
+    for (int k = 1; k < n - 1; k++) {
+        if (f_lambda > f_mu) {
+            a = lambda;
+            lambda = mu;
+            f_lambda = f_mu;
+            mu = a + 1. * F[n - k - 1] / F[n - k] * (b - a);
+            if (k != n - 2) {
+                f_mu = func(mu);
+            }
+        } else {
+            b = mu;
+            mu = lambda;
+            f_mu = f_lambda;
+            lambda = a + F[n - k - 2] / F[n - k] * (b - a);
+            if (k != n - 2) {
+                f_lambda = func(lambda);
+            }
+        }
+    }
+    mu = lambda + epsilon;
+    f_mu = func(mu);
+    f_lambda = func(lambda);
+    if (f_mu == f_lambda) {
+        a = lambda;
+    } else {
+        b = mu;
+    }
+
+    return range{a, b};
 }
 
