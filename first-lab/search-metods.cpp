@@ -1,7 +1,7 @@
 #include "search-metods.h"
 
 
-double search_methods::dichotomy(std::function<double(double)> &func, search_methods::range &r) {
+double search_methods::dichotomy(std::function<double(double)> &func, range &r) {
     double right = r.right;
     double left = r.left;
     double delta = epsilon / 2;
