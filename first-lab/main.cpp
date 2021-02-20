@@ -16,5 +16,6 @@ int main() {
     range r_fib = sm.fibonacci(func, r);
     double fib_ans = (func(r_fib.left) + func(r_fib.right)) / 2;
     std::cout << "fibonacci: " << fib_ans << std::endl;
+    std::cout << fib_ans - sm.dichotomy(func, r);
     return 0;
 }

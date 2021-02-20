@@ -16,10 +16,11 @@ struct range {
 
 class search_methods {
     double epsilon;
-    std::vector<int> F;
+//    std::vector<int> F;
 
     void init_fibonacci(double uncertainty);
 
+    double F(int n);
 public:
 
     search_methods(double epsilon) : epsilon(epsilon) {
