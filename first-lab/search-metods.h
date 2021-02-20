@@ -5,6 +5,12 @@
 struct range {
     double left;
     double right;
+    double delta() {
+        return right - left;
+    }
+    double median() {
+        return (right + left) / 2;
+    }
 };
 
 class search_methods {
@@ -17,6 +23,8 @@ public:
     }
 
     double dichotomy(std::function<double(double)> &func, range &r);
+
+    double dichotomy_recursive(std::function<double(double)> &func, range &r);
 
     double golden_ratio(std::function<double(double)> &func, range &r);
 
