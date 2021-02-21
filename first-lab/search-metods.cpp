@@ -23,7 +23,7 @@ double search_methods::dichotomy_recursive(std::function<double(double)> &func, 
     }
     double x1 = (r.right + r.left - epsilon / 2) / 2;
     double x2 = (r.right + r.left + epsilon / 2) / 2;
-    range new_r;
+    range new_r{};
     if (func(x1) <= func(x2)) {
         new_r = {r.left, x2};
     } else {
@@ -42,14 +42,14 @@ double search_methods::dichotomy_recursive(std::function<double(double)> &func, 
 //}
 
 double search_methods::F(int n) {
-    return pow(1 + sqrt(5) / 2, n) / sqrt(5);
+    return std::floor((pow((1 + sqrt(5)) / 2, n)) / sqrt(5));
 }
 
 
 range search_methods::fibonacci(std::function<double(double)> &func, range &r) {
     double a = r.left;
     double b = r.right;
-    int n = log(sqrt(5) * (b - a) / epsilon)/log((1+sqrt(5)) / 2);
+    int n = std::ceil(log(sqrt(5) * (b - a) / epsilon)/log((1+sqrt(5)) / 2));
     double lambda = a + F(n - 2) / F(n) * (b - a);
     double mu = a + F(n - 1) / F(n) * (b - a);
     double f_lambda = func(lambda);

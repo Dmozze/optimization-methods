@@ -6,10 +6,10 @@
 struct range {
     double left;
     double right;
-    double delta() {
+    double delta() const {
         return right - left;
     }
-    double median() {
+    double median() const {
         return (right + left) / 2;
     }
 };
