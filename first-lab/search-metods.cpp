@@ -1,5 +1,6 @@
 #include "search-metods.h"
 #include <cmath>
+#include <iostream>
 
 double search_methods::dichotomy(std::function<double(double)> &func, range &r) {
     double right = r.right;
@@ -42,7 +43,7 @@ double search_methods::dichotomy_recursive(std::function<double(double)> &func, 
 //}
 
 double search_methods::F(int n) {
-    return std::floor((pow((1 + sqrt(5)) / 2, n)) / sqrt(5));
+    return std::ceil((pow((1 + sqrt(5)) / 2, n)) / sqrt(5));
 }
 
 
