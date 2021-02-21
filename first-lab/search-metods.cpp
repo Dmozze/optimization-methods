@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iostream>
 
-double search_methods::dichotomy(std::function<double(double)> &func, range &r) {
+point_and_value search_methods::dichotomy(std::function<double(double)> &func, range &r) {
     double right = r.right;
     double left = r.left;
     double delta = epsilon / 2;
@@ -15,12 +15,18 @@ double search_methods::dichotomy(std::function<double(double)> &func, range &r) 
             left = x1;
         }
     }
-    return func((right + left) / 2);
+    point_and_value answer{};
+    answer.point = (right + left) / 2;
+    answer.value = func(answer.point);
+    return answer;
 }
 
-double search_methods::dichotomy_recursive(std::function<double(double)> &func, range &r) {
+point_and_value search_methods::dichotomy_recursive(std::function<double(double)> &func, range &r) {
     if (r.delta() / 2 <= epsilon) {
-        return func(r.median());
+        point_and_value answer{};
+        answer.point = r.median();
+        answer.value = func(answer.point);
+        return answer;
     }
     double x1 = (r.right + r.left - epsilon / 2) / 2;
     double x2 = (r.right + r.left + epsilon / 2) / 2;
@@ -33,14 +39,6 @@ double search_methods::dichotomy_recursive(std::function<double(double)> &func, 
     return dichotomy_recursive(func, new_r);
 }
 
-//void search_methods::init_fibonacci(double uncertainty) {
-//    F.reserve(10);
-//    F.push_back(1);
-//    F.push_back(1);
-//    while (F.back() <= static_cast<int>(uncertainty)) {
-//        F.push_back(F.back() + F[F.size() - 2]);
-//    }
-//}
 
 double search_methods::F(int n) {
     return std::ceil((pow((1 + sqrt(5)) / 2, n)) / sqrt(5));
@@ -85,6 +83,22 @@ range search_methods::fibonacci(std::function<double(double)> &func, range &r) {
 
     return range{a, b};
 }
+
+
+point_and_value search_methods::combined_brent(std::function<double(double)> &func, range &r) {
+    return {0.,0.};
+}
+
+
+
+//void search_methods::init_fibonacci(double uncertainty) {
+//    F.reserve(10);
+//    F.push_back(1);
+//    F.push_back(1);
+//    while (F.back() <= static_cast<int>(uncertainty)) {
+//        F.push_back(F.back() + F[F.size() - 2]);
+//    }
+//}
 //
 //range search_methods::fibonacci(std::function<double(double)> &func, range &r) {
 //    init_fibonacci(r.delta() / epsilon);
