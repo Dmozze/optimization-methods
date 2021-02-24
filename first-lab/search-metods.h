@@ -25,19 +25,19 @@ class search_methods {
 
     static double F(int n);
 
-    std::function<double(double)> find_cnt_func(std::function<double(double)> &func, int &cnt);
+    static std::function<double(double)> find_cnt_func(std::function<double(double)> &func, int &cnt);
 public:
 
     explicit search_methods(double epsilon) : epsilon(epsilon) {
     }
 
-    point_and_value dichotomy(std::function<double(double)> &func, range &r);
+    point_and_value dichotomy(std::function<double(double)> &func, range &r) const;
 
     point_and_value dichotomy_recursive(std::function<double(double)> &func, range &r);
 
     point_and_value golden_ratio(std::function<double(double)> &func, range &r);
 
-    point_and_value fibonacci(std::function<double(double)> &func, range &r);
+    point_and_value fibonacci(std::function<double(double)> &func, range &r) const;
 
     point_and_value parabolas(std::function<double(double)> &func, range &r);
 

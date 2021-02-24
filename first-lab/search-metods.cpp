@@ -10,16 +10,16 @@ std::function<double(double)> search_methods::find_cnt_func(std::function<double
     };
 }
 
-point_and_value search_methods::dichotomy(std::function<double(double)> &func, range &r) {
+point_and_value search_methods::dichotomy(std::function<double(double)> &func, range &r) const {
     int cnt = 0;
-    std::function<double(double)> func_calc = find_cnt_func(func, cnt);
+    std::function<double(double)> func_cnt = find_cnt_func(func, cnt);
     double right = r.right;
     double left = r.left;
     double delta = epsilon / 2;
     while ((right - left) / 2 > epsilon) {
         double x1 = (right + left - delta) / 2;
         double x2 = (right + left + delta) / 2;
-        if (func_calc(x1) <= func_calc(x2)) {
+        if (func_cnt(x1) <= func_cnt(x2)) {
             right = x2;
         } else {
             left = x1;
@@ -27,7 +27,7 @@ point_and_value search_methods::dichotomy(std::function<double(double)> &func, r
     }
     point_and_value answer{};
     answer.point = (right + left) / 2;
-    answer.value = func_calc(answer.point);
+    answer.value = func_cnt(answer.point);
     answer.times = cnt;
     return answer;
 }
@@ -56,9 +56,9 @@ double search_methods::F(int n) {
 }
 
 
-point_and_value search_methods::fibonacci(std::function<double(double)> &func, range &r) {
+point_and_value search_methods::fibonacci(std::function<double(double)> &func, range &r) const {
     int cnt;
-    std::function<double(double)> func_calc = find_cnt_func(func, cnt);
+    std::function<double(double)> func_cnt = find_cnt_func(func, cnt);
     double a = r.left;
     double b = r.right;
     int n = std::ceil(log(sqrt(5) * (b - a) / epsilon)/log((1+sqrt(5)) / 2));
@@ -73,7 +73,7 @@ point_and_value search_methods::fibonacci(std::function<double(double)> &func, r
             f_lambda = f_mu;
             mu = a + 1. * F(n - k - 1) / F(n - k) * (b - a);
             if (k != n - 2) {
-                f_mu = func_calc(mu);
+                f_mu = func_cnt(mu);
             }
         } else {
             b = mu;
@@ -81,12 +81,12 @@ point_and_value search_methods::fibonacci(std::function<double(double)> &func, r
             f_mu = f_lambda;
             lambda = a + F(n - k - 2) / F(n - k) * (b - a);
             if (k != n - 2) {
-                f_lambda = func_calc(lambda);
+                f_lambda = func_cnt(lambda);
             }
         }
     }
     mu = lambda + epsilon;
-    f_mu = func_calc(mu);
+    f_mu = func_cnt(mu);
 
     point_and_value answer{};
     answer.point = mu;
