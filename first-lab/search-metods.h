@@ -17,18 +17,18 @@ struct range {
 struct point_and_value {
     double point;
     double value;
+    double times;
 };
 
 class search_methods {
     double epsilon;
-//    std::vector<int> F;
 
-    void init_fibonacci(double uncertainty);
+    static double F(int n);
 
-    double F(int n);
+    std::function<double(double)> find_cnt_func(std::function<double(double)> &func, int &cnt);
 public:
 
-    search_methods(double epsilon) : epsilon(epsilon) {
+    explicit search_methods(double epsilon) : epsilon(epsilon) {
     }
 
     point_and_value dichotomy(std::function<double(double)> &func, range &r);
@@ -37,7 +37,7 @@ public:
 
     point_and_value golden_ratio(std::function<double(double)> &func, range &r);
 
-    range fibonacci(std::function<double(double)> &func, range &r);
+    point_and_value fibonacci(std::function<double(double)> &func, range &r);
 
     point_and_value parabolas(std::function<double(double)> &func, range &r);
 
