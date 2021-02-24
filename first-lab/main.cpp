@@ -17,7 +17,7 @@ int main() {
     range r = {-0.5, 0.5};
     std::vector<std::pair<double, int>> dichotomy;
     std::vector<std::pair<double, int>> fibonacci;
-    for (double epsilon = 1e-1; epsilon > 1e-11; epsilon *= 0.9) {
+    for (double epsilon = 1e-1; epsilon > 1e-11; epsilon *= 0.3) {
         std::cout << epsilon <<  ' ' << -log10(epsilon) << '\n';
         search_methods sm(epsilon);
         point_and_value dichotomy_answer = sm.dichotomy(func, r);
@@ -35,12 +35,17 @@ int main() {
 
     std::ofstream dichotomy_stream("tables/dichotomy.csv");
     std::ofstream fibonacci_stream("tables/fibonacci.csv");
+    dichotomy_stream << "log;cnt" << std::endl;
+    fibonacci_stream << "log;cnt" << std::endl;
     for (auto [log_eps, cnt] : dichotomy) {
         dichotomy_stream << log_eps << ';' << cnt << std::endl;
     }
     for (auto [log_eps, cnt] : fibonacci) {
         fibonacci_stream << log_eps << ';' << cnt << std::endl;
     }
-
+    dichotomy_stream.flush();
+    dichotomy_stream.close();
+    fibonacci_stream.flush();
+    fibonacci_stream.close();
     return 0;
 }
