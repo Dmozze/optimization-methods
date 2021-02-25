@@ -10,115 +10,92 @@ std::function<double(double)> search_methods::find_cnt_func(std::function<double
     };
 }
 
-point_and_value search_methods::dichotomy(std::function<double(double)> &func, range &r) const {
+information_search search_methods::dichotomy(std::function<double(double)> &func, range r) const {
     int cnt = 0;
     std::function<double(double)> func_cnt = find_cnt_func(func, cnt);
-    double right = r.right;
-    double left = r.left;
     double delta = epsilon / 2;
-    while ((right - left) / 2 > epsilon) {
-        double x1 = (right + left - delta) / 2;
-        double x2 = (right + left + delta) / 2;
+    while (r.delta() / 2 > epsilon) {
+        double x1 = (r.right() + r.left() - delta) / 2;
+        double x2 = (r.right() + r.left() + delta) / 2;
         if (func_cnt(x1) <= func_cnt(x2)) {
-            right = x2;
+            r.update_range(r.left(), x2);
         } else {
-            left = x1;
+            r.update_range(x1, r.right());
         }
     }
-    point_and_value answer{};
-    answer.point = (right + left) / 2;
-    answer.value = func_cnt(answer.point);
-    answer.times = cnt;
+    information_search answer(r.median(), func_cnt(r.median()), cnt, r);
+//    answer.point = (r.right() + r.left()) / 2;
+//    answer.value = func_cnt(answer.point);
+//    answer.times = cnt;
+//    answer.r = r;
     return answer;
 }
-
-point_and_value search_methods::dichotomy_recursive(std::function<double(double)> &func, range &r) {
-    if (r.delta() / 2 <= epsilon) {
-        point_and_value answer{};
-        answer.point = r.median();
-        answer.value = func(answer.point);
-        return answer;
-    }
-    double x1 = (r.right + r.left - epsilon / 2) / 2;
-    double x2 = (r.right + r.left + epsilon / 2) / 2;
-    range new_r{};
-    if (func(x1) <= func(x2)) {
-        new_r = {r.left, x2};
-    } else {
-        new_r = {x1, r.right};
-    }
-    return dichotomy_recursive(func, new_r);
-}
-
 
 double search_methods::F(int n) {
     return std::ceil((pow((1 + sqrt(5)) / 2, n)) / sqrt(5));
 }
 
-
-point_and_value search_methods::fibonacci(std::function<double(double)> &func, range &r) const {
+information_search search_methods::fibonacci(std::function<double(double)> &func, range r) const {
     int cnt;
     std::function<double(double)> func_cnt = find_cnt_func(func, cnt);
-    double a = r.left;
-    double b = r.right;
-    int n = std::ceil(log(sqrt(5) * (b - a) / epsilon)/log((1+sqrt(5)) / 2));
-    double lambda = a + F(n - 2) / F(n) * (b - a);
-    double mu = a + F(n - 1) / F(n) * (b - a);
-    double f_lambda = func(lambda);
-    double f_mu = func(mu);
+    int n = std::ceil(log(sqrt(5) * (r.right() - r.left()) / epsilon) / log((1 + sqrt(5)) / 2));
+    double x1 = r.left() + F(n - 2) / F(n) * (r.right() - r.left());
+    double x2 = r.left() + F(n - 1) / F(n) * (r.right() - r.left());
+    double f_x1 = func(x1);
+    double f_x2 = func(x2);
     for (int k = 1; k < n - 1; k++) {
-        if (f_lambda > f_mu) {
-            a = lambda;
-            lambda = mu;
-            f_lambda = f_mu;
-            mu = a + 1. * F(n - k - 1) / F(n - k) * (b - a);
+        if (f_x1 > f_x2) {
+            r.update_range(x1, r.right());
+            x1 = x2;
+            f_x1 = f_x2;
+            x2 = r.left() + 1. * F(n - k - 1) / F(n - k) * (r.right() - r.left());
             if (k != n - 2) {
-                f_mu = func_cnt(mu);
+                f_x2 = func_cnt(x2);
             }
         } else {
-            b = mu;
-            mu = lambda;
-            f_mu = f_lambda;
-            lambda = a + F(n - k - 2) / F(n - k) * (b - a);
+            r.update_range(r.left(), x2);
+            x2 = x1;
+            f_x2 = f_x1;
+            x1 = r.left() + F(n - k - 2) / F(n - k) * (r.right() - r.left());
             if (k != n - 2) {
-                f_lambda = func_cnt(lambda);
+                f_x1 = func_cnt(x1);
             }
         }
     }
-    mu = lambda + epsilon;
-    f_mu = func_cnt(mu);
-
-    point_and_value answer{};
-    answer.point = mu;
-    answer.value = f_mu;
-    answer.times = cnt;
-
+    x2 = x1 + epsilon;
+    r.update_range(x1, x2);
+    f_x2 = func_cnt(x2);
+    information_search answer(x2, f_x2, cnt, r);
+//    answer.point = x2;
+//    answer.value = f_x2;
+//    answer.times = cnt;
+//    answer.r = &r;
     return answer;
 }
 
-
-point_and_value search_methods::combined_brent(std::function<double(double)> &func, range &r) {
-    double K = (3 - sqrt(5)) / 2;
-    double x, w, u;
-    double a = r.left;
-    double c = r.right;
-    x = w = u = a + K * (c - a);
-    double fx, fw, fu;
-    fx = fw = fu = func(x);
-    double d, e;
-    d = e = c - a;
-    while (true) {
-        double g = e;
-        e = d;
-        double tol = epsilon * std::abs(x) + epsilon / 10;
-        if (std::abs(x - (a + c) / 2) + (c - a) / 2 <= 2 * tol) {
-            break;
-        }
-
-    }
-
-    return {0.,0.};
-}
+//
+//information_search search_methods::combined_brent(std::function<double(double)> &func, range r) {
+//    double K = (3 - sqrt(5)) / 2;
+//    double x, w, u;
+//    double a = r.l;
+//    double c = r.r;
+//    x = w = u = a + K * (c - a);
+//    double fx, fw, fu;
+//    fx = fw = fu = func(x);
+//    double d, e;
+//    d = e = c - a;
+//    while (true) {
+//        double g = e;
+//        e = d;
+//        double tol = epsilon * std::abs(x) + epsilon / 10;
+//        if (std::abs(x - (a + c) / 2) + (c - a) / 2 <= 2 * tol) {
+//            break;
+//        }
+//
+//    }
+//
+//    return {0.,0.};
+//}
 
 
 
@@ -131,11 +108,11 @@ point_and_value search_methods::combined_brent(std::function<double(double)> &fu
 //    }
 //}
 //
-//range search_methods::fibonacci(std::function<double(double)> &func, range &r) {
+//range search_methods::fibonacci(std::function<double(double)> &func, range r) {
 //    init_fibonacci(r.delta() / epsilon);
 //    int n = F.size() - 1;
-//    double a = r.left;
-//    double b = r.right;
+//    double a = r.l;
+//    double b = r.r;
 //    double lambda = a + 1. * F[n - 2] / F[n] * (b - a);
 //    double mu = a + 1. * F[n - 1] / F[n] * (b - a);
 //    double f_lambda = func(lambda);
