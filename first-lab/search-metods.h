@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <cmath>
 
 class range {
     std::vector<std::pair<double, double>> range_history;
@@ -24,7 +25,6 @@ public:
         return range_history.back().first;
     }
     void update_range(double l, double r) {
-        std::cout << l << ' ' << r << std::endl;
         range_history.emplace_back(l, r);
     }
     void print(std::ofstream &out) {
@@ -49,23 +49,33 @@ struct information_search {
 };
 
 class search_methods {
+    std::vector<double> f;
+    int number_fib = 90;
+
     double epsilon;
 
-    static double F(int n);
+    double golden_const = 0.5 * (sqrt(5) - 1);
+
+    double F(int n);
 
     static std::function<double(double)> find_cnt_func(std::function<double(double)> &func, int &cnt);
 public:
 
-    explicit search_methods(double epsilon) : epsilon(epsilon) {
+    explicit search_methods(double epsilon) : epsilon(epsilon), f() {
+        f.push_back(1.);
+        f.push_back(1.);
+        for (int i = 0; i < number_fib; i++) {
+            f.push_back(f.back() + f[f.size() - 2]);
+        }
     }
 
-    information_search dichotomy(std::function<double(double)> &func, range r) const;
+    information_search dichotomy(std::function<double(double)> &func, range r);
 
     information_search dichotomy_recursive(std::function<double(double)> &func, range r);
 
     information_search golden_ratio(std::function<double(double)> &func, range r);
 
-    information_search fibonacci(std::function<double(double)> &func, range r) const;
+    information_search fibonacci(std::function<double(double)> &func, range r);
 
     information_search parabolas(std::function<double(double)> &func, range r);
 
