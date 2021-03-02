@@ -6,7 +6,7 @@
 #include <cmath>
 
 class range {
-    std::vector<std::pair<long double, long double>> range_history;
+    std::vector<std::pair<double, double>> range_history;
 public:
 
     range(long double l, long double r) : range_history() {
@@ -28,6 +28,7 @@ public:
         range_history.emplace_back(l, r);
     }
     void print(std::ofstream &out) {
+
         for (auto [left, right] : range_history) {
             out << left << ';' << right << std::endl;
         }
@@ -37,9 +38,9 @@ public:
 struct information_search {
     long double point;
     long double value;
-    size_t times;
+    int times;
     range r;
-    information_search(long double point, long double value, size_t times, range &r)
+    information_search(long double point, long double value, int times, range &r)
     :
     point(point),
     value(value),
@@ -49,13 +50,15 @@ struct information_search {
 
 class search_methods {
     std::vector<long double> f;
-    int number_fib = 90;
+    const size_t number_fib = 90;
 
     long double epsilon;
 
-    long double golden_const = 0.5 * (sqrtl(5) - 1);
+    const long double golden_const = 0.5 * (sqrtl(5) - 1);
 
     long double F(size_t n);
+
+
 
     static std::function<long double(long double)>
     find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
@@ -75,9 +78,9 @@ public:
 
     information_search fibonacci(std::function<long double(long double)> &func, range r);
 
-    information_search parabolas(std::function<long double(long double)> &func, range r);
+    information_search parabolas(std::function<long double(long double)> &func, range r) const;
 
-    information_search combined_brent(std::function<long double(long double)> &func, range r);
+    information_search combined_brent(std::function<long double(long double)> &func, range r) const;
 
 
 };
