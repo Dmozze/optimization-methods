@@ -35,6 +35,7 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 	$dichotomy$,
 	$golden$,
 	$fibonacci$,
+	$parabola$
 };
 
 \addplot table [x={log}, y={cnt}]
@@ -44,6 +45,8 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
               {tables/golden.csv};
 \addplot table [x={log}, y={cnt}]
               {tables/fibonacci.csv};
+\addplot table [x={log}, y={cnt}]
+              {tables/parabola.csv};			  
 \end{axis}
 \end{tikzpicture}
 
