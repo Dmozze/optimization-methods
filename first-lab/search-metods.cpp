@@ -9,7 +9,7 @@ search_methods::find_cnt_func(std::function<long double(long double)> &func, int
     };
 }
 
-long double search_methods::F(int n) {
+long double search_methods::F(size_t n) {
     return f[n - 1];
     //return ceill((pow((1 + sqrt(5)) / 2, n)) / sqrt(5));
 }

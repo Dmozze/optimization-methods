@@ -56,7 +56,7 @@ class search_methods {
 
     long double golden_const = 0.5 * (sqrtl(5) - 1);
 
-    long double F(int n);
+    long double F(size_t n);
 
     static std::function<long double(long double)>
     find_cnt_func(std::function<long double(long double)> &func, int &cnt);

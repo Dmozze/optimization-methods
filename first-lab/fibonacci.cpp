@@ -3,12 +3,12 @@
 information_search search_methods::fibonacci(std::function<long double(long double)> &func, range r) {
     int cnt;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
-    int n = ceill(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2));
+    size_t n = ceill(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2));
     long double x1 = r.left() + F(n - 2) / F(n) * r.delta();
     long double x2 = r.left() + F(n - 1) / F(n) * r.delta();
     long double f_x1 = func(x1);
     long double f_x2 = func(x2);
-    for (int k = 1; k < n - 1; k++) {
+    for (size_t k = 1; k < n - 1; k++) {
         if (f_x1 > f_x2) {
             r.update_range(x1, r.right());
             x1 = x2;
