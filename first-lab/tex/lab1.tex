@@ -64,40 +64,19 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 \legend{
 	$dichotomy$,
 	$fibonacci$,
+	$golden$
 };
 
 \addplot table [x={log}, y={cnt}]
               {tables/dichotomy.csv};
 \addplot table [x={log}, y={cnt}]
               {tables/fibonacci.csv};
+\addplot table [x={log}, y={cnt}]
+              {tables/golden.csv};
 \end{axis}
 \end{tikzpicture}
 
-\csvautotabular[separator=semicolon]{dichotomy1.csv}
-
-\begin{tikzpicture}
-\begin{axis}[
-	table/col sep = semicolon,
-	height = 0.6\paperheight,
-	width = 0.65\paperwidth,
-	xmin = 1,
-	xmax = 12,
-	/pgf/number format/1000 sep={},
-	legend pos={north west}
-]
-
-\legend{
-	$dichotomy$,
-	$fibonacci$,
-};
-
-\addplot table [x={log}, y={cnt}]
-              {tables/dichotomy.csv};
-\addplot table [x={log}, y={cnt}]
-              {tables/fibonacci.csv};
-\end{axis}
-\end{tikzpicture}
-
+%\csvautotabular[separator=semicolon]{table/dichotomy.csv}
 
 
 \begin{tikzpicture}

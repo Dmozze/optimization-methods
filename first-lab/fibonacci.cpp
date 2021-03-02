@@ -3,7 +3,7 @@
 information_search search_methods::fibonacci(std::function<long double(long double)> &func, range r) {
     size_t cnt;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
-    size_t n = ceill(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2));
+    auto n = static_cast<size_t>(floorl(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2)));
     long double x1 = r.left() + F(n - 2) / F(n) * r.delta();
     long double x2 = r.left() + F(n - 1) / F(n) * r.delta();
     long double f_x1 = func(x1);

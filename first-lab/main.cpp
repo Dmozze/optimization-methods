@@ -43,6 +43,7 @@ int main() {
     };
     std::cout << std::setprecision(15);
     range r = {-0.5L, 0.5L};
+    //range r = {0.5L, 2.5L};
     std::vector<std::pair<double, int>> dichotomy;
     std::vector<std::pair<double, int>> fibonacci;
     std::vector<std::pair<double, int>> golden;
