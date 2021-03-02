@@ -15,8 +15,14 @@ void print(std::string s, information_search &inf) {
     out.close();
 }
 
+const std::string fib = "fibonacci";
+const std::string dich = "dichotomy";
+const std::string gold = "golden";
+const std::string csv = ".csv";
+const std::string path = "tex/tables/";
+
 void print_cnt(std::string s, std::vector<std::pair<double, int>> vec) {
-    std::ofstream out("tables/" + s + ".csv");
+    std::ofstream out(path + s + csv);
     out << std::setprecision(15);
     out << "log;cnt" << std::endl;
     for (auto [log_eps, cnt] : vec) {
@@ -39,10 +45,6 @@ int main() {
     std::vector<std::pair<double, int>> dichotomy;
     std::vector<std::pair<double, int>> fibonacci;
     std::vector<std::pair<double, int>> golden;
-    std::string fib = "fibonacci";
-    std::string dich = "dichotomy";
-    std::string gold = "golden";
-    std::string csv = ".csv";
     for (long double epsilon = 1e-1L; epsilon > 1e-11L; epsilon *= 1e-1L) {
         std::cout << epsilon <<  ' ' << -log10l(epsilon) << '\n';
         search_methods sm(epsilon);
@@ -65,9 +67,9 @@ int main() {
         golden.emplace_back(-log10l(epsilon), golden_answer.times);
         std::ostringstream s;
         s << std::setprecision(15) << epsilon;
-        print("tables/" + dich + s.str() + csv, fib_answer);
-        print("tables/" + fib + s.str() + csv, dichotomy_answer);
-        print("tables/" + gold + s.str() + csv, golden_answer);
+        print(path + dich + s.str() + csv, fib_answer);
+        print(path + fib + s.str() + csv, dichotomy_answer);
+        print(path + gold + s.str() + csv, golden_answer);
     }
 
     print_cnt(dich, dichotomy);

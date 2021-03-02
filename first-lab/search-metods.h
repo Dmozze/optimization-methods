@@ -6,7 +6,7 @@
 #include <cmath>
 
 class range {
-    std::vector<std::pair<double, double>> range_history;
+    std::vector<std::pair<long double, long double>> range_history;
 public:
 
     range(long double l, long double r) : range_history() {
