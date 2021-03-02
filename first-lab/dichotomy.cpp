@@ -2,7 +2,7 @@
 
 
 information_search search_methods::dichotomy(std::function<long double(long double)> &func, range r) const {
-    int cnt = 0;
+    size_t cnt = 0;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
     long double delta = epsilon / 2;
     while (r.delta() / 2 > epsilon) {

@@ -1,7 +1,7 @@
 #include "search-metods.h"
 
 information_search search_methods::golden_ratio(std::function<long double(long double)> &func, range r) const {
-    int cnt;
+    size_t cnt;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
     long double x1 = r.right() - golden_const * r.delta();
     long double x2 = r.left() + golden_const * r.delta();

@@ -1,7 +1,7 @@
 #include "search-metods.h"
 
 information_search search_methods::fibonacci(std::function<long double(long double)> &func, range r) {
-    int cnt;
+    size_t cnt;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
     size_t n = ceill(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2));
     long double x1 = r.left() + F(n - 2) / F(n) * r.delta();

@@ -6,7 +6,7 @@
 #include <cmath>
 
 class range {
-    std::vector<std::pair<double, double>> range_history;
+    std::vector<std::pair<long double, long double>> range_history;
 public:
 
     range(long double l, long double r) : range_history() {
@@ -28,7 +28,6 @@ public:
         range_history.emplace_back(l, r);
     }
     void print(std::ofstream &out) {
-
         for (auto [left, right] : range_history) {
             out << left << ';' << right << std::endl;
         }
@@ -38,9 +37,9 @@ public:
 struct information_search {
     long double point;
     long double value;
-    int times;
+    size_t times;
     range r;
-    information_search(long double point, long double value, int times, range &r)
+    information_search(long double point, long double value, size_t times, range &r)
     :
     point(point),
     value(value),
@@ -59,7 +58,7 @@ class search_methods {
     long double F(size_t n);
 
     static std::function<long double(long double)>
-    find_cnt_func(std::function<long double(long double)> &func, int &cnt);
+    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
 public:
 
     explicit search_methods(long double epsilon) : epsilon(epsilon), f() {

@@ -1,7 +1,7 @@
 #include "search-metods.h"
 
 std::function<long double(long double)>
-search_methods::find_cnt_func(std::function<long double(long double)> &func, int &cnt) {
+search_methods::find_cnt_func(std::function<long double(long double)> &func, size_t &cnt) {
     cnt = 0;
     return [&cnt, &func] (long double val) {
         cnt++;
