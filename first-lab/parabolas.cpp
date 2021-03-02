@@ -35,8 +35,8 @@ long double calc_u(const long double &x1, const long double &f_x1,
 information_search search_methods::parabolas(std::function<long double(long double)> &func, range r) const {
     size_t cnt = 0;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
-    long double x1 = r.right();
-    long double x3 = r.left();
+    long double x1 = r.left();
+    long double x3 = r.right();
     long double f_x1 = func_cnt(x1);
     long double f_x3 = func_cnt(x3);
     long double x_min = 0, f_min = 0;
