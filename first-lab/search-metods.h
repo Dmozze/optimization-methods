@@ -9,22 +9,22 @@ class range {
     std::vector<std::pair<double, double>> range_history;
 public:
 
-    range(double l, double r) : range_history() {
+    range(long double l, long double r) : range_history() {
         range_history.emplace_back(l, r);
     }
-    double delta() const {
+    long double delta() const {
         return right() - left();
     }
-    double median() const {
+    long double median() const {
         return (right() + left()) / 2;
     }
-    double right() const {
+    long double right() const {
         return range_history.back().second;
     }
-    double left() const {
+    long double left() const {
         return range_history.back().first;
     }
-    void update_range(double l, double r) {
+    void update_range(long double l, long double r) {
         range_history.emplace_back(l, r);
     }
     void print(std::ofstream &out) {
@@ -36,11 +36,11 @@ public:
 };
 
 struct information_search {
-    double point;
-    double value;
+    long double point;
+    long double value;
     int times;
     range r;
-    information_search(double point, double value, int times, range &r)
+    information_search(long double point, long double value, int times, range &r)
     :
     point(point),
     value(value),
@@ -49,19 +49,20 @@ struct information_search {
 };
 
 class search_methods {
-    std::vector<double> f;
+    std::vector<long double> f;
     int number_fib = 90;
 
-    double epsilon;
+    long double epsilon;
 
-    double golden_const = 0.5 * (sqrt(5) - 1);
+    long double golden_const = 0.5 * (sqrtl(5) - 1);
 
-    double F(int n);
+    long double F(int n);
 
-    static std::function<double(double)> find_cnt_func(std::function<double(double)> &func, int &cnt);
+    static std::function<long double(long double)>
+    find_cnt_func(std::function<long double(long double)> &func, int &cnt);
 public:
 
-    explicit search_methods(double epsilon) : epsilon(epsilon), f() {
+    explicit search_methods(long double epsilon) : epsilon(epsilon), f() {
         f.push_back(1.);
         f.push_back(1.);
         for (int i = 0; i < number_fib; i++) {
@@ -69,17 +70,15 @@ public:
         }
     }
 
-    information_search dichotomy(std::function<double(double)> &func, range r);
+    information_search dichotomy(std::function<long double(long double)> &func, range r) const;
 
-    information_search dichotomy_recursive(std::function<double(double)> &func, range r);
+    information_search golden_ratio(std::function<long double(long double)> &func, range r) const;
 
-    information_search golden_ratio(std::function<double(double)> &func, range r);
+    information_search fibonacci(std::function<long double(long double)> &func, range r);
 
-    information_search fibonacci(std::function<double(double)> &func, range r);
+    information_search parabolas(std::function<long double(long double)> &func, range r);
 
-    information_search parabolas(std::function<double(double)> &func, range r);
-
-    information_search combined_brent(std::function<double(double)> &func, range r);
+    information_search combined_brent(std::function<long double(long double)> &func, range r);
 
 
 };
