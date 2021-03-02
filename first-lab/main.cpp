@@ -6,7 +6,7 @@
 #include <vector>
 #include <fstream>
 
-void print(std::string s, information_search &inf) {
+void print(const std::string& s, information_search &inf) {
     std::ofstream out(s);
     out << std::setprecision(15);
     out << "left;right" << std::endl;
@@ -15,8 +15,8 @@ void print(std::string s, information_search &inf) {
     out.close();
 }
 
-void print_cnt(std::string s, std::vector<std::pair<double, int>> vec) {
-    std::ofstream out("tables/" + s + ".csv");
+void print_cnt(const std::string& s, const std::vector<std::pair<long double, int>>& vec) {
+    std::ofstream out("tex/tables/" + s + ".csv");
     out << std::setprecision(15);
     out << "log;cnt" << std::endl;
     for (auto [log_eps, cnt] : vec) {
@@ -36,9 +36,9 @@ int main() {
     };
     std::cout << std::setprecision(15);
     range r = {-0.5L, 0.5L};
-    std::vector<std::pair<double, int>> dichotomy;
-    std::vector<std::pair<double, int>> fibonacci;
-    std::vector<std::pair<double, int>> golden;
+    std::vector<std::pair<long double, int>> dichotomy;
+    std::vector<std::pair<long double, int>> fibonacci;
+    std::vector<std::pair<long double, int>> golden;
     std::string fib = "fibonacci";
     std::string dich = "dichotomy";
     std::string gold = "golden";
@@ -62,9 +62,9 @@ int main() {
         golden.emplace_back(-log10l(epsilon), golden_answer.times);
         std::ostringstream s;
         s << std::setprecision(15) << epsilon;
-        print("tables/" + dich + s.str() + csv, fib_answer);
-        print("tables/" + fib + s.str() + csv, dichotomy_answer);
-        print("tables/" + gold + s.str() + csv, golden_answer);
+        print("tex/tables/" + dich + s.str() + csv, fib_answer);
+        print("tex/tables/" + fib + s.str() + csv, dichotomy_answer);
+        print("tex/tables/" + gold + s.str() + csv, golden_answer);
     }
 
     print_cnt(dich, dichotomy);
