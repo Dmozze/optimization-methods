@@ -28,14 +28,14 @@ void print_cnt(std::string s, std::vector<std::pair<double, int>> vec) {
 
 
 int main() {
-    std::function<double(double)> func = [](double x) {
-        return -5 * pow(x, 5) + 4 * pow(x, 4) - 12 * pow(x, 3) + 11 * pow(x, 2) - 2 * x + 1;
+    std::function<long double(long double)> func = [](long double x) {
+        return -5 * powl(x, 5) + 4 * powl(x, 4) - 12 * powl(x, 3) + 11 * powl(x, 2) - 2 * x + 1;
     };
-    std::function<double(double)> func1 = [](double x) {
-        return 0.2 * x * log10(x) + (x - 2.3) * (x - 2.3);
+    std::function<long double(long double)> func1 = [](long double x) {
+        return 0.2L * x * log10l(x) + (x - 2.3L) * (x - 2.3L);
     };
     std::cout << std::setprecision(15);
-    range r = {-0.5, 0.5};
+    range r = {-0.5L, 0.5L};
     std::vector<std::pair<double, int>> dichotomy;
     std::vector<std::pair<double, int>> fibonacci;
     std::vector<std::pair<double, int>> golden;
@@ -43,8 +43,8 @@ int main() {
     std::string dich = "dichotomy";
     std::string gold = "golden";
     std::string csv = ".csv";
-    for (double epsilon = 1e-1; epsilon > 1e-11; epsilon *= 0.1) {
-        std::cout << epsilon <<  ' ' << -log10(epsilon) << '\n';
+    for (long double epsilon = 1e-1L; epsilon > 1e-11L; epsilon *= 1e-1L) {
+        std::cout << epsilon <<  ' ' << -log10l(epsilon) << '\n';
         search_methods sm(epsilon);
         information_search dichotomy_answer = sm.dichotomy(func, r);
         std::cout << "dichotomy: " << dichotomy_answer.point << ' ' << dichotomy_answer.value << ' ' << dichotomy_answer.times << std::endl;
@@ -57,9 +57,9 @@ int main() {
         std::cout << dichotomy_answer.times - fib_answer.times << std::endl;
         std::cout << dichotomy_answer.times - golden_answer.times << std::endl;
         std::cout << "\n*************\n\n";
-        dichotomy.emplace_back(-log10(epsilon), dichotomy_answer.times);
-        fibonacci.emplace_back(-log10(epsilon), fib_answer.times);
-        golden.emplace_back(-log10(epsilon), golden_answer.times);
+        dichotomy.emplace_back(-log10l(epsilon), dichotomy_answer.times);
+        fibonacci.emplace_back(-log10l(epsilon), fib_answer.times);
+        golden.emplace_back(-log10l(epsilon), golden_answer.times);
         std::ostringstream s;
         s << std::setprecision(15) << epsilon;
         print("tables/" + dich + s.str() + csv, fib_answer);
