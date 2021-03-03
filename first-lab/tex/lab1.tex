@@ -19,6 +19,8 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 \end{axis}
 \end{tikzpicture}
 
+Также можно заментить, что возрастающая часть графика возрастает довльно медленно и скорее всего 
+метод парабол будет очень плохо себя вести.
 
 \begin{tikzpicture}
 \begin{axis}[
@@ -35,18 +37,21 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 	$dichotomy$,
 	$golden$,
 	$fibonacci$,
-	$parabola$
+	$parabola$,
+	$brent$
 };
 
 \addplot table [x={log}, y={cnt}]
               {tables/dichotomy.csv};
-%косяк. не должно так быть(((((
 \addplot table [x={log}, y={cnt}]
               {tables/golden.csv};
 \addplot table [x={log}, y={cnt}]
               {tables/fibonacci.csv};
 \addplot table [x={log}, y={cnt}]
-              {tables/parabola.csv};			  
+              {tables/parabola.csv};
+\addplot table [x={log}, y={cnt}]
+              {tables/brent.csv};
+
 \end{axis}
 \end{tikzpicture}
 
