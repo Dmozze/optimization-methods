@@ -6,11 +6,10 @@
 #include <vector>
 #include <fstream>
 
-void print(const std::string& s, information_search &inf) {
+void print(const std::string& s, information_search &inf, std::function<long double(long double)> &func) {
     std::ofstream out(s);
-    out << std::setprecision(15);
-    out << "left;right" << std::endl;
-    inf.r.print(out);
+    out << std::setprecision(11);
+    inf.r.print(out, func);
     out.flush();
     out.close();
 }
@@ -78,11 +77,11 @@ int main() {
         brent_vec.emplace_back(log_epsilon, brent_answer.times);
         std::ostringstream s;
         s << std::setprecision(15) << epsilon;
-        print(path + dich + s.str() + csv, fib_answer);
-        print(path + fib + s.str() + csv, dichotomy_answer);
-        print(path + gold + s.str() + csv, golden_answer);
-        print(path + parab + s.str() + csv, parabolas);
-        print(path + brent + s.str() + csv, brent_answer);
+        print(path + dich + s.str() + csv, dichotomy_answer, func);
+        print(path + fib + s.str() + csv, fib_answer, func);
+        print(path + gold + s.str() + csv, golden_answer, func);
+        print(path + parab + s.str() + csv, parabolas, func);
+        print(path + brent + s.str() + csv, brent_answer, func);
     }
 
     print_cnt(dich, dichotomy);

@@ -1,4 +1,18 @@
 \chapter{Методы одномерной оптимизации}
+\section{Постановка задачи}
+Реализовать алгоритмы одномерной оптимизации:
+
+\begin{itemize}
+	\item 	Метод дихотомии
+	\item 	Метод золотого сечения
+	\item	Метод Фибоначчи
+	\item 	Метод парабол
+	\item 	Комбинированный метод Брента
+\end{itemize}
+
+Протестировать реализованные алгоритмы на данной функции:
+$$f(x) = -5x^5 + 4x^4 - 12x^3 + 11x^2 - 2x + 1 \rightarrow min$$ на промежутке $[-0.5, 0.5]$.
+
 \section{Исследование данного графика}
 
 $f(x) = -5x^5 + 4x^4 - 12x^3 + 11x^2 - 2x + 1 \rightarrow min$ на промежутке $[-0.5, 0.5]$.
@@ -7,6 +21,10 @@ $$f'(x) = -25x^4 + 16x^3 - 36x^2 + 22x - 2$$
 Производная на промежутке $[-0.5, 0.5]$ обращается в ноль только в одной точке $x_0 \approx 0.10986$, причем на промежутке $[-0.5, x_0]$ функция монотонно убывает и мнотонно возрастает на -- $[x_0, 0.5]$, следовательно данная функция является унимодальной на данном промежутке.
 $$min(f(x)) = f(x_0) \approx 0.897633$$
 Нахождение аналитического минимума у данной функции является весьма трудоемкой задачей, поэтомы мы возпользовались сторонним софтом, чтобы найти его примерное значение.
+
+Также можно заментить, что возрастающая часть графика возрастает довльно медленно и скорее всего 
+метод парабол будет значительно уступать остальным методам.
+
 
 \begin{tikzpicture}
 \begin{axis}[
@@ -18,13 +36,49 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
     \addplot[blue] {-5*x^5 + 4 * x^4 - 12 * x^3 + 11 * x^2 - 2*x + 1};
 \end{axis}
 \end{tikzpicture}
+\section {Таблицы}
+	Все таблицы предоставлены при точности $epsilon = 1e\!\!-\!\!11$
+\subsection {Метод дихотомии}
 
-Также можно заментить, что возрастающая часть графика возрастает довльно медленно и скорее всего 
-метод парабол будет очень плохо себя вести.
+На каждой итерации по два вызова функции
+
+\resizebox{15cm}{!}{
+\csvautotabular[separator=semicolon]{tables/dichotomy1e-11.csv}
+}
+
+\subsection {Метод золотого сечения}
+
+\resizebox{15cm}{!}{
+\csvautotabular[separator=semicolon]{tables/golden1e-11.csv}
+}
+
+\subsection {Метод Фибоначчи}
+
+\resizebox{15cm}{!}{
+\csvautotabular[separator=semicolon]{tables/fibonacci1e-11.csv}
+}
+
+\subsection {Метод парабол}
+
+\resizebox{10cm}{!}{
+\csvautotabular[separator=semicolon]{tables/parabola1e-11.csv}
+}
+
+\subsection {Комбинированный метод Брента}
+
+\resizebox{15cm}{!}{
+\csvautotabular[separator=semicolon]{tables/brent1e-11.csv}
+}
+
+
+\section {Графики}
+
 
 \begin{tikzpicture}
 \begin{axis}[
 	table/col sep = semicolon,
+	xlabel = {$-log10(eps)$},
+	ylabel = {$num\ cnt$},
 	height = 0.6\paperheight,
 	width = 0.65\paperwidth,
 	xmin = 1,
@@ -55,46 +109,278 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 \end{axis}
 \end{tikzpicture}
 
-\begin{tikzpicture}
-\begin{axis}[
-	table/col sep = semicolon,
-	height = 0.6\paperheight,
-	width = 0.65\paperwidth,
-	xmin = 1,
-	xmax = 12,
-	/pgf/number format/1000 sep={},
-	legend pos={north west}
-]
+Как и предполагалось метод парабол показал худшие результаты.
 
-\legend{
-	$dichotomy$,
-	$fibonacci$,
-	$golden$
-};
+По графикам видно, что метод дихотомии значительно уступает
+методам золотого сечения, фибоначчи и комбинированному методу Брента.
 
-\addplot table [x={log}, y={cnt}]
-              {tables/dichotomy.csv};
-\addplot table [x={log}, y={cnt}]
-              {tables/fibonacci.csv};
-\addplot table [x={log}, y={cnt}]
-              {tables/golden.csv};
-\end{axis}
-\end{tikzpicture}
+Метод золотого сечения и метод Фибоначчи отличаются только в константное количество раз, хотя 
+метод Фибоначчи должен быть на $17\%$ лучше метода золотого сечения.
 
-%\csvautotabular[separator=semicolon]{table/dichotomy.csv}
+\newpage
+\section {Код}
+\subsection {Метод дихотомии}
+
+\begin{lstlisting}
+information_search search_methods::dichotomy(std::function<long double(long double)> &func, range r) const {
+	size_t cnt = 0;
+	std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
+	long double delta = epsilon / 2;
+	while (r.delta() / 2 > epsilon) {
+		long double x1 = (r.right() + r.left() - delta) / 2;
+		long double x2 = (r.right() + r.left() + delta) / 2;
+		if (func_cnt(x1) <= func_cnt(x2)) {
+			r.update_range(r.left(), x2);
+		} else {
+			r.update_range(x1, r.right());
+		}
+	}
+	information_search answer(r.median(), func_cnt(r.median()), cnt, r);
+	return answer;
+}
+\end{lstlisting}
+
+\newpage
+\subsection {Метод золотого сечения}
+
+\begin{lstlisting}
+information_search search_methods::golden_ratio(std::function<long double(long double)> &func, range r) const {
+    size_t cnt;
+    std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
+    long double x1 = r.right() - golden_const * r.delta();
+    long double x2 = r.left() + golden_const * r.delta();
+    long double f_x1 = func_cnt(x1);
+    long double f_x2 = func_cnt(x2);
+    while (true) {
+        if (f_x1 > f_x2) {
+            r.update_range(x1, r.right());
+            x1 = x2;
+            f_x1 = f_x2;
+            x2 = r.left() + golden_const * r.delta();
+            f_x2 = func_cnt(x2);
+        } else {
+            r.update_range(r.left(), x2);
+            x2 = x1;
+            f_x2 = f_x1;
+            x1 = r.right() - golden_const * r.delta();
+            f_x1 = func_cnt(x1);
+        }
+        if (r.delta() < epsilon) {
+            break;
+        }
+    }
+    long double f_min, x_min;
+    if (f_x1 < f_x2) {
+        f_min = f_x1;
+        x_min = r.left();
+    } else {
+        f_min = f_x2;
+        x_min = r.right();
+    }
+    information_search answer(x_min, f_min, cnt, r);
+    return answer;
+}
+\end{lstlisting}
 
 
-\begin{tikzpicture}
-\begin{axis}[
-	table/col sep = semicolon,
-	height = 0.8\paperheight,
-	width = 0.8\paperwidth,
-	xmin = 1,
-	xmax = 12,
-	/pgf/number format/1000 sep={}
-]
+\newpage
+\subsection {Метод Фибоначчи} 
+\begin{lstlisting}
+information_search search_methods::fibonacci(std::function<long double(long double)> &func, range r) {
+    size_t cnt;
+    std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
+    auto n = static_cast<size_t>(floorl(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2)));
+    long double x1 = r.left() + F(n - 2) / F(n) * r.delta();
+    long double x2 = r.left() + F(n - 1) / F(n) * r.delta();
+    long double f_x1 = func(x1);
+    long double f_x2 = func(x2);
+    for (size_t k = 1; k < n - 1; k++) {
+        if (f_x1 > f_x2) {
+            r.update_range(x1, r.right());
+            x1 = x2;
+            f_x1 = f_x2;
+            x2 = r.left() + F(n - k - 1) / F(n - k) * r.delta();
+            if (k != n - 2) {
+                f_x2 = func_cnt(x2);
+            }
+        } else {
+            r.update_range(r.left(), x2);
+            x2 = x1;
+            f_x2 = f_x1;
+            if (k != n - 2) {
+                x1 = r.left() + F(n - k - 2) / F(n - k) * r.delta();
+                f_x1 = func_cnt(x1);
+            }
+        }
+    }
+    x2 = x1 + epsilon;
+    r.update_range(x1, x2);
+    f_x2 = func_cnt(x2);
+    information_search answer(x2, f_x2, cnt, r);
+    return answer;
+}
+\end{lstlisting}
+	
 
-\addplot table [x={log}, y={cnt}]
-              {tables/fibonacci.csv};
-\end{axis}
-\end{tikzpicture}
+\newpage
+\subsection{Метод парабол} 
+\begin{lstlisting}
+std::random_device rd;
+std::default_random_engine eng(rd());
+std::uniform_real_distribution<long double> distribution(0, 1);
+
+long double next_mid(const range &r) {
+    return r.left() + distribution(eng) * r.delta();
+}
+
+std::pair<long double, long double>
+find_mid(const std::function<long double(long double)> &func, const range &r, const long double &f_x1,
+         const long double &f_x2) {
+    long double mid = 0, f_mid = 0;
+    do {
+        mid = next_mid(r);
+        f_mid = func(mid);
+    } while (f_mid >= f_x2 || f_mid >= f_x1);
+    return {mid, f_mid};
+}
+long double search_methods::calc_u(const long double &x1, const long double &f_x1,
+                   const long double &x2, const long double &f_x2,
+                   const long double &x3, const long double &f_x3) {
+    const long double delta_x2_x1 = (x2 - x1);
+    const long double delta_f2_f3 = (f_x2 - f_x3);
+    const long double delta_x2_x3 = (x2 - x3);
+    const long double delta_f2_f1 = (f_x2 - f_x1);
+    return x2 - (delta_x2_x1 * delta_x2_x1 * delta_f2_f3 - delta_x2_x3 * delta_x2_x3 * delta_f2_f1) /
+                (2 * (delta_x2_x1 * delta_f2_f3 - delta_x2_x3 * delta_f2_f1));
+}
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+information_search search_methods::parabolas(std::function<long double(long double)> &func, range r) const {
+    size_t cnt = 0;
+    const std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
+    long double x1 = r.left();
+    long double x3 = r.right();
+    long double f_x1 = func_cnt(x1);
+    long double f_x3 = func_cnt(x3);
+    long double x_min = 0, f_min = 0;
+    auto [x2, f_x2] = find_mid(func_cnt, r, f_x1, f_x3);
+    while (true) {
+        long double u = calc_u(x1, f_x1, x2, f_x2, x3, f_x3);
+        long double f_u = func_cnt(u);
+        if (std::abs(u - x2) < epsilon){
+            x_min = u;
+            f_min = f_u;
+            break;
+        }
+        if (u < x2) {
+            if (f_u < f_x2) {
+                x3 = x2;
+                x2 = u;
+                f_x3 = func_cnt(x3);
+                f_x2 = func_cnt(x2);
+            } else {
+                x1 = u;
+                f_x1 = func_cnt(x1);
+            }
+        } else {
+            if (f_x2 < f_u) {
+                x3 = u;
+                f_x3 = func_cnt(x3);
+            } else {
+                x1 = x2;
+                x2 = u;
+                f_x1 = func_cnt(x1);
+                f_x2 = func_cnt(x2);
+            }
+        }
+        r.update_range(x1, x3);
+    }
+    information_search answer(x_min, f_min, cnt, r);
+    return answer;
+}
+\end{lstlisting}
+
+\newpage
+\subsection{Комбинированный метод Брента}
+\begin{lstlisting}
+information_search search_methods::combined_brent(std::function<long double(long double)> &func, range r) const {
+    size_t cnt = 0;
+    const std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
+    long double a = r.left(), c = r.right();
+    long double x = a + golden_const * r.delta();
+    long double f_x = func_cnt(x);
+    long double w = x, v = x;
+    long double f_w = f_x, f_v = f_x;
+    long double d = r.delta(), e = r.delta();
+    long double x_min = 0, f_min = 0;
+    while (true) {
+        long double g = e;
+        e = d;
+        long double tol = epsilon * std::abs(x) + epsilon / 10;
+        long double u;
+        bool normal_parabola = false;
+        if (std::abs(x - (a + c) / 2) + r.delta() / 2 <= 2 * tol){
+            x_min = x;
+            f_min = f_x;
+            break;
+        }
+        if (x != w && w != v && v != x && f_x != f_w && f_w != f_v && f_v != f_x){
+            u = calc_u(x, f_x, w, f_w, v, f_v);
+            if (a <= u && u <= c && std::abs(u - x) < g / 2){
+                normal_parabola = true;
+                if (u - a < 2 * tol || c - u < 2 * tol){
+                    u = x - sign(x - (a + c) / 2) * tol;
+                }
+            }
+        }
+        if (!normal_parabola){
+            if (x < (a + c) / 2){
+                u = x + golden_const * (c - x);
+                e = c - x;
+            } else {
+                u = x - golden_const * (x - a);
+                e = x - a;
+            }
+        }
+        if (std::abs(u - x) < tol){
+            u = x + sign(u - x) * tol;
+        }
+        d = std::abs(u - x);
+        long double f_u = func_cnt(u);
+        if (f_u <= f_x){
+            if (u >= x){
+                a = x;
+            } else {
+                c = x;
+            }
+            v = w;
+            f_v = f_w;
+            w = x;
+            f_w = f_x;
+            x = u;
+            f_x = f_u;
+        } else {
+            if (u >= x){
+                c = u;
+            } else {
+                a = u;
+            }
+            if (f_u <= f_w || w == x){
+                v = w;
+                f_v = f_w;
+                w = u;
+                f_w = f_u;
+            } else {
+                if (f_u <= f_v || v == x || v == w){
+                    v = u;
+                    f_v = f_u;
+                }
+            }
+        }
+        r.update_range(a, c);
+    }
+    information_search answer(x_min, f_min, cnt, r);
+    return answer;
+}
+\end{lstlisting}

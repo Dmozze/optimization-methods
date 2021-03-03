@@ -5,7 +5,6 @@ template <typename T> int sign(T val) {
     return (T(0) < val) - (val < T(0));
 }
 
-
 information_search search_methods::combined_brent(std::function<long double(long double)> &func, range r) const {
     size_t cnt = 0;
     const std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);

@@ -5,7 +5,6 @@ std::random_device rd;
 std::default_random_engine eng(rd());
 std::uniform_real_distribution<long double> distribution(0, 1);
 
-
 long double next_mid(const range &r) {
     return r.left() + distribution(eng) * r.delta();
 }
@@ -21,7 +20,7 @@ find_mid(const std::function<long double(long double)> &func, const range &r, co
     return {mid, f_mid};
 }
 
- long double search_methods::calc_u(const long double &x1, const long double &f_x1,
+long double search_methods::calc_u(const long double &x1, const long double &f_x1,
                    const long double &x2, const long double &f_x2,
                    const long double &x3, const long double &f_x3) {
     const long double delta_x2_x1 = (x2 - x1);

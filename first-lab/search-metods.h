@@ -27,10 +27,34 @@ public:
     void update_range(long double l, long double r) {
         range_history.emplace_back(l, r);
     }
-    void print(std::ofstream &out) {
-
-        for (auto [left, right] : range_history) {
-            out << left << ';' << right << std::endl;
+    void print(std::ofstream &out, std::function<long double(long double)> &func) {
+        out << "iter;left;right;ratio;f(left);f(right)" << std::endl;
+        for (size_t i = 0; i < range_history.size(); i++) {
+            out << i + 1 << ';';
+            const long double l = range_history[i].first;
+            const long double r = range_history[i].second;
+            out << l << ';' << r << ';';
+            if (i > 0) {
+                const long double l_ = range_history[i - 1].first;
+                const long double r_ = range_history[i - 1].second;
+                out << (r - l) / (r_ - l_);
+            }
+            out << ';' << func(l) << ';' << func(r) << std::endl;
+        }
+    }
+    void print(std::ostream &out, std::function<long double(long double)> &func) {
+        out << "iter;left;right;ratio;f(left);f(right)" << std::endl;
+        for (size_t i = 0; i < range_history.size(); i++) {
+            out << i + 1 << ';';
+            const long double l = range_history[i].first;
+            const long double r = range_history[i].second;
+            out << l << ';' << r << ';';
+            if (i > 0) {
+                const long double l_ = range_history[i - 1].first;
+                const long double r_ = range_history[i - 1].second;
+                out << (r - l) / (r_ - l_);
+            }
+            out << ';' << func(l) << ';' << func(r) << std::endl;
         }
     }
 };
