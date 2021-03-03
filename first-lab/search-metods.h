@@ -58,6 +58,11 @@ class search_methods {
 
     long double F(size_t n);
 
+    static long double calc_u(const long double &x1, const long double &f_x1,
+                       const long double &x2, const long double &f_x2,
+                       const long double &x3, const long double &f_x3);
+
+
 
 
     static std::function<long double(long double)>
