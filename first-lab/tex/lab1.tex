@@ -36,6 +36,7 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
     \addplot[blue] {-5*x^5 + 4 * x^4 - 12 * x^3 + 11 * x^2 - 2*x + 1};
 \end{axis}
 \end{tikzpicture}
+\newpage
 \section {Таблицы}
 	Все таблицы предоставлены при точности $epsilon = 1e\!\!-\!\!11$
 \subsection {Метод дихотомии}
@@ -116,6 +117,63 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 
 Метод золотого сечения и метод Фибоначчи отличаются только в константное количество раз, хотя 
 метод Фибоначчи должен быть на $17\%$ лучше метода золотого сечения.
+
+\newpage
+\section {Тестирование на многомодальной функции}
+Мы взяли функцию 
+$f(x) = x * sin(x^2)$
+и находим ее минимум на промежутке $[0, 3.7]$
+Все наши алгоритмы находят минимум $min_a (f(x)) = -2.183...$
+хотя глобальный минимум равен $min(f(x)) = -3.319...$.
+
+Графики
+
+\begin{tikzpicture}
+	\begin{axis}[
+			title = График функции f(x),
+			xlabel = {$x$},
+			ylabel = {$f(x)$},
+			domain = 0:3.5
+		]
+		\addplot[blue] {1.68955 * x^4 - 10.4033 * x^3 + 19.3156 * x^2 - 9.26816 * x};
+	\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+	\begin{axis}[
+		table/col sep = semicolon,
+		xlabel = {$-log10(eps)$},
+		ylabel = {$num\ cnt$},
+		height = 0.6\paperheight,
+		width = 0.65\paperwidth,
+		xmin = 1,
+		xmax = 12,
+		/pgf/number format/1000 sep={},
+		legend pos={north west}
+	]
+	
+	\legend{
+		$dichotomy$,
+		$golden$,
+		$fibonacci$,
+		$parabola$,
+		$brent$
+	};
+	
+	\addplot table [x={log}, y={cnt}]
+				  {tables/dichotomyB.csv};
+	\addplot table [x={log}, y={cnt}]
+				  {tables/goldenB.csv};
+	\addplot table [x={log}, y={cnt}]
+				  {tables/fibonacciB.csv};
+	\addplot table [x={log}, y={cnt}]
+				  {tables/parabolaB.csv};
+	\addplot table [x={log}, y={cnt}]
+				  {tables/brentB.csv};
+	
+	\end{axis}
+	\end{tikzpicture}
+
 
 \newpage
 \section {Код}

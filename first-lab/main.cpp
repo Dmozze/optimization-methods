@@ -35,15 +35,21 @@ void print_cnt(const std::string& s, const std::vector<std::pair<long double, in
 
 
 int main() {
-    std::function<long double(long double)> func = [](long double x) {
+    std::function<long double(long double)> func2 = [](long double x) {
         return -5 * powl(x, 5) + 4 * powl(x, 4) - 12 * powl(x, 3) + 11 * powl(x, 2) - 2 * x + 1;
     };
     std::function<long double(long double)> func1 = [](long double x) {
         return 0.2L * x * log10l(x) + (x - 2.3L) * (x - 2.3L);
     };
+    //break
+    std::function<long double(long double)> func = [](long double x) {
+        return 1.68955 * powl(x, 4) - 10.4033 * powl(x, 3) + 19.3156 * powl(x, 2) - 9.26816 * x;
+    };
     std::cout << std::setprecision(15);
-    range r = {-0.5L, 0.5L};
+    //range r = {-0.5L, 0.5L};
     //range r = {0.5L, 2.5L};
+    range r = {0, 3};//break
+    std::string brek = "B";
     std::vector<std::pair<long double, int>> dichotomy;
     std::vector<std::pair<long double, int>> fibonacci;
     std::vector<std::pair<long double, int>> golden;
@@ -77,17 +83,17 @@ int main() {
         brent_vec.emplace_back(log_epsilon, brent_answer.times);
         std::ostringstream s;
         s << std::setprecision(15) << epsilon;
-        print(path + dich + s.str() + csv, dichotomy_answer, func);
-        print(path + fib + s.str() + csv, fib_answer, func);
-        print(path + gold + s.str() + csv, golden_answer, func);
-        print(path + parab + s.str() + csv, parabolas, func);
-        print(path + brent + s.str() + csv, brent_answer, func);
+        print(path + dich + brek + s.str() + csv, dichotomy_answer, func);
+        print(path + fib + brek + s.str() + csv, fib_answer, func);
+        print(path + gold + brek + s.str() + csv, golden_answer, func);
+        print(path + parab + brek + s.str() + csv, parabolas, func);
+        print(path + brent + brek + s.str() + csv, brent_answer, func);
     }
 
-    print_cnt(dich, dichotomy);
-    print_cnt(fib, fibonacci);
-    print_cnt(gold, golden);
-    print_cnt(parab, parab_vec);
-    print_cnt(brent, brent_vec);
+    print_cnt(dich + brek, dichotomy);
+    print_cnt(fib + brek, fibonacci);
+    print_cnt(gold + brek, golden);
+    print_cnt(parab + brek, parab_vec);
+    print_cnt(brent + brek, brent_vec);
     return 0;
 }
