@@ -37,7 +37,7 @@ public:
             if (i > 0) {
                 const long double l_ = range_history[i - 1].first;
                 const long double r_ = range_history[i - 1].second;
-                out << (r - l) / (r_ - l_);
+                out << (r_ - l_) / (r - l);
             }
             out << ';' << func(l) << ';' << func(r) << std::endl;
         }
@@ -52,7 +52,7 @@ public:
             if (i > 0) {
                 const long double l_ = range_history[i - 1].first;
                 const long double r_ = range_history[i - 1].second;
-                out << (r - l) / (r_ - l_);
+                out << (r_ - l_) / (r - l);
             }
             out << ';' << func(l) << ';' << func(r) << std::endl;
         }
@@ -86,9 +86,6 @@ class search_methods {
                        const long double &x2, const long double &f_x2,
                        const long double &x3, const long double &f_x3);
 
-
-
-
     static std::function<long double(long double)>
     find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
 public:
@@ -110,6 +107,4 @@ public:
     information_search parabolas(std::function<long double(long double)> &func, range r) const;
 
     information_search combined_brent(std::function<long double(long double)> &func, range r) const;
-
-
 };

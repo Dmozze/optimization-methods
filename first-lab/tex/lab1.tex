@@ -31,6 +31,8 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
         title = График функции f(x),
 	    xlabel = {$x$},
 	    ylabel = {$f(x)$},
+        height = 0.8\paperheight,
+	    width = 0.65\paperwidth,
 	    domain = -0.5:0.5
     ]
     \addplot[blue] {-5*x^5 + 4 * x^4 - 12 * x^3 + 11 * x^2 - 2*x + 1};
@@ -41,35 +43,57 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 	Все таблицы предоставлены при точности $epsilon = 1e\!\!-\!\!11$
 \subsection {Метод дихотомии}
 
-На каждой итерации по два вызова функции
-
-\resizebox{15cm}{!}{
+\resizebox{12cm}{!}{
 \csvautotabular[separator=semicolon]{tables/dichotomy1e-11.csv}
 }
 
+\ 
+
+Этот метод хотя и имеет меньшее количество итераций, чем отстальные,
+но на каждой итерации происходит два вызова функции, что очень дорого.
+
 \subsection {Метод золотого сечения}
 
-\resizebox{15cm}{!}{
+\resizebox{12cm}{!}{
 \csvautotabular[separator=semicolon]{tables/golden1e-11.csv}
 }
 
 \subsection {Метод Фибоначчи}
 
-\resizebox{15cm}{!}{
+\resizebox{12cm}{!}{
 \csvautotabular[separator=semicolon]{tables/fibonacci1e-11.csv}
 }
 
+\ 
+
+Примерно с 30 итерации заметны какие либо отличия от метода золотого сечения, 
+но значительные отличия заметны только к концу, когда числа 
+Фибоначчи не большие.
+
 \subsection {Метод парабол}
 
-\resizebox{10cm}{!}{
+\resizebox{12cm}{!}{
 \csvautotabular[separator=semicolon]{tables/parabola1e-11.csv}
 }
 
+\ 
+
+Как мы видим, левая граница долгое время не менялась.
+Это из-за того, что наша функция в возрастающей части
+возрастает довольно медленно, и из-за этого точка минимума параболы
+не далеко отходит от правой границы отрезков.
+
 \subsection {Комбинированный метод Брента}
 
-\resizebox{15cm}{!}{
+\resizebox{12cm}{!}{
 \csvautotabular[separator=semicolon]{tables/brent1e-11.csv}
 }
+
+\ 
+
+Как мы видим во многих местах отночение дилин отрезвов
+близко к золотому сечению, что и компенсирует то, что данная
+функция возрастает довольно медленно.
 
 
 \section {Графики}
@@ -115,8 +139,11 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 По графикам видно, что метод дихотомии значительно уступает
 методам золотого сечения, фибоначчи и комбинированному методу Брента.
 
-Метод золотого сечения и метод Фибоначчи отличаются только в константное количество раз, хотя 
-метод Фибоначчи должен быть на $17\%$ лучше метода золотого сечения.
+Также по графикам видно, что метод золотого сечения практически не отличается от метода
+Фибоначчи. Я думаю это связано с тем, что если посмотреть на Таблицы
+по этим двум мотодам, то можно заметить, что отношение
+длин отрезков на соседних итерациях начинают значительно различаться
+только в конце, т. е. при малых числах Фибоначчи в методе Фибоначчи.
 
 \newpage
 \section {Тестирование на многомодальной функции}
@@ -128,16 +155,7 @@ $f(x) = x * sin(x^2)$
 
 Графики
 
-\begin{tikzpicture}
-	\begin{axis}[
-			title = График функции f(x),
-			xlabel = {$x$},
-			ylabel = {$f(x)$},
-			domain = 0:3.5
-		]
-		\addplot[blue] {1.68955 * x^4 - 10.4033 * x^3 + 19.3156 * x^2 - 9.26816 * x};
-	\end{axis}
-\end{tikzpicture}
+\includegraphics{Screenshot from 2021-03-10 10-53-01.png}
 
 \begin{tikzpicture}
 	\begin{axis}[
@@ -177,6 +195,119 @@ $f(x) = x * sin(x^2)$
 
 \newpage
 \section {Код}
+
+\subsection {Вспомогательный код}
+
+\begin{lstlisting}
+class range {
+    std::vector<std::pair<long double, long double>> range_history;
+public:
+
+    range(long double l, long double r) : range_history() {
+        range_history.emplace_back(l, r);
+    }
+    long double delta() const {
+        return right() - left();
+    }
+    long double median() const {
+        return (right() + left()) / 2;
+    }
+    long double right() const {
+        return range_history.back().second;
+    }
+    long double left() const {
+        return range_history.back().first;
+    }
+    void update_range(long double l, long double r) {
+        range_history.emplace_back(l, r);
+    }
+    void print(std::ofstream &out, std::function<long double(long double)> &func) {
+        out << "iter;left;right;ratio;f(left);f(right)" << std::endl;
+        for (size_t i = 0; i < range_history.size(); i++) {
+            out << i + 1 << ';';
+            const long double l = range_history[i].first;
+            const long double r = range_history[i].second;
+            out << l << ';' << r << ';';
+            if (i > 0) {
+                const long double l_ = range_history[i - 1].first;
+                const long double r_ = range_history[i - 1].second;
+                out << (r_ - l_) / (r - l);
+            }
+            out << ';' << func(l) << ';' << func(r) << std::endl;
+        }
+    }
+    void print(std::ostream &out, std::function<long double(long double)> &func) {
+        out << "iter;left;right;ratio;f(left);f(right)" << std::endl;
+        for (size_t i = 0; i < range_history.size(); i++) {
+            out << i + 1 << ';';
+            const long double l = range_history[i].first;
+            const long double r = range_history[i].second;
+            out << l << ';' << r << ';';
+            if (i > 0) {
+                const long double l_ = range_history[i - 1].first;
+                const long double r_ = range_history[i - 1].second;
+                out << (r_ - l_) / (r - l);
+            }
+            out << ';' << func(l) << ';' << func(r) << std::endl;
+        }
+    }
+};
+\end{lstlisting}
+
+\begin{lstlisting}
+struct information_search {
+    long double point;
+    long double value;
+    int times;
+    range r;
+    information_search(long double point, long double value, int times, range &r)
+    :
+    point(point),
+    value(value),
+    times(times),
+    r(r) {}
+};
+\end{lstlisting}
+
+\begin{lstlisting}
+class search_methods {
+    std::vector<long double> f;
+    const size_t number_fib = 90;
+
+    long double epsilon;
+
+    const long double golden_const = 0.5 * (sqrtl(5) - 1);
+
+    long double F(size_t n);
+
+    static long double calc_u(const long double &x1, const long double &f_x1,
+                       const long double &x2, const long double &f_x2,
+                       const long double &x3, const long double &f_x3);
+    
+    static std::function<long double(long double)>
+    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
+public:
+
+    explicit search_methods(long double epsilon) : epsilon(epsilon), f() {
+        f.push_back(1.);
+        f.push_back(1.);
+        for (int i = 0; i < number_fib; i++) {
+            f.push_back(f.back() + f[f.size() - 2]);
+        }
+    }
+
+    information_search dichotomy(std::function<long double(long double)> &func, range r) const;
+
+    information_search golden_ratio(std::function<long double(long double)> &func, range r) const;
+
+    information_search fibonacci(std::function<long double(long double)> &func, range r);
+
+    information_search parabolas(std::function<long double(long double)> &func, range r) const;
+
+    information_search combined_brent(std::function<long double(long double)> &func, range r) const;
+};
+\end{lstlisting}
+
 \subsection {Метод дихотомии}
 
 \begin{lstlisting}
