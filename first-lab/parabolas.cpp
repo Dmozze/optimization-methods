@@ -1,22 +1,24 @@
 #include "search-metods.h"
 #include <random>
 
-std::random_device rd;
-std::default_random_engine eng(rd());
-std::uniform_real_distribution<long double> distribution(0, 1);
-
-long double next_mid(const range &r) {
-    return r.left() + distribution(eng) * r.delta();
-}
-
 std::pair<long double, long double>
 find_mid(const std::function<long double(long double)> &func, const range &r, const long double &f_x1,
          const long double &f_x2) {
     long double mid = 0, f_mid = 0;
-    do {
-        mid = next_mid(r);
+    long double left = r.left(), right = r.right();
+    while (true) {
+        mid = left + (right - left) / 2;
         f_mid = func(mid);
-    } while (f_mid >= f_x2 || f_mid >= f_x1);
+        if (f_mid < f_x2 && f_mid < f_x1) {
+            break;
+        }
+        if (f_mid >= f_x1){
+            left = mid;
+        }
+        if (f_mid >= f_x2) {
+            right = mid;
+        }
+    }
     return {mid, f_mid};
 }
 
