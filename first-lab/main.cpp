@@ -35,10 +35,10 @@ void print_cnt(const std::string& s, const std::vector<std::pair<long double, in
 
 
 int main() {
-    std::function<long double(long double)> func1 = [](long double x) {
+    std::function<long double(long double)> func = [](long double x) {
         return -5 * powl(x, 5) + 4 * powl(x, 4) - 12 * powl(x, 3) + 11 * powl(x, 2) - 2 * x + 1;
     };
-    std::function<long double(long double)> func = [](long double x) {
+    std::function<long double(long double)> func1 = [](long double x) {
         return expl(3.0L * x) + 5.0L * expl(-2.0L * x);
     };
     //break
@@ -46,8 +46,8 @@ int main() {
         return 1.68955 * powl(x, 4) - 10.4033 * powl(x, 3) + 19.3156 * powl(x, 2) - 9.26816 * x;
     };
     std::cout << std::setprecision(15);
-    //range r = {-0.5L, 0.5L};
-    range r = {0, 1};
+    range r = {-0.5L, 0.5L};
+    //range r = {0, 1};
     //range r = {0, 3};//break
     std::string brek = "";
     std::vector<std::pair<long double, int>> dichotomy;
@@ -88,6 +88,7 @@ int main() {
         print(path + gold + brek + s.str() + csv, golden_answer, func);
         print(path + parab + brek + s.str() + csv, parabolas, func);
         print(path + brent + brek + s.str() + csv, brent_answer, func);
+        sm.research_parabolas(func, r, 0.05L);
     }
 
     print_cnt(dich + brek, dichotomy);

@@ -95,6 +95,24 @@ $$min(f(x)) = f(x_0) \approx 0.897633$$
 близко к золотому сечению, что и компенсирует то, что данная
 функция возрастает довольно медленно.
 
+\section {Исследование метода парабол при различных начальных приближениях}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        table/col sep = semicolon,
+        xlabel = {$x$},
+        ylabel = {$num\ cnt$},
+        height = 0.6\paperheight,
+        width = 0.65\paperwidth,
+        /pgf/number format/1000 sep={},
+        legend pos={north west}
+    ]
+    
+    \addplot table [x={point}, y={cnt}]
+                  {tables/research_parabolas1e-11.csv};
+    \end{axis}
+\end{tikzpicture}
+
 
 \section {Графики}
 

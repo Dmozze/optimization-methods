@@ -86,8 +86,8 @@ class search_methods {
                        const long double &x2, const long double &f_x2,
                        const long double &x3, const long double &f_x3);
 
-    static std::function<long double(long double)>
-    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
+    information_search research_parabolas_(std::function<long double(long double)> &func, range r, long double &current_mid, long double step) const;
+
 public:
 
     explicit search_methods(long double epsilon) : epsilon(epsilon), f() {
@@ -106,5 +106,10 @@ public:
 
     information_search parabolas(std::function<long double(long double)> &func, range r) const;
 
+    void research_parabolas(std::function<long double(long double)> &func, range r, long double step) const;
+
     information_search combined_brent(std::function<long double(long double)> &func, range r) const;
+
+    static std::function<long double(long double)>
+    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
 };
