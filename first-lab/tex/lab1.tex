@@ -331,11 +331,11 @@ class search_methods {
     long double F(size_t n);
 
     static long double calc_u(const long double &x1, const long double &f_x1,
-                       const long double &x2, const long double &f_x2,
-                       const long double &x3, const long double &f_x3);
-    
-    static std::function<long double(long double)>
-    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
+                        const long double &x2, const long double &f_x2,
+                        const long double &x3, const long double &f_x3);
+
+    information_search research_parabolas_(std::function<long double(long double)> &func, range r, long double &current_mid, long double step) const;
+
 public:
 
     explicit search_methods(long double epsilon) : epsilon(epsilon), f() {
@@ -354,7 +354,12 @@ public:
 
     information_search parabolas(std::function<long double(long double)> &func, range r) const;
 
+    void research_parabolas(std::function<long double(long double)> &func, range r, long double step) const;
+
     information_search combined_brent(std::function<long double(long double)> &func, range r) const;
+
+    static std::function<long double(long double)>
+    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
 };
 \end{lstlisting}
 
@@ -464,24 +469,26 @@ information_search search_methods::fibonacci(std::function<long double(long doub
 \newpage
 \subsection{Метод парабол} 
 \begin{lstlisting}
-std::random_device rd;
-std::default_random_engine eng(rd());
-std::uniform_real_distribution<long double> distribution(0, 1);
-
-long double next_mid(const range &r) {
-    return r.left() + distribution(eng) * r.delta();
-}
-
 std::pair<long double, long double>
 find_mid(const std::function<long double(long double)> &func, const range &r, const long double &f_x1,
-         const long double &f_x2) {
+            const long double &f_x2) {
     long double mid = 0, f_mid = 0;
-    do {
-        mid = next_mid(r);
+    long double left = r.left(), right = r.right();
+    while (true) {
+        mid = left + (right - left) / 2;
         f_mid = func(mid);
-    } while (f_mid >= f_x2 || f_mid >= f_x1);
+        if (f_mid < f_x2 && f_mid < f_x1) {
+            break;
+        }
+        if (f_mid >= f_x1){
+            left = mid;
+        }
+        if (f_mid >= f_x2) {
+            right = mid;
+        }
+    }
     return {mid, f_mid};
-}
+}    
 long double search_methods::calc_u(const long double &x1, const long double &f_x1,
                    const long double &x2, const long double &f_x2,
                    const long double &x3, const long double &f_x3) {
@@ -516,7 +523,7 @@ information_search search_methods::parabolas(std::function<long double(long doub
             if (f_u < f_x2) {
                 x3 = x2;
                 x2 = u;
-                f_x3 = func_cnt(x3);
+                f_x3 = f_x2;
                 f_x2 = func_cnt(x2);
             } else {
                 x1 = u;
@@ -529,7 +536,7 @@ information_search search_methods::parabolas(std::function<long double(long doub
             } else {
                 x1 = x2;
                 x2 = u;
-                f_x1 = func_cnt(x1);
+                f_x1 = f_x2;
                 f_x2 = func_cnt(x2);
             }
         }
@@ -540,6 +547,95 @@ information_search search_methods::parabolas(std::function<long double(long doub
 }
 \end{lstlisting}
 
+\newpage
+\subsection{Код для исследования метода парабол}
+\begin{lstlisting}
+std::pair<long double, long double>
+research_find_mid(const std::function<long double(long double)> &func, const range &r, const long double &f_x1,
+                      const long double &f_x2, long double &mid, const long double step) {
+        mid += step;
+        long double f_mid = func(mid);
+        while (mid < r.right() && !(f_mid < f_x2 && f_mid < f_x1)) {
+            mid += step;
+            f_mid = func(mid);
+        }
+        if (mid > r.right()) {
+            return {0.0, 0.0};
+        }
+        return {mid, f_mid};
+    }
+\end{lstlisting}
+
+\begin{lstlisting}
+information_search search_methods::research_parabolas_(std::function<long double(long double)> &func, range r, long double &current_mid, long double step) const {
+    size_t cnt = 0;
+    const std::function<long double(long double)> func_cnt = search_methods::find_cnt_func(func, cnt);
+    long double x1 = r.left();
+    long double x3 = r.right();
+    long double f_x1 = func_cnt(x1);
+    long double f_x3 = func_cnt(x3);
+    long double x_min = 0, f_min = 0;
+    auto [x2, f_x2] = research_find_mid(func, r, f_x1, f_x3, current_mid, step);
+    cnt++; // only for research         _/\_
+    if (x2 == 0.0 && f_x2 == 0.0) {
+        information_search answer(0.0, 0.0, -1, r);
+        return answer;
+    }
+    while (true) {
+        long double u = calc_u(x1, f_x1, x2, f_x2, x3, f_x3);
+        long double f_u = func_cnt(u);
+        if (std::abs(u - x2) < epsilon){
+            x_min = u;
+            f_min = f_u;
+            break;
+        }
+        if (u < x2) {
+            if (f_u < f_x2) {
+                x3 = x2;
+                x2 = u;
+                f_x3 = f_x2;
+                f_x2 = func_cnt(x2);
+            } else {
+                x1 = u;
+                f_x1 = func_cnt(x1);
+            }
+        } else {
+            if (f_x2 < f_u) {
+                x3 = u;
+                f_x3 = func_cnt(x3);
+            } else {
+                x1 = x2;
+                x2 = u;
+                f_x1 = f_x2;
+                f_x2 = func_cnt(x2);
+            }
+        }
+        r.update_range(x1, x3);
+    }
+    information_search answer(x_min, f_min, cnt, r);
+    return answer;
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+ void search_methods::research_parabolas(std::function<long double(long double)> &func, range r,
+                                        long double step) const {
+    std::ostringstream s;
+    s << std::setprecision(15) << epsilon;
+    std::ofstream out("tex/tables/research_parabolas" + s.str() + ".csv");
+    out << std::setprecision(15);
+    out << "point;cnt" << std::endl;
+    long double current_mid = r.left();
+    while (true) {
+        information_search inf = research_parabolas_(func, r, current_mid, step);
+        if (inf.times == -1) {
+            break;
+        }
+        out << current_mid << ';' << inf.times << std::endl;
+    }
+    out.close();
+}
+\end{lstlisting}
 \newpage
 \subsection{Комбинированный метод Брента}
 \begin{lstlisting}
