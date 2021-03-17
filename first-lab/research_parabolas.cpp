@@ -44,7 +44,7 @@ information_search search_methods::research_parabolas_(std::function<long double
             if (f_u < f_x2) {
                 x3 = x2;
                 x2 = u;
-                f_x3 = func_cnt(x3);
+                f_x3 = f_x2;
                 f_x2 = func_cnt(x2);
             } else {
                 x1 = u;
@@ -57,7 +57,7 @@ information_search search_methods::research_parabolas_(std::function<long double
             } else {
                 x1 = x2;
                 x2 = u;
-                f_x1 = func_cnt(x1);
+                f_x1 = f_x2;
                 f_x2 = func_cnt(x2);
             }
         }
