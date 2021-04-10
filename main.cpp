@@ -127,6 +127,33 @@ void second_lab_main() {
     Matrix MM2 = M * M1;
     Vector VV = M * V1;
 
+    for (size_t j = 0; j < M11.size(); j++) {
+        for (size_t i = 0; i < M11.size(); i++) {
+            std::cout << M11[i][j] << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+    for (size_t j = 0; j < MM.size(); j++) {
+        for (size_t i = 0; i < MM.size(); i++) {
+            std::cout << MM[i][j] << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+    for (size_t j = 0; j < MM2.size(); j++) {
+        for (size_t i = 0; i < MM2.size(); i++) {
+            std::cout << MM2[i][j] << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+
+    for (size_t i = 0; i < VV.size(); i++) {
+        std::cout << VV[i] << '\n';
+    }
+    std::cout << '\n';
+
 
 }
 
