@@ -1,5 +1,5 @@
 #include <iostream>
-#include "search-metods.h"
+#include "first-lab/search-metods.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -33,8 +33,7 @@ void print_cnt(const std::string& s, const std::vector<std::pair<long double, in
     out.close();
 }
 
-
-int main() {
+void first_lab_main() {
     std::function<long double(long double)> func = [](long double x) {
         return -5 * powl(x, 5) + 4 * powl(x, 4) - 12 * powl(x, 3) + 11 * powl(x, 2) - 2 * x + 1;
     };
@@ -96,5 +95,16 @@ int main() {
     print_cnt(gold + brek, golden);
     print_cnt(parab + brek, parab_vec);
     print_cnt(brent + brek, brent_vec);
+}
+
+
+void second_lab_main() {
+
+}
+
+int main() {
+    //first_lab_main();
+
+    second_lab_main();
     return 0;
 }
