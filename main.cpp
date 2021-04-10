@@ -1,5 +1,7 @@
 #include <iostream>
 #include "first-lab/search-metods.h"
+#include "second-lab/Vector.h"
+#include "second-lab/Matrix.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -99,6 +101,32 @@ void first_lab_main() {
 
 
 void second_lab_main() {
+
+    std::vector<long double> v1 = {1, 2, 3};
+    std::vector<long double> v2 = {4, 5, 6};
+    std::vector<long double> v3 = {7, 8, 9};
+    Vector V1(v1);
+    Vector V2(v2);
+    Vector V3(v3);
+
+    std::vector<Vector> m = {V1, V2, V3};
+    Matrix M(m);
+
+    std::vector<long double> v11 = {1, 1, 1};
+    std::vector<long double> v12 = {1, 1, 1};
+    std::vector<long double> v13 = {1, 1, 1};
+    Vector V11(v11);
+    Vector V12(v12);
+    Vector V13(v13);
+
+    std::vector<Vector> m1 = {V11, V12, V13};
+    Matrix M1(m1);
+
+    Matrix M11 = M1 * 2;
+    Matrix MM = M + M1;
+    Matrix MM2 = M * M1;
+    Vector VV = M * V1;
+
 
 }
 
