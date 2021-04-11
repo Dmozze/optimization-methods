@@ -31,6 +31,8 @@ public:
 
     Matrix operator * (Matrix &matrix1);
 
+    Matrix transpose();
+
 };
 
 

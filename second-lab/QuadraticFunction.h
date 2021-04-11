@@ -12,6 +12,7 @@ class QuadraticFunction {
 
 public:
 
+    // A - симметричная положительно определенная матрица.
     QuadraticFunction(Matrix &A, Vector &b, T c);
 
     T calc(Vector &x);

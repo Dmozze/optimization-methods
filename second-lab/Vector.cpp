@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Vector.h"
 
 Vector::Vector(size_t n) {
@@ -51,6 +52,12 @@ Vector Vector::operator*(Vector::T value) {
         answer[i] = this->operator[](i) * value;
     }
     return Vector(answer);
+}
+
+Vector::T Vector::norma() {
+    Vector this_(v);
+    T square_norma = this_ * this_;
+    return sqrtl(square_norma);
 }
 
 

@@ -74,6 +74,16 @@ Matrix Matrix::operator*(Matrix &matrix1) {
     return Matrix(prod);
 }
 
+Matrix Matrix::transpose() {
+    Matrix_type transposeMatrix(size(), Vector(size()));
+    for (size_t i = 0; i < size(); i++) {
+        for (size_t j = 0; j < size(); j++) {
+            transposeMatrix[i][j] = this->operator[](j)[i];
+        }
+    }
+    return Matrix(transposeMatrix);
+}
+
 
 
 

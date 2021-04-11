@@ -27,5 +27,7 @@ public:
     T operator * (Vector &vector);
 
     Vector operator * (T value);
+
+    T norma();
 };
 
