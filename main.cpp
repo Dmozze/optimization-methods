@@ -185,8 +185,21 @@ void test_main() {
     Matrix M44(m44);
 
     std::cout << "determinant 4x4:\n";
-    std::cout << M44.determinant();
+    std::cout << M44.determinant() << std::endl;
 
+    std::cout << "test positive definite matrix:\n";
+    std::vector<long double> v21 = {2, -1, 0};
+    std::vector<long double> v22 = {-1, 2, -1};
+    std::vector<long double> v23 = {0, -1, 2};
+
+    Vector V21(v21);
+    Vector V22(v22);
+    Vector V23(v23);
+
+    std::vector<Vector> m33 = {V21, V22, V23};
+    Matrix M33(m33);
+
+    std::cout << M33.is_positive_definite_matrix() << '\n';
 }
 
 

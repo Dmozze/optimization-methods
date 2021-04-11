@@ -35,6 +35,13 @@ public:
 
     T determinant();
 
+    // size <= size()!!!!!
+    Matrix angle_matrix(size_t size);
+
+    T main_minor(size_t size);
+
+    bool is_positive_definite_matrix();
+
 };
 
 

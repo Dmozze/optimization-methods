@@ -103,6 +103,31 @@ Matrix::T Matrix::determinant() {
     return d;
 }
 
+Matrix Matrix::angle_matrix(size_t size) {
+    Matrix_type angle(size, Vector(size));
+    for (size_t i = 0; i < size; i++) {
+        for (size_t j = 0; j < size; j++) {
+            angle[i][j] = this->operator[](i)[j];
+        }
+    }
+    return Matrix(angle);
+}
+
+Matrix::T Matrix::main_minor(size_t size) {
+    return angle_matrix(size).determinant();
+}
+
+bool Matrix::is_positive_definite_matrix() {
+    bool f = true;
+    for (size_t i = 0; i < size(); i++) {
+        if (main_minor(i + 1) <= 0.0L) {
+            f = false;
+            break;
+        }
+    }
+    return f;
+}
+
 
 
 
