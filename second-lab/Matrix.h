@@ -33,6 +33,8 @@ public:
 
     Matrix transpose();
 
+    T determinant();
+
 };
 
 

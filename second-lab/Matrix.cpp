@@ -1,8 +1,5 @@
-//
-// Created by andrey on 10.04.2021.
-//
-
 #include "Matrix.h"
+#include <iostream>
 
 Matrix::Matrix(size_t n) {
     matrix.assign(n, Vector(n));
@@ -82,6 +79,28 @@ Matrix Matrix::transpose() {
         }
     }
     return Matrix(transposeMatrix);
+}
+
+
+
+
+Matrix::T Matrix::determinant() {
+    Matrix this_(matrix);
+
+    for (size_t k = 0; k < size() - 1; k++) {
+        for (size_t i = k + 1; i < size(); i++) {
+            T tmp = -this_[i][k] / this_[k][k];
+            for (size_t j = 0; j < size(); j++) {
+                this_[i][j] += this_[k][j] * tmp;
+            }
+        }
+    }
+
+    T d = 1;
+    for (size_t i = 0; i < size(); i++) {
+        d *= this_[i][i];
+    }
+    return d;
 }
 
 

@@ -100,8 +100,7 @@ void first_lab_main() {
 }
 
 
-void second_lab_main() {
-
+void test_main() {
     std::vector<long double> v1 = {1, 2, 3};
     std::vector<long double> v2 = {4, 5, 6};
     std::vector<long double> v3 = {7, 8, 9};
@@ -115,9 +114,13 @@ void second_lab_main() {
     std::vector<long double> v11 = {1, 1, 1};
     std::vector<long double> v12 = {1, 1, 1};
     std::vector<long double> v13 = {1, 1, 1};
+    std::vector<long double> v_pifagor = {3, 4, 0};
+    std::vector<long double> v_good = {1, 1, 1, 1, 1, 1, 1, 1, 1};
     Vector V11(v11);
     Vector V12(v12);
     Vector V13(v13);
+    Vector V_pifagor(v_pifagor);
+    Vector V_good(v_good);
 
     std::vector<Vector> m1 = {V11, V12, V13};
     Matrix M1(m1);
@@ -152,14 +155,48 @@ void second_lab_main() {
     for (size_t i = 0; i < VV.size(); i++) {
         std::cout << VV[i] << '\n';
     }
+    std::cout << "norma VV: " << VV.norma();
     std::cout << '\n';
+    std::cout << "norma V11: " << V11.norma();
+    std::cout << '\n';
+    std::cout << "norma V_pifagor: " << V_pifagor.norma();
+    std::cout << '\n';
+    std::cout << "V_good:\n";
+    for (size_t i = 0; i < V_good.size(); i++) {
+        std::cout << V_good[i] << '\n';
+    }
+    std::cout << "norma V_good: " << V_good.norma() << '\n';
 
+    std::cout << "determinant:\n";
+    std::cout << MM.determinant() << '\n';
+
+    std::vector<long double> v41 = {-2, 3, -5, 4};
+    std::vector<long double> v42 = {1, 0, 2, -  1};
+    std::vector<long double> v43 = {3, -1, 3, 2};
+    std::vector<long double> v44 = {2, 2, 0, -3};
+
+    Vector V41(v41);
+    Vector V42(v42);
+    Vector V43(v43);
+    Vector V44(v44);
+
+    std::vector<Vector> m44 = {V41, V42, V43, V44};
+
+    Matrix M44(m44);
+
+    std::cout << "determinant 4x4:\n";
+    std::cout << M44.determinant();
+
+}
+
+
+void second_lab_main() {
 
 }
 
 int main() {
     //first_lab_main();
-
+    test_main();
     second_lab_main();
     return 0;
 }
