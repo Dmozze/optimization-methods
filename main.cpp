@@ -200,10 +200,20 @@ void test_main() {
     Matrix M33(m33);
 
     std::cout << M33.is_positive_definite_matrix() << '\n';
+
+    std::cout << "difference vectors:\n";
+    Vector vec_prod_3 = V22 * 3;
+    Vector vec_diff = V21 - vec_prod_3;
+    for (size_t i = 0; i < vec_diff.size(); i++) {
+        std::cout << vec_diff[i] << '\n';
+    }
+
 }
 
 
 void second_lab_main() {
+
+
 
 }
 
