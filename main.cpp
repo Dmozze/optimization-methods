@@ -209,7 +209,7 @@ void second_lab_main() {
 
 int main() {
     //first_lab_main();
-    test_main();
+    //test_main();
     second_lab_main();
     return 0;
 }
