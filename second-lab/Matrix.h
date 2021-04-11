@@ -15,6 +15,8 @@ public:
 
     Matrix(Matrix_type &matrix);
 
+    Matrix(std::vector<std::vector<long double>> &matrix_of_vectors);
+
     size_t size();
 
     Vector& operator[](size_t index);

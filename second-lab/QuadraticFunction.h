@@ -26,7 +26,13 @@ public:
 
     Matrix hessian();
 
-    information_methods get_information_about_calculation();
+    Vector get_last_calc_vector();
+
+    T get_last_calc_value();
+
+    Vector get_last_calc_gradient_vector();
+
+    Vector get_last_calc_gradient_value();
 };
 
 

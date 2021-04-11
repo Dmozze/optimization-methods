@@ -29,4 +29,21 @@ information_methods QuadraticFunction::get_information_about_calculation() {
                                value_gradient_history);
 }
 
+Vector QuadraticFunction::get_last_calc_vector() {
+    return calc_history.back();
+}
+
+QuadraticFunction::T QuadraticFunction::get_last_calc_value() {
+    return value_calc_history.back();
+}
+
+Vector QuadraticFunction::get_last_calc_gradient_vector() {
+    return gradient_history.back();
+}
+
+Vector QuadraticFunction::get_last_calc_gradient_value() {
+    return value_gradient_history.back();
+}
+
+
 

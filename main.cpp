@@ -2,6 +2,7 @@
 #include "first-lab/search-metods.h"
 #include "second-lab/Vector.h"
 #include "second-lab/Matrix.h"
+#include "second-lab/QuadraticFunction.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -212,6 +213,37 @@ void test_main() {
 
 
 void second_lab_main() {
+    using T = long double;
+    using type_B = std::vector<T>;
+    using type_A = std::vector<type_B>;
+    type_A a1 = {{64, 63},
+                {63, 64}};
+    type_B b1 = {-10, 30};
+    type_B x0 = {1, 1};
+    T c1 = 13;
+    Matrix A1(a1);
+    Vector B1(b1);
+    Vector X0(x0);
+
+    QuadraticFunction func1(A1, B1, c1);
+
+    T epsilon = 1e-2L;
+
+    gradient_methods gm(epsilon);
+
+    gm.gradient_descent(func1, X0);
+
+    Vector mi = func1.get_last_calc_vector();
+    T miv = func1.get_last_calc_value();
+
+    std::cout << "min vec:\n";
+    for (size_t i = 0; i < mi.size(); i++) {
+        std::cout << mi[i] << '\n';
+    }
+    std::cout << "min value:\n";
+    std::cout << miv << '\n';
+
+
 
 
 

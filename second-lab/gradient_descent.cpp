@@ -1,7 +1,7 @@
 #import "gradient_methods.h"
 
 
-information_methods gradient_methods::gradient_descent(QuadraticFunction &function, Vector &x0) {
+void gradient_methods::gradient_descent(QuadraticFunction &function, Vector &x0) {
     T alpha = 0.01L; //разобраться откуда брать эту константу нормально.
     Vector x = x0;
     T f_x = function.calc(x);
@@ -23,6 +23,5 @@ information_methods gradient_methods::gradient_descent(QuadraticFunction &functi
             alpha /= 2;
         }
     }
-    return function.get_information_about_calculation();
 }
 
