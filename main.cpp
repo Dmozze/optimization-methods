@@ -356,9 +356,31 @@ void first_function_conjugate() {
 
 }
 
+
+void second_function_conjugate() {
+    type_A a = {{2, 0, 0},
+                {0, 20, 0},
+                {0, 0, 6}};
+    type_B b = {23, 17, 1};
+    type_B x0 = {0, 0, 0};
+    T c = 12;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    gradient_methods gm(epsilon);
+    gm.conjugate_gradient(func, X0);
+
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec conjugate:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value conjugate:\n";
+    std::cout << func.get_last_calc_value() << '\n';
+}
+
 void conjugate_gradient() {
     first_function_conjugate();
-
+    second_function_conjugate();
 
 }
 

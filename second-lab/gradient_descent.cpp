@@ -2,6 +2,8 @@
 #include "gradient_methods.h"
 
 
+
+
 void gradient_methods::gradient_descent(QuadraticFunction &function, Vector &x0, T alpha) const {
     Vector x = x0;
     T f_x = function.calc(x);

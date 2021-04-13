@@ -1,3 +1,4 @@
+#include <iostream>
 #include "gradient_methods.h"
 
 void gradient_methods::conjugate_gradient(QuadraticFunction &function, Vector &x0) const {
@@ -13,7 +14,7 @@ void gradient_methods::conjugate_gradient(QuadraticFunction &function, Vector &x
     Vector last_A_pk(x0.size());
     int cnt = 0;
     while (true) {
-
+        cnt++;
         if (gradient0.norma() < epsilon) {
             break;
         }
@@ -38,4 +39,6 @@ void gradient_methods::conjugate_gradient(QuadraticFunction &function, Vector &x
 
         gradient0 = gradient1;
     }
+
+    std::cout << "cnt conjugate: " << cnt << '\n';
 }

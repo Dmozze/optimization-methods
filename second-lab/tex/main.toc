@@ -1,0 +1,2 @@
+\babel@toc {russian}{}
+\contentsline {chapter}{\numberline {1}Методы многомерной оптимизации}{2}{chapter.1}%
