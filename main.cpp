@@ -234,7 +234,7 @@ void first_function() {
 
     gradient_methods gm(epsilon);
 
-    gm.gradient_descent(func1, X0);
+    gm.gradient_descent(func1, X0, 1.0L/128.0L);
 
     Vector mi = func1.get_last_calc_vector();
     T miv = func1.get_last_calc_value();
@@ -258,7 +258,7 @@ void second_function() {
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
     gradient_methods gm(epsilon);
-    gm.gradient_descent(func, X0);
+    gm.gradient_descent(func, X0, 1.0L/11.0L);
 
     std::cout << std::setprecision(11);
     std::cout << "min2 vec:\n";

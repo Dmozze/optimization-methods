@@ -13,7 +13,7 @@ public:
 
     gradient_methods(T epsilon) : epsilon(epsilon) {};
 
-    void gradient_descent(QuadraticFunction &function, Vector &x0) const;
+    void gradient_descent(QuadraticFunction &function, Vector &x0, T alpha) const;
 
     void steepest_descent(QuadraticFunction &function);
 
