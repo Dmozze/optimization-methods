@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <ostream>
 
 
 class Vector {
@@ -29,5 +30,16 @@ public:
     Vector operator * (T value);
 
     T norma();
-};
 
+    friend std::ostream & operator<<(std::ostream &out, Vector vector) {
+        out << '[';
+        for (size_t i = 0; i < vector.size(); i++) {
+            out << vector[i];
+            if (i != vector.size() - 1) {
+                out << ", ";
+            }
+        }
+        out << ']';
+        return out;
+    }
+};

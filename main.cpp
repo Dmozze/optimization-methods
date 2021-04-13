@@ -212,13 +212,16 @@ void test_main() {
 
 }
 
+using T = long double;
+using type_B = std::vector<T>;
+using type_A = std::vector<type_B>;
 
-void second_lab_main() {
-    using T = long double;
-    using type_B = std::vector<T>;
-    using type_A = std::vector<type_B>;
+T epsilon = 1e-5L;
+
+
+void first_function() {
     type_A a1 = {{128, 126},
-                {126, 128}};
+                 {126, 128}};
     type_B b1 = {-10, 30};
     type_B x0 = {1, 1};
     T c1 = 13;
@@ -228,7 +231,6 @@ void second_lab_main() {
 
     QuadraticFunction func1(A1, B1, c1);
 
-    T epsilon = 1e-2L;
 
     gradient_methods gm(epsilon);
 
@@ -237,17 +239,38 @@ void second_lab_main() {
     Vector mi = func1.get_last_calc_vector();
     T miv = func1.get_last_calc_value();
 
-    std::cout << "min vec:\n";
-    for (size_t i = 0; i < mi.size(); i++) {
-        std::cout << mi[i] << '\n';
-    }
-    std::cout << "min value:\n";
+    std::cout << std::setprecision(11);
+    std::cout << "min1 vec:\n";
+    std::cout << mi << '\n';
+    std::cout << "min1 value:\n";
     std::cout << miv << '\n';
+}
 
+void second_function() {
+    type_A a = {{2, 0, 0},
+              {0, 20, 0},
+              {0, 0, 6}};
+    type_B b = {23, 17, 1};
+    type_B x0 = {0, 0, 0};
+    T c = 12;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    gradient_methods gm(epsilon);
+    gm.gradient_descent(func, X0);
 
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value:\n";
+    std::cout << func.get_last_calc_value() << '\n';
 
+}
 
-
+void second_lab_main() {
+    first_function();
+    second_function();
 }
 
 int main() {
