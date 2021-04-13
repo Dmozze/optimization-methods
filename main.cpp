@@ -240,9 +240,9 @@ void first_function() {
     T miv = func1.get_last_calc_value();
 
     std::cout << std::setprecision(11);
-    std::cout << "min1 vec:\n";
+    std::cout << "min1 vec descent:\n";
     std::cout << mi << '\n';
-    std::cout << "min1 value:\n";
+    std::cout << "min1 value descent:\n";
     std::cout << miv << '\n';
 }
 
@@ -261,9 +261,9 @@ void second_function() {
     gm.gradient_descent(func, X0, 1.0L/11.0L);
 
     std::cout << std::setprecision(11);
-    std::cout << "min2 vec:\n";
+    std::cout << "min2 vec descent:\n";
     std::cout << func.get_last_calc_vector() << '\n';
-    std::cout << "min2 value:\n";
+    std::cout << "min2 value descent:\n";
     std::cout << func.get_last_calc_value() << '\n';
 
 }
@@ -289,12 +289,33 @@ void first_function_steepest() {
     T miv = func1.get_last_calc_value();
 
     std::cout << std::setprecision(11);
-    std::cout << "min1 vec:\n";
+    std::cout << "min1 vec steepest:\n";
     std::cout << mi << '\n';
-    std::cout << "min1 value:\n";
+    std::cout << "min1 value steepest:\n";
     std::cout << miv << '\n';
 }
 
+void second_function_steepest() {
+    type_A a = {{2, 0, 0},
+                {0, 20, 0},
+                {0, 0, 6}};
+    type_B b = {23, 17, 1};
+    type_B x0 = {0, 0, 0};
+    T c = 12;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    gradient_methods gm(epsilon);
+    gm.steepest_descent(func, X0, 20.0L);
+
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec steepest:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value steepest:\n";
+    std::cout << func.get_last_calc_value() << '\n';
+
+}
 
 void gradient_descent() {
     first_function();
@@ -303,10 +324,11 @@ void gradient_descent() {
 
 void steepest_descent() {
     first_function_steepest();
+    second_function_steepest();
 }
 
 void second_lab_main() {
-    //gradient_descent();
+    gradient_descent();
     steepest_descent();
 }
 

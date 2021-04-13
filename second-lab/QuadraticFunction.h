@@ -33,6 +33,23 @@ public:
     Vector get_last_calc_gradient_vector();
 
     Vector get_last_calc_gradient_value();
+
+    std::vector<Vector> get_calc_history() {
+        return calc_history;
+    }
+
+    std::vector<Vector> get_gradient_history() {
+        return gradient_history;
+    }
+
+    std::vector<T> get_value_calc_history() {
+        return value_calc_history;
+    }
+
+    std::vector<Vector> get_value_gradient_history() {
+        return value_gradient_history;
+    }
+
 };
 
 

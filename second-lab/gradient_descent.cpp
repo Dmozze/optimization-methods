@@ -1,11 +1,13 @@
 #include <iostream>
-#import "gradient_methods.h"
+#include "gradient_methods.h"
 
 
 void gradient_methods::gradient_descent(QuadraticFunction &function, Vector &x0, T alpha) const {
     Vector x = x0;
     T f_x = function.calc(x);
+    int cnt = 0;
     while (true) {
+        cnt++;
         Vector gradient = function.gradient(x);
         T norma_gradient = gradient.norma();
         std::cout << norma_gradient << ' ';
@@ -26,5 +28,6 @@ void gradient_methods::gradient_descent(QuadraticFunction &function, Vector &x0,
             alpha /= 2;
         }
     }
+    std::cout << "cnt descent: " << cnt << '\n';
 }
 
