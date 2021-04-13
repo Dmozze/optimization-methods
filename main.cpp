@@ -268,9 +268,46 @@ void second_function() {
 
 }
 
-void second_lab_main() {
+void first_function_steepest() {
+    type_A a1 = {{128, 126},
+                 {126, 128}};
+    type_B b1 = {-10, 30};
+    type_B x0 = {1, 1};
+    T c1 = 13;
+    Matrix A1(a1);
+    Vector B1(b1);
+    Vector X0(x0);
+
+    QuadraticFunction func1(A1, B1, c1);
+
+
+    gradient_methods gm(epsilon);
+
+    gm.steepest_descent(func1, x0, 254.0L);
+
+    Vector mi = func1.get_last_calc_vector();
+    T miv = func1.get_last_calc_value();
+
+    std::cout << std::setprecision(11);
+    std::cout << "min1 vec:\n";
+    std::cout << mi << '\n';
+    std::cout << "min1 value:\n";
+    std::cout << miv << '\n';
+}
+
+
+void gradient_descent() {
     first_function();
     second_function();
+}
+
+void steepest_descent() {
+    first_function_steepest();
+}
+
+void second_lab_main() {
+    //gradient_descent();
+    steepest_descent();
 }
 
 int main() {

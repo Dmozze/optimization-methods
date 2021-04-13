@@ -15,7 +15,7 @@ public:
 
     void gradient_descent(QuadraticFunction &function, Vector &x0, T alpha) const;
 
-    void steepest_descent(QuadraticFunction &function);
+    void steepest_descent(QuadraticFunction &function, Vector x0, T L);
 
     void conjugate_gradient(QuadraticFunction &function);
 
