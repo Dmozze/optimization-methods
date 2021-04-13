@@ -327,9 +327,45 @@ void steepest_descent() {
     second_function_steepest();
 }
 
+void first_function_conjugate() {
+    type_A a1 = {{128, 126},
+                 {126, 128}};
+    type_B b1 = {-10, 30};
+    type_B x0 = {1, 1};
+    T c1 = 13;
+    Matrix A1(a1);
+    Vector B1(b1);
+    Vector X0(x0);
+
+    QuadraticFunction func1(A1, B1, c1);
+
+
+    gradient_methods gm(epsilon);
+
+    gm.conjugate_gradient(func1, X0);
+
+    Vector mi = func1.get_last_calc_vector();
+    T miv = func1.get_last_calc_value();
+
+    std::cout << std::setprecision(11);
+    std::cout << "min1 vec conjugate:\n";
+    std::cout << mi << '\n';
+    std::cout << "min1 value conjugate:\n";
+    std::cout << miv << '\n';
+
+
+}
+
+void conjugate_gradient() {
+    first_function_conjugate();
+
+
+}
+
 void second_lab_main() {
-    gradient_descent();
-    steepest_descent();
+    //gradient_descent();
+    //steepest_descent();
+    conjugate_gradient();
 }
 
 int main() {
