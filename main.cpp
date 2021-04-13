@@ -217,8 +217,8 @@ void second_lab_main() {
     using T = long double;
     using type_B = std::vector<T>;
     using type_A = std::vector<type_B>;
-    type_A a1 = {{64, 63},
-                {63, 64}};
+    type_A a1 = {{128, 126},
+                {126, 128}};
     type_B b1 = {-10, 30};
     type_B x0 = {1, 1};
     T c1 = 13;
