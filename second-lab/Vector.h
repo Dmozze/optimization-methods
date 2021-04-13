@@ -13,7 +13,7 @@ public:
 
     Vector(size_t n);
 
-    Vector(Vector_type &vec);
+    Vector(Vector_type vec);
 
     size_t size();
 

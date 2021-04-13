@@ -5,7 +5,7 @@ Vector::Vector(size_t n) {
     v.assign(n, 0.0L);
 }
 
-Vector::Vector(Vector_type &vec) : v(vec) {
+Vector::Vector(Vector_type vec) : v(vec) {
 }
 
 size_t Vector::size() {

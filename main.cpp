@@ -232,7 +232,7 @@ void first_function() {
     QuadraticFunction func1(A1, B1, c1);
 
 
-    gradient_methods gm(epsilon);
+    gradient_methods<QuadraticFunction> gm(epsilon);
 
     gm.gradient_descent(func1, X0, 1.0L/128.0L);
 
@@ -257,7 +257,7 @@ void second_function() {
     Vector B(b);
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
-    gradient_methods gm(epsilon);
+    gradient_methods<QuadraticFunction> gm(epsilon);
     gm.gradient_descent(func, X0, 1.0L/11.0L);
 
     std::cout << std::setprecision(11);
@@ -281,7 +281,7 @@ void first_function_steepest() {
     QuadraticFunction func1(A1, B1, c1);
 
 
-    gradient_methods gm(epsilon);
+    gradient_methods<QuadraticFunction> gm(epsilon);
 
     gm.steepest_descent(func1, x0, 254.0L);
 
@@ -306,7 +306,7 @@ void second_function_steepest() {
     Vector B(b);
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
-    gradient_methods gm(epsilon);
+    gradient_methods<QuadraticFunction> gm(epsilon);
     gm.steepest_descent(func, X0, 20.0L);
 
     std::cout << std::setprecision(11);
@@ -340,7 +340,7 @@ void first_function_conjugate() {
     QuadraticFunction func1(A1, B1, c1);
 
 
-    gradient_methods gm(epsilon);
+    gradient_methods<QuadraticFunction> gm(epsilon);
 
     gm.conjugate_gradient(func1, X0);
 
@@ -368,7 +368,7 @@ void second_function_conjugate() {
     Vector B(b);
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
-    gradient_methods gm(epsilon);
+    gradient_methods<QuadraticFunction> gm(epsilon);
     gm.conjugate_gradient(func, X0);
 
     std::cout << std::setprecision(11);
