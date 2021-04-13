@@ -3,6 +3,7 @@
 #include "second-lab/Vector.h"
 #include "second-lab/Matrix.h"
 #include "second-lab/QuadraticFunction.h"
+#include "second-lab/gradient_methods.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>

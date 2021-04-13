@@ -22,12 +22,6 @@ Matrix QuadraticFunction::hessian() {
     return A;
 }
 
-information_methods QuadraticFunction::get_information_about_calculation() {
-    return information_methods(calc_history,
-                               value_calc_history,
-                               gradient_history,
-                               value_gradient_history);
-}
 
 Vector QuadraticFunction::get_last_calc_vector() {
     return calc_history.back();

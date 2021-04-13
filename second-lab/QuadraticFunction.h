@@ -1,6 +1,6 @@
 #pragma once
 #include "Matrix.h"
-#include "gradient_methods.h"
+
 
 class QuadraticFunction {
 
