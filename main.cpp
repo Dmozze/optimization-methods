@@ -443,7 +443,7 @@ void generate_tables_descent() {
     vpair times_k;
     vpair times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-
+    std::string path = "tex/descent/";
 
     FOR_K_N
             std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
@@ -469,31 +469,32 @@ void generate_tables_descent() {
             Diagonal_Matrix DiagM(Diag);
             DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
-            size_t cnt = gm.gradient_descent(quad, X0, 2.0L/(L + l));
+            size_t cnt = gm.gradient_descent(quad, X0, 2.0L/(l + L));
             times_k.emplace_back(cnt, k);
             times_n.emplace_back(cnt, n);
             input.close();
             std::cout << n << ' ' << k << '\n';
         }
+        std::sort(times_k.begin(), times_k.end());
+        std::ofstream out_k(path + std::to_string(n) + "k" + csv);
+        out_k << "times;k" << std::endl;
+        for (auto [a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
     }
-    std::sort(times_k.begin(), times_k.end());
+
     std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
         return a.second < b.second || a.second == b.second && a.first < b.first;
     });
-    std::string path = "tex/descent/";
-    std::ofstream out_k(path + "k." + csv);
-    std::ofstream out_n(path + "n." + csv);
-    out_k << "times;k" << std::endl;
-    for (auto [a, b] : times_k) {
-        out_k << a << ';' << b << std::endl;
-    }
+
+    std::ofstream out_n(path + "n" + csv);
     out_n << "times;n" << std::endl;
     for (auto [a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
     }
-    out_k.close();
     out_n.close();
-
 };
 
 void generate_tables_steepest() {
@@ -501,7 +502,7 @@ void generate_tables_steepest() {
     vpair times_k;
     vpair times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-
+    std::string path = "tex/steepest/";
 
     FOR_K_N
             std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
@@ -533,23 +534,25 @@ void generate_tables_steepest() {
             input.close();
             std::cout << n << ' ' << k << '\n';
         }
+        std::sort(times_k.begin(), times_k.end());
+        std::ofstream out_k(path + std::to_string(n) + "k" + csv);
+        out_k << "times;k" << std::endl;
+        for (auto [a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
     }
-    std::sort(times_k.begin(), times_k.end());
+
     std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
         return a.second < b.second || a.second == b.second && a.first < b.first;
     });
-    std::string path = "tex/steepest/";
-    std::ofstream out_k(path + "k." + csv);
-    std::ofstream out_n(path + "n." + csv);
-    out_k << "times;k" << std::endl;
-    for (auto [a, b] : times_k) {
-        out_k << a << ';' << b << std::endl;
-    }
+
+    std::ofstream out_n(path + "n" + csv);
     out_n << "times;n" << std::endl;
     for (auto [a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
     }
-    out_k.close();
     out_n.close();
 }
 
@@ -558,7 +561,7 @@ void generate_tables_conjugate() {
     vpair times_k;
     vpair times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-
+    std::string path = "tex/conjugate/";
 
     FOR_K_N
             std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
@@ -590,23 +593,25 @@ void generate_tables_conjugate() {
             input.close();
             std::cout << n << ' ' << k << '\n';
         }
+        std::sort(times_k.begin(), times_k.end());
+        std::ofstream out_k(path + std::to_string(n) + "k" + csv);
+        out_k << "times;k" << std::endl;
+        for (auto [a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
     }
-    std::sort(times_k.begin(), times_k.end());
+
     std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
         return a.second < b.second || a.second == b.second && a.first < b.first;
     });
-    std::string path = "tex/conjugate/";
-    std::ofstream out_k(path + "k." + csv);
-    std::ofstream out_n(path + "n." + csv);
-    out_k << "times;k" << std::endl;
-    for (auto [a, b] : times_k) {
-        out_k << a << ';' << b << std::endl;
-    }
+
+    std::ofstream out_n(path + "n" + csv);
     out_n << "times;n" << std::endl;
     for (auto [a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
     }
-    out_k.close();
     out_n.close();
 }
 
