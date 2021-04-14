@@ -3,13 +3,13 @@
 #include <random>
 #include "GeneratorQuadraticFunction.h"
 
-std::vector<generator_quadratic_functions::T> generator_quadratic_functions::gen_quad(size_t n, T k) {
+std::vector<GeneratorQuadraticFunction::T> GeneratorQuadraticFunction::gen_quad(size_t n, T k) {
     T lower_bound = 1;
     T upper_bound = k;
     std::uniform_real_distribution<T> unif(lower_bound,upper_bound);
     std::default_random_engine re;
     T t = unif(re);
-    T t2 = k / t;
+    T t2 = k * t;
     if (t > t2) {
         std::swap(t, t2);
     }

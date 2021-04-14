@@ -22,6 +22,10 @@ public:
         }
         return ans;
     }
+
+    Vector get_diagonal() {
+        return diagonal;
+    }
 };
 
 

@@ -51,6 +51,14 @@ public:
     std::vector<Vector> get_value_gradient_history() {
         return value_gradient_history;
     }
+
+    Vector get_b() {
+        return b;
+    }
+
+    T get_c() {
+        return c;
+    }
 };
 
 

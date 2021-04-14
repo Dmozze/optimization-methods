@@ -6,6 +6,7 @@
 #include "second-lab/gradient_methods.h"
 #include "second-lab/Diagonal_Matrix.h"
 #include "second-lab/DiagonalQuadraticFunction.h"
+#include "second-lab/GeneratorQuadraticFunction.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -408,11 +409,35 @@ void conjugate_gradient() {
     second_function_conjugate();
 }
 
+const std::string generate_quad_string = "generate_quad";
+void generator_quad() {
+    GeneratorQuadraticFunction gen_quad;
+    for (int n = 10; n < 1e5; n *= 10) {
+        for (int k = 1; k < 2000; k += 64) {
+            std::ofstream out(generate_quad_string + '/' + std::to_string(n) + "_" + std::to_string(k));
+            DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, k);
+            Vector diagonalVec = q.hessian().get_diagonal();
+            Vector b = q.get_b();
+            out << n << ' ' << k << '\n';
+            for (size_t i = 0; i < diagonalVec.size(); i++) {
+                out << diagonalVec[i] << ' ';
+            }
+            out << '\n';
+            for (size_t i = 0; i < b.size(); i++) {
+                out << b[i] << ' ';
+            }
+            out << std::endl;
+
+        }
+    }
+}
+
 void second_lab_main() {
     //gradient_descent();
     //steepest_descent();
-    conjugate_gradient();
-    diagonal_test();
+    //conjugate_gradient();
+    //diagonal_test();
+    generator_quad();
 }
 
 int main() {
