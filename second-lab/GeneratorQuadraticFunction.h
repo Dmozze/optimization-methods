@@ -1,10 +1,17 @@
 #pragma once
 #include "Vector.h"
+#include <random>
 #include "DiagonalQuadraticFunction.h"
 
 class GeneratorQuadraticFunction {
     using T = long double;
+    std::mt19937 generator;
 public:
+    GeneratorQuadraticFunction(){
+        std::random_device rd;
+        std::mt19937 ge(rd());
+        generator = ge;
+    }
     std::vector<T> gen_quad(size_t n, T k);
     Vector generateVector(size_t n) {
         return Vector(gen_quad(n, 1000.0L));
