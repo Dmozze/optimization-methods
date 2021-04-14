@@ -17,7 +17,7 @@ public:
 
     size_t size();
 
-    T& operator[] (size_t &index);
+    T& operator[] (size_t index);
 
     Vector operator + (Vector &vector);
 

@@ -42,6 +42,10 @@ Vector DiagonalQuadraticFunction::get_last_calc_gradient_value() {
     return value_gradient_history.back();
 }
 
+DiagonalQuadraticFunction::T DiagonalQuadraticFunction::calc_without_history(Vector &x) {
+    return ((A * x) * x) / 2 + (b * x) + c;;
+}
+
 
 
 

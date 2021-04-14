@@ -22,6 +22,8 @@ public:
 
     T calc(Vector &x);
 
+    T calc_without_history(Vector &x);
+
     Vector gradient(Vector &x);
 
     Matrix hessian();

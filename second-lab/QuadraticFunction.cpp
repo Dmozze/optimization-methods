@@ -39,5 +39,9 @@ Vector QuadraticFunction::get_last_calc_gradient_value() {
     return value_gradient_history.back();
 }
 
+QuadraticFunction::T QuadraticFunction::calc_without_history(Vector &x) {
+    return ((A * x) * x) / 2 + (b * x) + c;
+}
+
 
 

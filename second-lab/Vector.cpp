@@ -12,7 +12,7 @@ size_t Vector::size() {
     return v.size();
 }
 
-Vector::T& Vector::operator[](size_t &index) {
+Vector::T& Vector::operator[](size_t index) {
     return v[index];
 }
 

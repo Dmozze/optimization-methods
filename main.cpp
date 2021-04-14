@@ -775,6 +775,76 @@ void good_dim_test_conjugate() {
     out_n.close();
 }
 
+void test_draw_1_descent(QuadraticFunction func, Vector X0) {
+
+    gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
+    std::cout << gm.gradient_descent(func, X0, 1.0L/5.0L);
+    std::cout << '\n';
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec descent:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value descent:\n";
+    std::cout << func.get_last_calc_value() << '\n';
+
+    std::ofstream out("test_1_draw/descent" + csv);
+    out << "x;y\n";
+    for (Vector v : func.get_calc_history()) {
+        out << v[0] << ';' << v[1] << '\n';
+    }
+    out.close();
+}
+
+void test_draw_1_steepest(QuadraticFunction func, Vector X0) {
+
+    gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
+    std::cout << gm.steepest_descent(func, X0, 5.0L + sqrtl(10.0L));
+    std::cout << '\n';
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec steepest:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value steepest:\n";
+    std::cout << func.get_last_calc_value() << '\n';
+    std::ofstream out("test_1_draw/steepest" + csv);
+    out << "x;y\n";
+    for (Vector v : func.get_calc_history()) {
+        out << v[0] << ';' << v[1] << '\n';
+    }
+    out.close();
+}
+void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
+
+    gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
+    std::cout << gm.conjugate_gradient(func, X0);
+    std::cout << '\n';
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec conjugate:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value conjugate:\n";
+    std::cout << func.get_last_calc_value() << '\n';
+    std::ofstream out("test_1_draw/conjugate" + csv);
+    out << "x;y\n";
+    for (Vector v : func.get_calc_history()) {
+        out << v[0] << ';' << v[1] << '\n';
+    }
+    out.close();
+}
+
+void test_draw_1() {
+    type_A a = {{2, -1},
+                {-1, 8}};
+
+    type_B b = {2, 1};
+    type_B x0 = {10, 10};
+    T c = 0;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    test_draw_1_descent(func, X0);
+    test_draw_1_steepest(func, X0);
+    test_draw_1_conjugate(func, X0);
+}
+
 void second_lab_main() {
     //gradient_descent();
     //steepest_descent();
@@ -784,10 +854,11 @@ void second_lab_main() {
 //    generate_tables_descent();
 //    generate_tables_steepest();
 //    generate_tables_conjugate();
-    good_dim_generation();
-    good_dim_test_descent();
-    good_dim_test_steepest();
-    good_dim_test_conjugate();
+//    good_dim_generation();
+//    good_dim_test_descent();
+//    good_dim_test_steepest();
+//    good_dim_test_conjugate();
+    test_draw_1();
 }
 
 int main() {

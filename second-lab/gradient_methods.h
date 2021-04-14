@@ -54,13 +54,14 @@ public:
             std::function<T(T)> F = [&](T alpha) {
                 Vector grad_alpha = gradient * alpha;
                 Vector calc_vec = x0 - grad_alpha;
-                return function.calc(calc_vec);
+                return function.calc_without_history(calc_vec);
             };
 
             range rang(0, 2.0L / L);
             information_search informationSearch = searchMethods.combined_brent(F, rang);
             T alpha_min = informationSearch.point;
             Vector gradient_alpha_min = gradient * alpha_min;
+            function.calc(x0);
             x0 = x0 - gradient_alpha_min;
         }
         return cnt;
