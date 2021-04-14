@@ -14,7 +14,8 @@ public:
     }
     std::vector<T> gen_quad(size_t n, T k);
     Vector generateVector(size_t n) {
-        return Vector(gen_quad(n, 1000.0L));
+        std::uniform_real_distribution<T> unif_normal(1.0L,1000.0L);
+        return Vector(gen_quad(n, unif_normal(generator)));
     }
 
     DiagonalQuadraticFunction gen_diag_quad(size_t n, T k) {

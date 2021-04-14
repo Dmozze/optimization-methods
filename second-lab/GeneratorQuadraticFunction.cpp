@@ -2,6 +2,7 @@
 #include <vector>
 #include <random>
 #include <time.h>
+#include <algorithm>
 #include "GeneratorQuadraticFunction.h"
 
 
@@ -21,5 +22,6 @@ std::vector<GeneratorQuadraticFunction::T> GeneratorQuadraticFunction::gen_quad(
     for (size_t i = 2; i < n; i++){
         res.push_back(unif_normal(generator));
     }
+    std::sort(res.begin(), res.end());
     return res;
 }

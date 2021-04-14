@@ -850,15 +850,15 @@ void second_lab_main() {
     //steepest_descent();
     //conjugate_gradient();
     //diagonal_test();
-//    generator_quad();
-//    generate_tables_descent();
-//    generate_tables_steepest();
-//    generate_tables_conjugate();
-//    good_dim_generation();
-//    good_dim_test_descent();
-//    good_dim_test_steepest();
-//    good_dim_test_conjugate();
-    test_draw_1();
+    generator_quad();
+    generate_tables_descent();
+    generate_tables_steepest();
+    generate_tables_conjugate();
+    good_dim_generation();
+    good_dim_test_descent();
+    good_dim_test_steepest();
+    good_dim_test_conjugate();
+    //test_draw_1();
 }
 
 int main() {
