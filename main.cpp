@@ -4,6 +4,8 @@
 #include "second-lab/Matrix.h"
 #include "second-lab/QuadraticFunction.h"
 #include "second-lab/gradient_methods.h"
+#include "second-lab/Diagonal_Matrix.h"
+#include "second-lab/DiagonalQuadraticFunction.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -378,16 +380,39 @@ void second_function_conjugate() {
     std::cout << func.get_last_calc_value() << '\n';
 }
 
+void diagonal_test() {
+    type_B diag = {2, 20, 6};
+    Vector Diag(diag);
+    Diagonal_Matrix A(Diag);
+    type_B b = {23, 17, 1};
+    type_B x0 = {0, 0, 0};
+    T c = 12;
+    Vector B(b);
+    Vector X0(x0);
+    DiagonalQuadraticFunction func(A, B, c);
+    gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
+
+    gm.gradient_descent(func, X0, 1.0L/11.0L);
+    //gm.steepest_descent(func, X0, 20);
+    //gm.conjugate_gradient(func, X0);
+
+    std::cout << std::setprecision(11);
+    std::cout << "min2 vec diag:\n";
+    std::cout << func.get_last_calc_vector() << '\n';
+    std::cout << "min2 value diag:\n";
+    std::cout << func.get_last_calc_value() << '\n';
+}
+
 void conjugate_gradient() {
     first_function_conjugate();
     second_function_conjugate();
-
 }
 
 void second_lab_main() {
     //gradient_descent();
     //steepest_descent();
     conjugate_gradient();
+    diagonal_test();
 }
 
 int main() {

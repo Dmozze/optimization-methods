@@ -1,3 +1,4 @@
+#pragma once
 #include "Vector.h"
 
 class generator_quadratic_functions {
