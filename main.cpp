@@ -409,7 +409,7 @@ void conjugate_gradient() {
     second_function_conjugate();
 }
 
-#define FOR_K_N for (int n = 10; n < 3000; n += 350 + n/200) { for (int k = 1; k < 1500; k += k/5 + 64) {
+#define FOR_K_N for (int n = 10; n < 100000; n *= 10) { for (int k = 1; k < 2000; k += 64) {  if (n == 10000 && k > 1000) break;
 
 const std::string generate_quad_string = "generate_quad";
 void generator_quad() {
@@ -475,7 +475,9 @@ void generate_tables_descent() {
             input.close();
             std::cout << n << ' ' << k << '\n';
         }
-        std::sort(times_k.begin(), times_k.end());
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || a.second == b.second && a.first < b.first;
+        });
         std::ofstream out_k(path + std::to_string(n) + "k" + csv);
         out_k << "times;k" << std::endl;
         for (auto [a, b] : times_k) {
@@ -534,7 +536,9 @@ void generate_tables_steepest() {
             input.close();
             std::cout << n << ' ' << k << '\n';
         }
-        std::sort(times_k.begin(), times_k.end());
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || a.second == b.second && a.first < b.first;
+        });
         std::ofstream out_k(path + std::to_string(n) + "k" + csv);
         out_k << "times;k" << std::endl;
         for (auto [a, b] : times_k) {
@@ -593,7 +597,9 @@ void generate_tables_conjugate() {
             input.close();
             std::cout << n << ' ' << k << '\n';
         }
-        std::sort(times_k.begin(), times_k.end());
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || a.second == b.second && a.first < b.first;
+        });
         std::ofstream out_k(path + std::to_string(n) + "k" + csv);
         out_k << "times;k" << std::endl;
         for (auto [a, b] : times_k) {
@@ -614,6 +620,8 @@ void generate_tables_conjugate() {
     }
     out_n.close();
 }
+
+void good_
 
 void second_lab_main() {
     //gradient_descent();

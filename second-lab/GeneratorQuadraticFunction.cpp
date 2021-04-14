@@ -9,7 +9,7 @@ std::vector<GeneratorQuadraticFunction::T> GeneratorQuadraticFunction::gen_quad(
     T lower_bound = 1;
     T upper_bound = k;
     std::uniform_real_distribution<T> unif(lower_bound,upper_bound);
-    T t = unif(generator);
+    T t = 1; /*unif(generator);*/
     T t2 = k * t;
     if (t > t2) {
         std::swap(t, t2);
