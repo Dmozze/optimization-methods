@@ -443,7 +443,7 @@ void generate_tables_descent() {
     vpair times_k;
     vpair times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    std::string path = "tex/descent/";
+    std::string path_gradient = "tex/descent/";
 
     FOR_K_N
             std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
@@ -478,7 +478,7 @@ void generate_tables_descent() {
         std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
             return a.second < b.second || a.second == b.second && a.first < b.first;
         });
-        std::ofstream out_k(path + std::to_string(n) + "k" + csv);
+        std::ofstream out_k(path_gradient + std::to_string(n) + "k" + csv);
         out_k << "times;k" << std::endl;
         for (auto [a, b] : times_k) {
             out_k << a << ';' << b << std::endl;
@@ -491,7 +491,7 @@ void generate_tables_descent() {
         return a.second < b.second || a.second == b.second && a.first < b.first;
     });
 
-    std::ofstream out_n(path + "n" + csv);
+    std::ofstream out_n(path_gradient + "n" + csv);
     out_n << "times;n" << std::endl;
     for (auto [a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
@@ -621,17 +621,173 @@ void generate_tables_conjugate() {
     out_n.close();
 }
 
-void good_
+void good_dim_generation() {
+
+    GeneratorQuadraticFunction gen_quad;
+    for (int n = 100; n <= 2000; n+=100) {
+        std::ofstream out(generate_quad_string + '/' + std::to_string(n));
+        DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, 100);
+        Vector diagonalVec = q.hessian().get_diagonal();
+        Vector b = q.get_b();
+        // out << n << ' ' << k << '\n';
+        for (size_t i = 0; i < diagonalVec.size(); i++) {
+            out << diagonalVec[i] << ' ';
+        }
+        out << '\n';
+        for (size_t i = 0; i < b.size(); i++) {
+            out << b[i] << ' ';
+        }
+        out << '\n';
+        Vector X0 = gen_quad.generateVector(n);
+        for (size_t i = 0; i < X0.size(); i++) {
+            out << X0[i] << ' ';
+        }
+        out << std::endl;
+        out.close();
+    }
+}
+
+void good_dim_test_descent() {
+    std::vector<std::pair<int, int>> times_n;
+    gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
+    for (int n = 100; n <= 2000; n+=100) {
+        std::ifstream input(generate_quad_string + "/" + std::to_string(n));
+        type_B diag(n);
+        type_B b(n);
+        type_B x0(n);
+        T l = 1e9;
+        T L = -1e9;
+        for (size_t i = 0; i < n; i++) {
+            input >> diag[i];
+            l = std::min(l, diag[i]);
+            L = std::max(L, diag[i]);
+        }
+        for (size_t i = 0; i < n; i++) {
+            input >> b[i];
+        }
+        for (size_t i = 0; i < n; i++) {
+            input >> x0[i];
+        }
+        Vector Diag(diag);
+        Vector B(b);
+        Vector X0(x0);
+        Diagonal_Matrix DiagM(Diag);
+        DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+
+        size_t cnt = gm.gradient_descent(quad, X0, 2.0L/(l + L));
+        times_n.emplace_back(cnt, n);
+        input.close();
+        std::cout << n << '\n';
+    }
+    std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
+        return a.second < b.second || a.second == b.second && a.first < b.first;
+    });
+
+    std::string path_gradient = "tex/descent/";
+    std::ofstream out_n(path_gradient + "n_good" + csv);
+    out_n << "times;n" << std::endl;
+    for (auto [a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
+}
+
+
+void good_dim_test_steepest() {
+    std::vector<std::pair<int, int>> times_n;
+    gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
+    for (int n = 100; n <= 2000; n+=100) {
+        std::ifstream input(generate_quad_string + "/" + std::to_string(n));
+        type_B diag(n);
+        type_B b(n);
+        type_B x0(n);
+        T l = 1e9;
+        T L = -1e9;
+        for (size_t i = 0; i < n; i++) {
+            input >> diag[i];
+            l = std::min(l, diag[i]);
+            L = std::max(L, diag[i]);
+        }
+        for (size_t i = 0; i < n; i++) {
+            input >> b[i];
+        }
+        for (size_t i = 0; i < n; i++) {
+            input >> x0[i];
+        }
+        Vector Diag(diag);
+        Vector B(b);
+        Vector X0(x0);
+        Diagonal_Matrix DiagM(Diag);
+        DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+
+        size_t cnt = gm.steepest_descent(quad, X0, L);
+        times_n.emplace_back(cnt, n);
+        input.close();
+        std::cout << n << '\n';
+    }
+    std::string path_gradient = "tex/steepest/";
+    std::ofstream out_n(path_gradient + "n_good" + csv);
+    out_n << "times;n" << std::endl;
+    for (auto [a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
+}
+
+void good_dim_test_conjugate() {
+    std::vector<std::pair<int, int>> times_n;
+    gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
+    for (int n = 100; n <= 2000; n+=100) {
+        std::ifstream input(generate_quad_string + "/" + std::to_string(n));
+        type_B diag(n);
+        type_B b(n);
+        type_B x0(n);
+        T l = 1e9;
+        T L = -1e9;
+        for (size_t i = 0; i < n; i++) {
+            input >> diag[i];
+            l = std::min(l, diag[i]);
+            L = std::max(L, diag[i]);
+        }
+        for (size_t i = 0; i < n; i++) {
+            input >> b[i];
+        }
+        for (size_t i = 0; i < n; i++) {
+            input >> x0[i];
+        }
+        Vector Diag(diag);
+        Vector B(b);
+        Vector X0(x0);
+        Diagonal_Matrix DiagM(Diag);
+        DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+
+        size_t cnt = gm.conjugate_gradient(quad, X0);
+        times_n.emplace_back(cnt, n);
+        input.close();
+        std::cout << n << '\n';
+    }
+    std::string path_gradient = "tex/conjugate/";
+    std::ofstream out_n(path_gradient + "n_good" + csv);
+    out_n << "times;n" << std::endl;
+    for (auto [a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
+}
 
 void second_lab_main() {
     //gradient_descent();
     //steepest_descent();
     //conjugate_gradient();
     //diagonal_test();
-    generator_quad();
-    generate_tables_descent();
-    generate_tables_steepest();
-    generate_tables_conjugate();
+//    generator_quad();
+//    generate_tables_descent();
+//    generate_tables_steepest();
+//    generate_tables_conjugate();
+    good_dim_generation();
+    good_dim_test_descent();
+    good_dim_test_steepest();
+    good_dim_test_conjugate();
 }
 
 int main() {
