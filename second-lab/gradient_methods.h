@@ -16,18 +16,18 @@ public:
 
     gradient_methods(T epsilon) : epsilon(epsilon) {};
 
-    void gradient_descent(QuadraticFunctionType &function, Vector &x0, T alpha) const {
+    size_t gradient_descent(QuadraticFunctionType &function, Vector &x0, T alpha) const {
         Vector x = x0;
         T f_x = function.calc(x);
-        int cnt = 0;
+        size_t cnt = 0;
         while (true) {
-            cnt++;
             Vector gradient = function.gradient(x);
             T norma_gradient = gradient.norma();
             std::cout << norma_gradient << ' ';
             if (norma_gradient < epsilon) {
                 break;
             }
+            cnt++;
             while (true) {
                 Vector gradient_prod_alpha = gradient * alpha;
                 Vector y = x - gradient_prod_alpha;
@@ -42,18 +42,18 @@ public:
                 alpha /= 2;
             }
         }
-        std::cout << "cnt descent: " << cnt << '\n';
+        return cnt;
     }
 
-    void steepest_descent(QuadraticFunctionType &function, Vector x0, T L) const {
+    size_t steepest_descent(QuadraticFunctionType &function, Vector x0, T L) const {
         search_methods searchMethods(epsilon);
-        int cnt = 0;
+        size_t cnt = 0;
         while (true) {
-            cnt++;
             Vector gradient = function.gradient(x0);
             if (gradient.norma() < epsilon) {
                 break;
             }
+            cnt++;
             std::function<T(T)> F = [&](T alpha) {
                 Vector grad_alpha = gradient * alpha;
                 Vector calc_vec = x0 - grad_alpha;
@@ -66,15 +66,10 @@ public:
             Vector gradient_alpha_min = gradient * alpha_min;
             x0 = x0 - gradient_alpha_min;
         }
-//    std::vector<Vector> calc_history = function.get_calc_history();
-//    std::vector<T> value_history = function.get_value_calc_history();
-//    for (size_t i = 0; i < calc_history.size(); i++) {
-//        std::cout << calc_history[i] << ' ' << value_history[i] << '\n';
-//    }
-        std::cout << "cnt steepest: " << cnt << '\n';
+        return cnt;
     }
 
-    void conjugate_gradient(QuadraticFunctionType &function, Vector &x0) const {
+    size_t conjugate_gradient(QuadraticFunctionType &function, Vector &x0) const {
         std::vector<Vector> p;
         Vector gradient0 = function.gradient(x0);
         p.emplace_back(gradient0 * (-1.0L));
@@ -84,13 +79,12 @@ public:
         function.calc(x.back());
 
         Vector last_A_pk(x0.size());
-        int cnt = 0;
+        size_t cnt = 0;
         while (true) {
-            cnt++;
             if (gradient0.norma() < epsilon) {
                 break;
             }
-
+            cnt++;
             Vector A_pk = function.hessian() * p.back();
             T A_pk_prod_pk = A_pk * p.back();
             T grad_norma_2 = gradient0 * gradient0;
@@ -111,8 +105,7 @@ public:
 
             gradient0 = gradient1;
         }
-
-        std::cout << "cnt conjugate: " << cnt << '\n';
+        return cnt;
     }
 
 };

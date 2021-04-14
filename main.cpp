@@ -418,7 +418,7 @@ void generator_quad() {
             DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, k);
             Vector diagonalVec = q.hessian().get_diagonal();
             Vector b = q.get_b();
-            out << n << ' ' << k << '\n';
+           // out << n << ' ' << k << '\n';
             for (size_t i = 0; i < diagonalVec.size(); i++) {
                 out << diagonalVec[i] << ' ';
             }
@@ -426,11 +426,69 @@ void generator_quad() {
             for (size_t i = 0; i < b.size(); i++) {
                 out << b[i] << ' ';
             }
+            out << '\n';
+            Vector X0 = gen_quad.generateVector(n);
+            for (size_t i = 0; i < X0.size(); i++) {
+                out << X0[i] << ' ';
+            }
             out << std::endl;
-
+            out.close();
         }
     }
 }
+
+void generate_tables_descent() {
+    using vpair = std::vector<std::pair<int, int>>;
+    vpair times_k;
+    vpair times_n;
+    gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
+
+    for (int n = 10; n < 1e5; n *= 10) {
+        for (int k = 1; k < 2000; k += 64) {
+            std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
+            type_B diag(n);
+            type_B b(n);
+            type_B x0;
+            T l = 1e9;
+            T L = -1e9;
+            for (size_t i = 0; i < n; i++) {
+                input >> diag[i];
+                l = std::min(l, diag[i]);
+                L = std::max(L, diag[i]);
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> b[i];
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> x0[i];
+            }
+            Vector Diag(diag);
+            Vector B(b);
+            Vector X0(x0);
+            Diagonal_Matrix DiagM(Diag);
+            DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+
+            size_t cnt = gm.gradient_descent(quad, X0, 2.0L/(L + l));
+            times_k.emplace_back(cnt, k);
+            times_n.emplace_back(cnt, n);
+            input.close();
+        }
+    }
+    std::string path = "tex/descent/";
+    std::ofstream out_k(path + "k." + csv);
+    std::ofstream out_n(path + "n." + csv);
+    out_k << "times;k" << std::endl;
+    for (auto [a, b] : times_k) {
+        out_k << a << ';' << b << std::endl;
+    }
+    out_n << "times;n" << std::endl;
+    for (auto [a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_k.close();
+    out_n.close();
+
+};
 
 void second_lab_main() {
     //gradient_descent();
@@ -438,6 +496,7 @@ void second_lab_main() {
     //conjugate_gradient();
     //diagonal_test();
     generator_quad();
+    //generate_tables_descent();
 }
 
 int main() {

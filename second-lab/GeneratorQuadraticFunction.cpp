@@ -7,7 +7,7 @@ std::vector<GeneratorQuadraticFunction::T> GeneratorQuadraticFunction::gen_quad(
     T lower_bound = 1;
     T upper_bound = k;
     std::uniform_real_distribution<T> unif(lower_bound,upper_bound);
-    std::default_random_engine re;
+    std::default_random_engine re(time(nullptr));
     T t = unif(re);
     T t2 = k * t;
     if (t > t2) {
