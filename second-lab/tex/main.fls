@@ -366,6 +366,10 @@ INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2
 INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/larm1728.tfm
 INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/labx1728.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1440.tfm
+INPUT /usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
+INPUT /usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
+INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/latt1440.tfm
+INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/latt1200.tfm
 INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/larm1200.tfm
 INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/lati1200.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
@@ -401,3 +405,4 @@ INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfcc1440.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb
+INPUT /usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb
