@@ -1,0 +1,246 @@
+\chapter{Методы многомерной оптимизации}
+
+
+\section{Постановка задачи и цель работы}
+
+\begin{enumerate}
+    \item Реализовать алгоритмы:
+    \begin{itemize}
+        \item 	Метод градиентного спуска
+        \item   Метод наискорейшего спуска
+        \item   Метод сопряженных градиентов
+    \end{itemize}
+    Оценить как меняется скорость сходимости, если для поиска величины шага используются
+    различные методы одномерного поиска.
+    \item Проанализировать траектории методов для нескольких квадратичных
+    функций: придумайте две-три квадратичные двумерные функции, на которых
+    работа каждого из методов будет отличаться. Нарисовать графики с линиями
+    уровня функций и траекториями методов.
+    \item Исследовать, как зависит число итераций, необходимое методам для
+    сходимости, от следующих двух параметров:
+    \begin{itemize}
+        \item числа обусловленности $k \geq 1$ оптимизируемой функции
+        \item размерности пространства $n$ оптимизируемых переменных
+    \end{itemize}
+    Сгенерировать от заданных параметров $k$ и $n$ квадратичную задачу размерности $n$ с числом обусловленности
+    $k$ и запустить на ней методы многомерной оптимизации с некоторой заданной точностью. Замерить число итераций $T(n, k)$, которое 
+    потребовалось сделать методу до сходимости.
+\end{enumerate}
+
+
+
+\section{Иллуюстрации работы градиентных методов на двумерных квадратичных функцкиях}
+
+Рассмотрим функцию $f(x, y) = x^2 - xy + 4y^2 + 2x + y$. В матричном виде ее вид 
+$f(x) = 1/2 * (Ax, x) + b * x$, где $A = $
+\begin{pmatrix}
+    2 & -1\\
+    -1 & 8
+\end{pmatrix}
+и $b = $
+\begin{pmatrix}
+    2 \\
+    1
+\end{pmatrix}.
+
+$det(A - \lambda E) = $
+\begin{vmatrix}
+    2 - \lambda & -1\\
+    -1 & 8 - \lambda
+\end{vmatrix}
+$ = (2 - \lambda) * (8 - \lambda) - 1 = 15 - 10 * \lambda + \lambda^2 = (5 + \sqrt{10} - \lambda) * (5 + \sqrt{10} - \lambda)$.
+Собственные значение матрицы $A$ положительны, следовательно квадратичная форма $f$ положительно определенная, а 
+следовательно выпукла вниз. Таким образом к этой квадратчной форме можно применить алгоритмы минимизации.
+Для начала найдем точку минимума функции аналитически.
+
+
+Надем точку, в которой градиент данной функции обращается в ноль. Это и будет точка минимума функции.
+$grad\ f = $
+\begin{pmatrix}
+    2 * x - y + 2 & -x + 8y + 1
+\end{pmatrix}$^T = (0\ 0)^T$
+Решив систему линейных уравнений, получаем $x = -17/15, y = -4/15$ и $min(f(x, y)) = -19/15$
+
+
+\section{Общая схема того, как мы реализовывали алгоритмы}
+
+В начале мы создали классы Matrix, DiagonalMatix и Vector и для них перегрузили операторы $'+'$, $'-'$, $'*'$ и $'[\ ]'$
+ (класс DiagonalMatix появился только под конец, когда мы уже начали тестировать и узнали, что для тестов нужны только 
+ диагональные матрицы и оказалось, что в коде для матриц испльзовался только оператор $'*'$, поэтому мы не стали реализовывать остальные 
+ перегрузки для этого класса).
+
+ Далее мы решили не использовать лямда-функции для задания квадратичных форм, а сделать отдельные классы
+QuadraticFunction и \newline DiagonalQuadraticFunction, в которых храниться матрица $A$, вектор $b$ и число $c$, и просто
+передавать их в качестве параметров в реализуемые алгоритмы, к тому же в классе можно хранить всю историю
+ обращения к функции, что мы и сделали.
+
+Также мы создали класс GeneratorQudraticFunction, который генерировал рандомые вектора по заданной размерности и 
+числу обусловленности.
+
+Точность для алгоритмов мы решили задать всего лишь $0.1$, так как при тестировании не хотелось ждать по 30 минут, пока
+алгоритмы найдут необходимый минимум для всех сгенерированных функций.
+
+
+
+
+
+\section{Метод градиентного спуска}
+
+Заметим, что в методе градиентного спуска константа линейной скорости сходимости не зависит
+от размерности пространства, а только от собственных чисел матрицы квадратичной формы, а следовательно
+для всех размерностей должны получится похожие результаты, что мы как раз таки видим на графике ниже.
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$k$},
+            ylabel = {$times$},
+            height = 0.6\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west}
+        ]
+        
+        \legend{
+            $n = 10$,
+            $n = 10^2$,
+            $n = 10^3$,
+            $n = 10^4$,
+        };
+
+        \addplot table [x={k}, y={times}]
+                  {descent/10k.csv};
+        \addplot table [x={k}, y={times}]
+                  {descent/100k.csv};
+        \addplot table [x={k}, y={times}]
+                  {descent/1000k.csv};
+        \addplot table [x={k}, y={times}]
+                  {descent/10000k.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
+
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$n$},
+            ylabel = {$times$},
+            height = 0.6\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west}
+        ]
+        
+        \addplot table [x={n}, y={times}]
+                      {descent/n_good.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
+
+\section{Метод наискорейшего спуска}
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$k$},
+            ylabel = {$times$},
+            height = 0.6\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west}
+        ]
+        
+        \legend{
+            $n = 10$,
+            $n = 10^2$,
+            $n = 10^3$,
+            $n = 10^4$,
+        };
+
+        \addplot table [x={k}, y={times}]
+                  {steepest/10k.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest/100k.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest/1000k.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest/10000k.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
+
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$n$},
+            ylabel = {$times$},
+            height = 0.6\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west}
+        ]
+        
+        \addplot table [x={n}, y={times}]
+                      {steepest/n_good.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
+
+\section{Метод сопряженных градиентов}
+
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$k$},
+            ylabel = {$times$},
+            height = 0.6\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west}
+        ]
+        
+        \legend{
+            $n = 10$,
+            $n = 10^2$,
+            $n = 10^3$,
+            $n = 10^4$,
+        };
+
+        \addplot table [x={k}, y={times}]
+                  {conjugate/10k.csv};
+        \addplot table [x={k}, y={times}]
+                  {conjugate/100k.csv};
+        \addplot table [x={k}, y={times}]
+                  {conjugate/1000k.csv};
+        \addplot table [x={k}, y={times}]
+                  {conjugate/10000k.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
+
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$n$},
+            ylabel = {$times$},
+            height = 0.6\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west}
+        ]
+        
+        \addplot table [x={n}, y={times}]
+                      {conjugate/n_good.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
