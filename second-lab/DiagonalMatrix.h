@@ -3,13 +3,13 @@
 
 #include "Vector.h"
 
-class Diagonal_Matrix {
+class DiagonalMatrix {
     using T = long double;
     Vector diagonal;
 
 public:
 
-    Diagonal_Matrix(Vector &vec) : diagonal(vec) {}
+    DiagonalMatrix(Vector &vec) : diagonal(vec) {}
 
     size_t size() {
         return diagonal.size();

@@ -21,7 +21,7 @@ public:
     DiagonalQuadraticFunction gen_diag_quad(size_t n, T k) {
         std::vector<T> gen = gen_quad(n, k);
         Vector vec(gen);
-        Diagonal_Matrix diagonalMatrix(vec);
+        DiagonalMatrix diagonalMatrix(vec);
         Vector g = generateVector(n);
         return DiagonalQuadraticFunction(diagonalMatrix, g, 0.0L);
     }

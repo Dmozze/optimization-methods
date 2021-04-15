@@ -4,7 +4,7 @@
 #include "second-lab/Matrix.h"
 #include "second-lab/QuadraticFunction.h"
 #include "second-lab/gradient_methods.h"
-#include "second-lab/Diagonal_Matrix.h"
+#include "second-lab/DiagonalMatrix.h"
 #include "second-lab/DiagonalQuadraticFunction.h"
 #include "second-lab/GeneratorQuadraticFunction.h"
 #include <functional>
@@ -384,7 +384,7 @@ void second_function_conjugate() {
 void diagonal_test() {
     type_B diag = {2, 20, 6};
     Vector Diag(diag);
-    Diagonal_Matrix A(Diag);
+    DiagonalMatrix A(Diag);
     type_B b = {23, 17, 1};
     type_B x0 = {0, 0, 0};
     T c = 12;
@@ -466,7 +466,7 @@ void generate_tables_descent() {
             Vector Diag(diag);
             Vector B(b);
             Vector X0(x0);
-            Diagonal_Matrix DiagM(Diag);
+            DiagonalMatrix DiagM(Diag);
             DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
             size_t cnt = gm.gradient_descent(quad, X0, 2.0L/(l + L));
@@ -527,7 +527,7 @@ void generate_tables_steepest() {
             Vector Diag(diag);
             Vector B(b);
             Vector X0(x0);
-            Diagonal_Matrix DiagM(Diag);
+            DiagonalMatrix DiagM(Diag);
             DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
             size_t cnt = gm.steepest_descent(quad, X0, L);
@@ -588,7 +588,7 @@ void generate_tables_conjugate() {
             Vector Diag(diag);
             Vector B(b);
             Vector X0(x0);
-            Diagonal_Matrix DiagM(Diag);
+            DiagonalMatrix DiagM(Diag);
             DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
             size_t cnt = gm.conjugate_gradient(quad, X0);
@@ -671,7 +671,7 @@ void good_dim_test_descent() {
         Vector Diag(diag);
         Vector B(b);
         Vector X0(x0);
-        Diagonal_Matrix DiagM(Diag);
+        DiagonalMatrix DiagM(Diag);
         DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
         size_t cnt = gm.gradient_descent(quad, X0, 2.0L/(l + L));
@@ -717,7 +717,7 @@ void good_dim_test_steepest() {
         Vector Diag(diag);
         Vector B(b);
         Vector X0(x0);
-        Diagonal_Matrix DiagM(Diag);
+        DiagonalMatrix DiagM(Diag);
         DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
         size_t cnt = gm.steepest_descent(quad, X0, L);
@@ -758,7 +758,7 @@ void good_dim_test_conjugate() {
         Vector Diag(diag);
         Vector B(b);
         Vector X0(x0);
-        Diagonal_Matrix DiagM(Diag);
+        DiagonalMatrix DiagM(Diag);
         DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
         size_t cnt = gm.conjugate_gradient(quad, X0);
@@ -850,15 +850,15 @@ void second_lab_main() {
     //steepest_descent();
     //conjugate_gradient();
     //diagonal_test();
-    generator_quad();
-    generate_tables_descent();
-    generate_tables_steepest();
-    generate_tables_conjugate();
-    good_dim_generation();
-    good_dim_test_descent();
-    good_dim_test_steepest();
-    good_dim_test_conjugate();
-    //test_draw_1();
+//    generator_quad();
+//    generate_tables_descent();
+//    generate_tables_steepest();
+//    generate_tables_conjugate();
+//    good_dim_generation();
+//    good_dim_test_descent();
+//    good_dim_test_steepest();
+//    good_dim_test_conjugate();
+    test_draw_1();
 }
 
 int main() {

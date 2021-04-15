@@ -2,12 +2,12 @@
 
 #include "Vector.h"
 #include "Matrix.h"
-#include "Diagonal_Matrix.h"
+#include "DiagonalMatrix.h"
 
 class DiagonalQuadraticFunction {
 
     using T = long double;
-    Diagonal_Matrix A;
+    DiagonalMatrix A;
     Vector b;
     T c;
     std::vector<Vector> calc_history;
@@ -20,7 +20,7 @@ class DiagonalQuadraticFunction {
 public:
 
     // A - диагональная матрица ввиде вектора
-    DiagonalQuadraticFunction(Diagonal_Matrix &A, Vector &b, T c);
+    DiagonalQuadraticFunction(DiagonalMatrix &A, Vector &b, T c);
 
     T calc(Vector &x);
 
@@ -28,7 +28,7 @@ public:
 
     Vector gradient(Vector &x);
 
-    Diagonal_Matrix hessian();
+    DiagonalMatrix hessian();
 
     Vector get_last_calc_vector();
 

@@ -1,7 +1,7 @@
 #include "DiagonalQuadraticFunction.h"
 
 
-DiagonalQuadraticFunction::DiagonalQuadraticFunction(Diagonal_Matrix &A, Vector &b, DiagonalQuadraticFunction::T c)
+DiagonalQuadraticFunction::DiagonalQuadraticFunction(DiagonalMatrix &A, Vector &b, DiagonalQuadraticFunction::T c)
 :
     A(A),
     b(b),
@@ -22,7 +22,7 @@ Vector DiagonalQuadraticFunction::gradient(Vector &x) {
     return value;
 }
 
-Diagonal_Matrix DiagonalQuadraticFunction::hessian() {
+DiagonalMatrix DiagonalQuadraticFunction::hessian() {
     return A;
 }
 

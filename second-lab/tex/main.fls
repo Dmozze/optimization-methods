@@ -370,10 +370,10 @@ INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/desc
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/descent/100k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/descent/1000k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/descent/10000k.csv
-INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/descent/n_good.csv
 INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/larm1200.tfm
 INPUT /home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/lati1200.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/descent/n_good.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest/10k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest/100k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest/1000k.csv
