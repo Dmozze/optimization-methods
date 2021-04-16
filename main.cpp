@@ -866,7 +866,7 @@ void test_draw_3() {
                 {1, 2}};
 
     type_B b = {1, 1};
-    type_B x0 = {-10, 10};
+    type_B x0 = {13, 1};
     T c = 0;
     Matrix A(a);
     Vector B(b);
