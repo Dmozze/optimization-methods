@@ -787,9 +787,9 @@ void test_draw_1_descent(QuadraticFunction func, Vector X0, T alpha) {
     std::cout << func.get_last_calc_value() << '\n';
 
     std::ofstream out("descent" + csv);
-    out << "x;y;value\n";
+    out << "x;y\n";
     for (Vector v : func.get_calc_history()) {
-        out << v[0] << ';' << v[1] << ';' << func.calc_without_history(v) << '\n';
+        out << v[0] << ';' << v[1] << '\n';
     }
     out.close();
 }
