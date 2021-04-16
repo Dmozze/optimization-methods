@@ -775,10 +775,10 @@ void good_dim_test_conjugate() {
     out_n.close();
 }
 
-void test_draw_1_descent(QuadraticFunction func, Vector X0) {
+void test_draw_1_descent(QuadraticFunction func, Vector X0, T alpha) {
 
     gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
-    std::cout << gm.gradient_descent(func, X0, 1.0L/5.0L);
+    std::cout << gm.gradient_descent(func, X0, alpha);
     std::cout << '\n';
     std::cout << std::setprecision(11);
     std::cout << "min2 vec descent:\n";
@@ -787,17 +787,17 @@ void test_draw_1_descent(QuadraticFunction func, Vector X0) {
     std::cout << func.get_last_calc_value() << '\n';
 
     std::ofstream out("descent" + csv);
-    out << "x;y\n";
+    out << "x;y;value\n";
     for (Vector v : func.get_calc_history()) {
-        out << v[0] << ';' << v[1] << '\n';
+        out << v[0] << ';' << v[1] << ';' << func.calc_without_history(v) << '\n';
     }
     out.close();
 }
 
-void test_draw_1_steepest(QuadraticFunction func, Vector X0) {
+void test_draw_1_steepest(QuadraticFunction func, Vector X0, T L) {
 
     gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
-    std::cout << gm.steepest_descent(func, X0, 5.0L + sqrtl(10.0L));
+    std::cout << gm.steepest_descent(func, X0, L);
     std::cout << '\n';
     std::cout << std::setprecision(11);
     std::cout << "min2 vec steepest:\n";
@@ -840,8 +840,8 @@ void test_draw_1() {
     Vector B(b);
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
-    test_draw_1_descent(func, X0);
-    test_draw_1_steepest(func, X0);
+    test_draw_1_descent(func, X0, 1/13.0L);
+    test_draw_1_steepest(func, X0, 13.0L + sqrtl(109.0L));
     test_draw_1_conjugate(func, X0);
 }
 
