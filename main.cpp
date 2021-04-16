@@ -830,6 +830,38 @@ void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
 }
 
 void test_draw_1() {
+    type_A a = {{2, -1},
+                {-1, 8}};
+
+    type_B b = {2, 1};
+    type_B x0 = {-1, 10};
+    T c = 0;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    test_draw_1_descent(func, X0, 1/5.0L);
+    test_draw_1_steepest(func, X0, 5.0L + sqrtl(101.0L));
+    test_draw_1_conjugate(func, X0);
+}
+
+void test_draw_2() {
+    type_A a = {{16, 10},
+                {10, 10}};
+
+    type_B b = {5, 6};
+    type_B x0 = {-5, 7};
+    T c = 0;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    test_draw_1_descent(func, X0, 1/13.0L);
+    test_draw_1_steepest(func, X0, 13.0L + sqrtl(109.0L));
+    test_draw_1_conjugate(func, X0);
+}
+
+void test_draw_3() {
     type_A a = {{22, 1},
                 {1, 2}};
 
@@ -852,13 +884,15 @@ void second_lab_main() {
     //diagonal_test();
 //    generator_quad();
 //    generate_tables_descent();
-    generate_tables_steepest();
-    generate_tables_conjugate();
-    good_dim_generation();
-    good_dim_test_descent();
-    good_dim_test_steepest();
-    good_dim_test_conjugate();
+//    generate_tables_steepest();
+//    generate_tables_conjugate();
+//    good_dim_generation();
+//    good_dim_test_descent();
+//    good_dim_test_steepest();
+//    good_dim_test_conjugate();
     test_draw_1();
+    test_draw_2();
+    test_draw_3();
 }
 
 int main() {

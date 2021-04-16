@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1618583225 "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.tex" "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.pdf" "main" 1618583225
+["pdflatex"] 1618583756 "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.tex" "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.pdf" "main" 1618583756
   "/etc/texmf/web2c/texmf.cnf" 1614706588 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/labx1440.tfm" 1614712481 3304 6a543c07045572737981351171e0505e ""
   "/home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/labx1728.tfm" 1614712505 3312 d199be9bd555944e2403193d58a0256a ""
@@ -12,7 +12,7 @@
   "/home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/lati1200.tfm" 1614712528 3512 f3a56cfe95a159371df20f73d1eb107d ""
   "/home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/latt1200.tfm" 1618520375 1272 bf3bb5cc29880b269c8bcb412a1ac6e2 ""
   "/home/andrey/.texlive2019/texmf-var/fonts/tfm/lh/lh-t2a/latt1440.tfm" 1618520009 1272 e3abe42d6bdbd8626fffa22fcb43f669 ""
-  "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.aux" 1618583225 8 a94a2480d3289e625eea47cd1b285758 ""
+  "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.aux" 1618583756 8 a94a2480d3289e625eea47cd1b285758 ""
   "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.tex" 1618583220 3595 9733de36e948225ed119a698007f48c8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1440.tfm" 1136768653 1536 3290a75021d32d016616fe527bc9884c ""
@@ -256,7 +256,7 @@
   "descent/100k.csv" 1618578193 317 9c1790bac2f840eddca3436644928d49 ""
   "descent/10k.csv" 1618578181 318 995679f5de139e589449cb156189ed02 ""
   "descent/n_good.csv" 1618579802 179 39ff460a3c42f6b0f8bb3f106dce30c7 ""
-  "lab2.tex" 1618582995 12868 a3998bd4136c0e3ce36991a95a9d7594 ""
+  "lab2.tex" 1618583752 12868 cfb3b45595e3d8bd582741887b30a7e6 ""
   "main.aux" 0 -1 0 "pdflatex"
   "main.out" 0 -1 0 "pdflatex"
   "main.tex" 1618583220 3595 9733de36e948225ed119a698007f48c8 ""
@@ -266,10 +266,10 @@
   "steepest/10k.csv" 1618579135 303 cbda8768f6f45dfdbdc31cfe50bb75b2 ""
   "steepest/n_good.csv" 1618579813 179 db1cd8afbb982c3867fa15a77abfa651 ""
   (generated)
-  "main.toc"
-  "main.aux"
-  "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.pdf"
-  "main.pdf"
-  "main.log"
   "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.log"
+  "main.toc"
+  "main.pdf"
+  "main.aux"
   "main.out"
+  "/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.pdf"
+  "main.log"
