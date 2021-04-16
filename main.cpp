@@ -219,7 +219,7 @@ using T = long double;
 using type_B = std::vector<T>;
 using type_A = std::vector<type_B>;
 
-T epsilon = 1e-1L;
+T epsilon = 1e-2L;
 
 
 void first_function() {
@@ -534,7 +534,7 @@ void generate_tables_steepest() {
             times_k.emplace_back(cnt, k);
             times_n.emplace_back(cnt, n);
             input.close();
-            std::cout << n << ' ' << k << '\n';
+            std::cout << n << ' ' << k << ' ' << cnt << '\n';
         }
         std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
             return a.second < b.second || a.second == b.second && a.first < b.first;
@@ -830,18 +830,18 @@ void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
 }
 
 void test_draw_1() {
-    type_A a = {{16, 10},
-                {10, 10}};
+    type_A a = {{22, 1},
+                {1, 2}};
 
-    type_B b = {5, 6};
-    type_B x0 = {10, -10};
+    type_B b = {1, 1};
+    type_B x0 = {-10, 10};
     T c = 0;
     Matrix A(a);
     Vector B(b);
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
-    test_draw_1_descent(func, X0, 1/13.0L);
-    test_draw_1_steepest(func, X0, 13.0L + sqrtl(109.0L));
+    test_draw_1_descent(func, X0, 1/12.0L);
+    test_draw_1_steepest(func, X0, 12.0L + sqrtl(101.0L));
     test_draw_1_conjugate(func, X0);
 }
 
@@ -852,12 +852,12 @@ void second_lab_main() {
     //diagonal_test();
 //    generator_quad();
 //    generate_tables_descent();
-//    generate_tables_steepest();
-//    generate_tables_conjugate();
-//    good_dim_generation();
-//    good_dim_test_descent();
-//    good_dim_test_steepest();
-//    good_dim_test_conjugate();
+    generate_tables_steepest();
+    generate_tables_conjugate();
+    good_dim_generation();
+    good_dim_test_descent();
+    good_dim_test_steepest();
+    good_dim_test_conjugate();
     test_draw_1();
 }
 

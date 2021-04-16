@@ -20,6 +20,7 @@ public:
         Vector x = x0;
         T f_x = function.calc(x);
         size_t cnt = 0;
+       // alpha = 0.1L;
         while (true) {
             Vector gradient = function.gradient(x);
             T norma_gradient = gradient.norma();
@@ -43,7 +44,7 @@ public:
     }
 
     size_t steepest_descent(QuadraticFunctionType &function, Vector x0, T L) const {
-        search_methods searchMethods(epsilon);
+        search_methods searchMethods(epsilon * epsilon);
         size_t cnt = 0;
         while (true) {
             Vector gradient = function.gradient(x0);
@@ -57,9 +58,13 @@ public:
                 return function.calc_without_history(calc_vec);
             };
 
-            range rang(0, 2.0L / L);
+            range rang(0, 0.1L);
             information_search informationSearch = searchMethods.combined_brent(F, rang);
             T alpha_min = informationSearch.point;
+//            if (cnt % 100 == 0) {
+//                std::cout << "2/L: " << 2.0L/L << " " << "alpha_min: ";
+//                std::cout << alpha_min << " cnt_brent: " << informationSearch.times << '\n';
+//            }
             Vector gradient_alpha_min = gradient * alpha_min;
             function.calc(x0);
             x0 = x0 - gradient_alpha_min;
