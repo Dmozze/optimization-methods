@@ -786,7 +786,7 @@ void test_draw_1_descent(QuadraticFunction func, Vector X0) {
     std::cout << "min2 value descent:\n";
     std::cout << func.get_last_calc_value() << '\n';
 
-    std::ofstream out("test_1_draw/descent" + csv);
+    std::ofstream out("descent" + csv);
     out << "x;y\n";
     for (Vector v : func.get_calc_history()) {
         out << v[0] << ';' << v[1] << '\n';
@@ -804,7 +804,7 @@ void test_draw_1_steepest(QuadraticFunction func, Vector X0) {
     std::cout << func.get_last_calc_vector() << '\n';
     std::cout << "min2 value steepest:\n";
     std::cout << func.get_last_calc_value() << '\n';
-    std::ofstream out("test_1_draw/steepest" + csv);
+    std::ofstream out("steepest" + csv);
     out << "x;y\n";
     for (Vector v : func.get_calc_history()) {
         out << v[0] << ';' << v[1] << '\n';
@@ -821,7 +821,7 @@ void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
     std::cout << func.get_last_calc_vector() << '\n';
     std::cout << "min2 value conjugate:\n";
     std::cout << func.get_last_calc_value() << '\n';
-    std::ofstream out("test_1_draw/conjugate" + csv);
+    std::ofstream out("conjugate" + csv);
     out << "x;y\n";
     for (Vector v : func.get_calc_history()) {
         out << v[0] << ';' << v[1] << '\n';
@@ -830,11 +830,11 @@ void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
 }
 
 void test_draw_1() {
-    type_A a = {{2, -1},
-                {-1, 8}};
+    type_A a = {{16, 10},
+                {10, 10}};
 
-    type_B b = {2, 1};
-    type_B x0 = {10, 10};
+    type_B b = {5, 6};
+    type_B x0 = {10, -10};
     T c = 0;
     Matrix A(a);
     Vector B(b);
