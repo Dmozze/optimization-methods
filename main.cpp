@@ -787,9 +787,9 @@ void test_draw_1_descent(QuadraticFunction func, Vector X0, T alpha) {
     std::cout << func.get_last_calc_value() << '\n';
 
     std::ofstream out("descent" + csv);
-    out << "x;y;value\n";
+    out << "x;y\n";
     for (Vector v : func.get_calc_history()) {
-        out << v[0] << ';' << v[1] << ';' << func.calc_without_history(v) << '\n';
+        out << v[0] << ';' << v[1] << '\n';
     }
     out.close();
 }
@@ -872,8 +872,8 @@ void test_draw_3() {
     Vector B(b);
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
-    test_draw_1_descent(func, X0, 1/12.0L);
-    test_draw_1_steepest(func, X0, 12.0L + sqrtl(101.0L));
+    test_draw_1_descent(func, X0, 1/24.0L);
+    test_draw_1_steepest(func, X0, 24.0L + sqrtl(401.0L));
     test_draw_1_conjugate(func, X0);
 }
 
