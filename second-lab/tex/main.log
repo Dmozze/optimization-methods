@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.3.2)  16 APR 2021 18:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.3.2)  18 APR 2021 16:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -994,25 +994,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--55
 
  []
 
-/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:77: Missing $ inserted.
-<inserted text> 
-                $
-l.77 \begin{pmatrix}
-                    
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:80: Missing $ inserted.
-<inserted text> 
-                $
-l.80 \end{pmatrix}
-                  
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
+<4566.jpg, id=35, 287.57437pt x 205.5178pt>
+File: 4566.jpg Graphic file (type jpg)
+<use 4566.jpg>
+Package pdftex.def Info: 4566.jpg  used on input line 77.
+(pdftex.def)             Requested size: 287.57367pt x 205.5173pt.
+[3]
 /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:82: Missing $ inserted.
 <inserted text> 
                 $
@@ -1025,25 +1012,6 @@ you left one out. Proceed, with fingers crossed.
 <inserted text> 
                 $
 l.85 \end{pmatrix}
-                  .
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:88: Missing $ inserted.
-<inserted text> 
-                $
-l.88 \begin{vmatrix}
-                    
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:91: Missing $ inserted.
-<inserted text> 
-                $
-l.91 \end{vmatrix}
                   
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1051,19 +1019,56 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-[3]
-/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:100: Missing $ inserted.
+/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:87: Missing $ inserted.
 <inserted text> 
                 $
-l.100 \begin{pmatrix}
+l.87 \begin{pmatrix}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:90: Missing $ inserted.
+<inserted text> 
+                $
+l.90 \end{pmatrix}
+                  .
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:93: Missing $ inserted.
+<inserted text> 
+                $
+l.93 \begin{vmatrix}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:96: Missing $ inserted.
+<inserted text> 
+                $
+l.96 \end{vmatrix}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:105: Missing $ inserted.
+<inserted text> 
+                $
+l.105 \begin{pmatrix}
                      
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:102: Missing $ inserted.
+/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/lab2.tex:107: Missing $ inserted.
 <inserted text> 
                 $
-l.102 \end{pmatrix}
+l.107 \end{pmatrix}
                    $^T = (0\ 0)^T$.
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1071,35 +1076,85 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-[4]
+<gradient1.jpg, id=44, 321.2pt x 240.9pt>
+File: gradient1.jpg Graphic file (type jpg)
+<use gradient1.jpg>
+Package pdftex.def Info: gradient1.jpg  used on input line 118.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+[4 </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/4566.jpg>]
+<steepest1.jpg, id=53, 321.2pt x 240.9pt>
+File: steepest1.jpg Graphic file (type jpg)
+<use steepest1.jpg>
+Package pdftex.def Info: steepest1.jpg  used on input line 127.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+<conjugate1.jpg, id=54, 321.2pt x 240.9pt>
+File: conjugate1.jpg Graphic file (type jpg)
+<use conjugate1.jpg>
+Package pdftex.def Info: conjugate1.jpg  used on input line 138.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+ [5 </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/gradient1.jpg> </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest1.jpg>]
+<all1.jpg, id=61, 321.2pt x 240.9pt>
+File: all1.jpg Graphic file (type jpg)
+<use all1.jpg>
+Package pdftex.def Info: all1.jpg  used on input line 147.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+ [6 </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate1.jpg> </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/all1.jpg>]
+<gradient2.jpg, id=68, 321.2pt x 240.9pt>
+File: gradient2.jpg Graphic file (type jpg)
+<use gradient2.jpg>
+Package pdftex.def Info: gradient2.jpg  used on input line 164.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+<steepest2.jpg, id=69, 321.2pt x 240.9pt>
+File: steepest2.jpg Graphic file (type jpg)
+<use steepest2.jpg>
+Package pdftex.def Info: steepest2.jpg  used on input line 175.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+ [7 </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/gradient2.jpg> </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest2.jpg>]
+<conjugate2.jpg, id=76, 321.2pt x 240.9pt>
+File: conjugate2.jpg Graphic file (type jpg)
+<use conjugate2.jpg>
+Package pdftex.def Info: conjugate2.jpg  used on input line 183.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+<all2.jpg, id=77, 321.2pt x 240.9pt>
+File: all2.jpg Graphic file (type jpg)
+<use all2.jpg>
+Package pdftex.def Info: all2.jpg  used on input line 191.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+ [8 </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate2.jpg> </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/all2.jpg>]
+<all3.jpg, id=84, 321.2pt x 240.9pt>
+File: all3.jpg Graphic file (type jpg)
+<use all3.jpg>
+Package pdftex.def Info: all3.jpg  used on input line 229.
+(pdftex.def)             Requested size: 321.19922pt x 240.8994pt.
+ [9 </home/andrey/Documents/Домашки/метопт/123/second-lab/tex/all3.jpg>]
 Missing character: There is no ; in font nullfont!
 PGFPlots: reading {descent/10k.csv}
 PGFPlots: reading {descent/100k.csv}
 PGFPlots: reading {descent/1000k.csv}
 PGFPlots: reading {descent/10000k.csv}
 PGFPlots: reading {descent/n_good.csv}
- [5]
+ [10]
 Missing character: There is no ; in font nullfont!
 PGFPlots: reading {steepest/10k.csv}
 PGFPlots: reading {steepest/100k.csv}
 PGFPlots: reading {steepest/1000k.csv}
 PGFPlots: reading {steepest/10000k.csv}
- [6]
+ [11]
 PGFPlots: reading {steepest/n_good.csv}
- [7]
+ [12]
 Missing character: There is no ; in font nullfont!
 PGFPlots: reading {conjugate/10k.csv}
 PGFPlots: reading {conjugate/100k.csv}
 PGFPlots: reading {conjugate/1000k.csv}
 PGFPlots: reading {conjugate/10000k.csv}
- [8]
+ [13]
 PGFPlots: reading {conjugate/n_good.csv}
- [9])
+ [14])
 
 Package caption Warning: Unused \captionsetup[lstlisting] on input line 17.
 See the caption package documentation for explanation.
 
-[10]
+[15]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 76.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 76.
  (/home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.aux)
@@ -1117,18 +1172,18 @@ Package rerunfilecheck Info: Checksums for `main.out':
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 76.
  ) 
 Here is how much of TeX's memory you used:
- 36021 strings out of 481239
- 803792 string characters out of 5920378
- 1347635 words of memory out of 5000000
- 50630 multiletter control sequences out of 15000+600000
+ 36096 strings out of 481239
+ 804750 string characters out of 5920378
+ 1348635 words of memory out of 5000000
+ 50680 multiletter control sequences out of 15000+600000
  542341 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  76i,17n,105p,997b,2260s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t2a.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.pdf (11 pages, 243058 bytes).
+Output written on /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/main.pdf (16 pages, 551539 bytes).
 PDF statistics:
- 133 PDF objects out of 1000 (max. 8388607)
- 105 compressed objects within 2 object streams
- 25 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 177 PDF objects out of 1000 (max. 8388607)
+ 134 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 63 words of extra memory for PDF output out of 10000 (max. 10000000)
 
