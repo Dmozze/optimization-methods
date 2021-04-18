@@ -20,7 +20,6 @@ public:
         Vector x = x0;
         T f_x = function.calc(x);
         size_t cnt = 0;
-       // alpha = 0.1L;
         while (true) {
             Vector gradient = function.gradient(x);
             T norma_gradient = gradient.norma();
@@ -43,7 +42,8 @@ public:
         return cnt;
     }
 
-    size_t steepest_descent(QuadraticFunctionType &function, Vector x0, T L) const {
+    size_t steepest_descent(QuadraticFunctionType &function, Vector x0) const {
+        // Инициализирую методы одномерной оптимизации
         search_methods searchMethods(epsilon * epsilon);
         size_t cnt = 0;
         while (true) {
@@ -52,6 +52,8 @@ public:
                 break;
             }
             cnt++;
+
+            // Лямбда-функция для одномерной оптимизации
             std::function<T(T)> F = [&](T alpha) {
                 Vector grad_alpha = gradient * alpha;
                 Vector calc_vec = x0 - grad_alpha;
@@ -61,10 +63,6 @@ public:
             range rang(0, 0.1L);
             information_search informationSearch = searchMethods.combined_brent(F, rang);
             T alpha_min = informationSearch.point;
-//            if (cnt % 100 == 0) {
-//                std::cout << "2/L: " << 2.0L/L << " " << "alpha_min: ";
-//                std::cout << alpha_min << " cnt_brent: " << informationSearch.times << '\n';
-//            }
             Vector gradient_alpha_min = gradient * alpha_min;
             function.calc(x0);
             x0 = x0 - gradient_alpha_min;
@@ -95,6 +93,9 @@ public:
 
             Vector alpha_pk = p.back() * alpha_k;
             x.emplace_back(x.back() + alpha_pk);
+
+            //Данное вычисление функции не влияет на ход алгоритма.
+            //Это нужно только для статики.
             function.calc(x.back());
 
             Vector alpha_k_A_pk = A_pk * alpha_k;

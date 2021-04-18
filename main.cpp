@@ -286,7 +286,7 @@ void first_function_steepest() {
 
     gradient_methods<QuadraticFunction> gm(epsilon);
 
-    gm.steepest_descent(func1, x0, 254.0L);
+    gm.steepest_descent(func1, x0);
 
     Vector mi = func1.get_last_calc_vector();
     T miv = func1.get_last_calc_value();
@@ -310,7 +310,7 @@ void second_function_steepest() {
     Vector X0(x0);
     QuadraticFunction func(A, B, c);
     gradient_methods<QuadraticFunction> gm(epsilon);
-    gm.steepest_descent(func, X0, 20.0L);
+    gm.steepest_descent(func, X0);
 
     std::cout << std::setprecision(11);
     std::cout << "min2 vec steepest:\n";
@@ -409,7 +409,7 @@ void conjugate_gradient() {
     second_function_conjugate();
 }
 
-#define FOR_K_N for (int n = 10; n < 100000; n *= 10) { for (int k = 1; k < 2000; k += 64) {  if (n == 10000 && k > 1000) break;
+#define FOR_K_N for (int n = 10; n < 100000; n *= 10) { for (int k = 1; k < 2000; k += 64) {  /*if (n == 10000 && k > 1000) break;*/
 
 const std::string generate_quad_string = "generate_quad";
 void generator_quad() {
@@ -530,7 +530,7 @@ void generate_tables_steepest() {
             DiagonalMatrix DiagM(Diag);
             DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
-            size_t cnt = gm.steepest_descent(quad, X0, L);
+            size_t cnt = gm.steepest_descent(quad, X0);
             times_k.emplace_back(cnt, k);
             times_n.emplace_back(cnt, n);
             input.close();
@@ -624,7 +624,7 @@ void generate_tables_conjugate() {
 void good_dim_generation() {
 
     GeneratorQuadraticFunction gen_quad;
-    for (int n = 100; n <= 2000; n+=100) {
+    for (int n = 100; n <= 10000; n+=100) {
         std::ofstream out(generate_quad_string + '/' + std::to_string(n));
         DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, 100);
         Vector diagonalVec = q.hessian().get_diagonal();
@@ -650,7 +650,7 @@ void good_dim_generation() {
 void good_dim_test_descent() {
     std::vector<std::pair<int, int>> times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    for (int n = 100; n <= 2000; n+=100) {
+    for (int n = 100; n <= 10000; n+=100) {
         std::ifstream input(generate_quad_string + "/" + std::to_string(n));
         type_B diag(n);
         type_B b(n);
@@ -696,7 +696,7 @@ void good_dim_test_descent() {
 void good_dim_test_steepest() {
     std::vector<std::pair<int, int>> times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    for (int n = 100; n <= 2000; n+=100) {
+    for (int n = 100; n <= 10000; n+=100) {
         std::ifstream input(generate_quad_string + "/" + std::to_string(n));
         type_B diag(n);
         type_B b(n);
@@ -720,7 +720,7 @@ void good_dim_test_steepest() {
         DiagonalMatrix DiagM(Diag);
         DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
-        size_t cnt = gm.steepest_descent(quad, X0, L);
+        size_t cnt = gm.steepest_descent(quad, X0);
         times_n.emplace_back(cnt, n);
         input.close();
         std::cout << n << '\n';
@@ -737,7 +737,7 @@ void good_dim_test_steepest() {
 void good_dim_test_conjugate() {
     std::vector<std::pair<int, int>> times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    for (int n = 100; n <= 2000; n+=100) {
+    for (int n = 100; n <= 10000; n+=100) {
         std::ifstream input(generate_quad_string + "/" + std::to_string(n));
         type_B diag(n);
         type_B b(n);
@@ -797,7 +797,7 @@ void test_draw_1_descent(QuadraticFunction func, Vector X0, T alpha) {
 void test_draw_1_steepest(QuadraticFunction func, Vector X0, T L) {
 
     gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
-    std::cout << gm.steepest_descent(func, X0, L);
+    std::cout << gm.steepest_descent(func, X0);
     std::cout << '\n';
     std::cout << std::setprecision(11);
     std::cout << "min2 vec steepest:\n";
@@ -882,14 +882,14 @@ void second_lab_main() {
     //steepest_descent();
     //conjugate_gradient();
     //diagonal_test();
-//    generator_quad();
+ //   generator_quad();
 //    generate_tables_descent();
 //    generate_tables_steepest();
-//    generate_tables_conjugate();
-//    good_dim_generation();
-//    good_dim_test_descent();
-//    good_dim_test_steepest();
-//    good_dim_test_conjugate();
+  //  generate_tables_conjugate();
+    good_dim_generation();
+    good_dim_test_descent();
+    good_dim_test_steepest();
+    good_dim_test_conjugate();
     //test_draw_1();
     //test_draw_2();
     test_draw_3();
