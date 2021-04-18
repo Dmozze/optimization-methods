@@ -787,9 +787,9 @@ void test_draw_1_descent(QuadraticFunction func, Vector X0, T alpha) {
     std::cout << func.get_last_calc_value() << '\n';
 
     std::ofstream out("descent" + csv);
-    out << "x;y\n";
+    out << "x;y;value\n";
     for (Vector v : func.get_calc_history()) {
-        out << v[0] << ';' << v[1] << '\n';
+        out << v[0] << ';' << v[1] << ';' << func.calc_without_history(v) << '\n';
     }
     out.close();
 }
@@ -862,8 +862,8 @@ void test_draw_2() {
 }
 
 void test_draw_3() {
-    type_A a = {{22, 1},
-                {1, 2}};
+    type_A a = {{44, 1},
+                {1, 4}};
 
     type_B b = {1, 1};
     type_B x0 = {13, 1};
@@ -890,8 +890,8 @@ void second_lab_main() {
 //    good_dim_test_descent();
 //    good_dim_test_steepest();
 //    good_dim_test_conjugate();
-    test_draw_1();
-    test_draw_2();
+    //test_draw_1();
+    //test_draw_2();
     test_draw_3();
 }
 
