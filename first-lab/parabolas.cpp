@@ -3,10 +3,13 @@
 
 std::pair<long double, long double>
 find_mid(const std::function<long double(long double)> &func, const range &r, const long double &f_x1,
-         const long double &f_x2) {
+         const long double &f_x2, const long double e) {
     long double mid = 0, f_mid = 0;
     long double left = r.left(), right = r.right();
     while (true) {
+        if (right - left < e) {
+            break;
+        }
         mid = left + (right - left) / 2;
         f_mid = func(mid);
         if (f_mid < f_x2 && f_mid < f_x1) {
@@ -41,7 +44,7 @@ information_search search_methods::parabolas(std::function<long double(long doub
     long double f_x1 = func_cnt(x1);
     long double f_x3 = func_cnt(x3);
     long double x_min = 0, f_min = 0;
-    auto [x2, f_x2] = find_mid(func_cnt, r, f_x1, f_x3);
+    auto [x2, f_x2] = find_mid(func_cnt, r, f_x1, f_x3, epsilon);
     while (true) {
         long double u = calc_u(x1, f_x1, x2, f_x2, x3, f_x3);
         long double f_u = func_cnt(u);
