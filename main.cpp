@@ -409,7 +409,7 @@ void conjugate_gradient() {
     second_function_conjugate();
 }
 
-#define FOR_K_N for (int n = 10; n < 100000; n *= 10) { for (int k = 1; k < 2000; k += 64) {  /*if (n == 10000 && k > 1000) break;*/
+#define FOR_K_N for (int n = 100; n < 1000; n *= 10) { for (int k = 1; k < 2000; k += 64) {  if (n == 10000 && k > 1000) break;
 
 const std::string generate_quad_string = "generate_quad";
 void generator_quad() {
@@ -777,7 +777,7 @@ void good_dim_test_conjugate() {
 
 void test_draw_1_descent(QuadraticFunction func, Vector X0, T alpha) {
 
-    gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
+    gradient_methods<QuadraticFunction> gm(epsilon);
     std::cout << gm.gradient_descent(func, X0, alpha);
     std::cout << '\n';
     std::cout << std::setprecision(11);
@@ -877,6 +877,119 @@ void test_draw_3() {
     test_draw_1_conjugate(func, X0);
 }
 
+
+void test_draw_4() {
+    type_A a = {{2, 0},
+                {0, 500}};
+
+    type_B b = {0, 0};
+    type_B x0 = {1, 0};
+    T c = 0;
+    Matrix A(a);
+    Vector B(b);
+    Vector X0(x0);
+    QuadraticFunction func(A, B, c);
+    test_draw_1_descent(func, X0, 1.0L/2.0L);
+    //test_draw_1_steepest(func, X0, 5.0L + sqrtl(101.0L));
+    //test_draw_1_conjugate(func, X0);
+}
+
+using type_search_method =
+std::function<information_search(std::function<T(T)>&, range)>;
+
+void generate_tables_steepest(const type_search_method& searchMethod, std::string & name_method) {
+    using vpair = std::vector<std::pair<int, int>>;
+    vpair times_k;
+    vpair times_n;
+    gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
+    std::string path = "tex/steepest_diff/";
+
+    FOR_K_N
+            std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
+            type_B diag(n);
+            type_B b(n);
+            type_B x0(n);
+            T l = 1e9;
+            T L = -1e9;
+            for (size_t i = 0; i < n; i++) {
+                input >> diag[i];
+                l = std::min(l, diag[i]);
+                L = std::max(L, diag[i]);
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> b[i];
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> x0[i];
+            }
+            Vector Diag(diag);
+            Vector B(b);
+            Vector X0(x0);
+            DiagonalMatrix DiagM(Diag);
+            DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+
+            size_t cnt = gm.steepest_descent(quad, X0, searchMethod);
+            times_k.emplace_back(cnt, k);
+            if (k == 129) {
+                times_n.emplace_back(cnt, n);
+            }
+            input.close();
+            std::cout << n << ' ' << k << ' ' << cnt << '\n';
+        }
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || a.second == b.second && a.first < b.first;
+        });
+        std::ofstream out_k(path + std::to_string(n) + "k_" + name_method + csv);
+        out_k << "times;k" << std::endl;
+        for (auto [a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
+    }
+
+    std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
+        return a.second < b.second || a.second == b.second && a.first < b.first;
+    });
+
+    std::ofstream out_n(path + "n_" + name_method + csv);
+    out_n << "times;n" << std::endl;
+    for (auto [a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
+}
+
+
+
+
+void steepest_different() {
+    search_methods searchMethods(epsilon * epsilon);
+    std::vector<std::pair<type_search_method, std::string>> methods;
+//    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
+//        return searchMethods.dichotomy(function1, std::move(r));
+//    }, "dichotomy");
+//    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
+//        return searchMethods.golden_ratio(function1, std::move(r));
+//    }, "golden_ratio");
+//    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
+//        return searchMethods.fibonacci(function1, std::move(r));
+//    }, "fibonacci");
+    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
+        return searchMethods.parabolas(function1, std::move(r));
+    }, "parabolas");
+//    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
+//        return searchMethods.combined_brent(function1, std::move(r));
+//    }, "combined_brent");
+
+    for (auto [method, name_method] : methods) {
+        generate_tables_steepest(method, name_method);
+    }
+
+
+}
+
+
 void second_lab_main() {
     //gradient_descent();
     //steepest_descent();
@@ -886,13 +999,15 @@ void second_lab_main() {
 //    generate_tables_descent();
 //    generate_tables_steepest();
   //  generate_tables_conjugate();
-    good_dim_generation();
-    good_dim_test_descent();
-    good_dim_test_steepest();
-    good_dim_test_conjugate();
+    //good_dim_generation();
+    //good_dim_test_descent();
+    //good_dim_test_steepest();
+    //good_dim_test_conjugate();
     //test_draw_1();
     //test_draw_2();
-    test_draw_3();
+   // test_draw_3();
+    //test_draw_4();
+    steepest_different();
 }
 
 int main() {

@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 #include <vector>
 #include <iostream>
 #include "Vector.h"
@@ -42,9 +43,10 @@ public:
         return cnt;
     }
 
-    size_t steepest_descent(QuadraticFunctionType &function, Vector x0) const {
-        // Инициализирую методы одномерной оптимизации
-        search_methods searchMethods(epsilon * epsilon);
+    using type_search_method =
+            std::function<information_search(std::function<T(T)>&, range)>;
+
+    size_t steepest_descent(QuadraticFunctionType &function, Vector x0, const type_search_method& searchMethod) const {
         size_t cnt = 0;
         while (true) {
             Vector gradient = function.gradient(x0);
@@ -61,13 +63,22 @@ public:
             };
 
             range rang(0, 0.1L);
-            information_search informationSearch = searchMethods.combined_brent(F, rang);
+            information_search informationSearch = searchMethod(F, rang);
             T alpha_min = informationSearch.point;
             Vector gradient_alpha_min = gradient * alpha_min;
             function.calc(x0);
             x0 = x0 - gradient_alpha_min;
         }
         return cnt;
+    }
+
+    size_t steepest_descent(QuadraticFunctionType &function, Vector x0) const {
+        // Инициализирую методы одномерной оптимизации
+        search_methods searchMethods(epsilon * epsilon);
+        type_search_method combined_brent_method = [&] (std::function<T(T)> &function1, range r) {
+            return searchMethods.combined_brent(function1, std::move(r));
+        };
+        return steepest_descent(function, x0, combined_brent_method);
     }
 
     size_t conjugate_gradient(QuadraticFunctionType &function, Vector &x0) const {
