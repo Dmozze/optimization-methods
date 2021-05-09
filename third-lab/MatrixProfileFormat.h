@@ -4,13 +4,14 @@
 
 class MatrixProfileFormat {
 
+protected:
     using T = long double;
     using AL = std::vector<T>;
     using AU = AL;
     using Profile = std::vector<int>;
     using Diag = AL;
 
-
+private:
     AL al{};
     AU au{};
     Profile profile{};
@@ -18,7 +19,8 @@ class MatrixProfileFormat {
 
     T zero = 0.0L;
 
-    MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL &al_or_au);
+    template<typename AL_OR_AU>
+    MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au);
 
     template<typename Type>
     Type mul_vec(Type &vec, T value) {
@@ -47,6 +49,7 @@ public:
     MatrixProfileFormat operator * (T value);
 
     Vector operator * (Vector &vector);
+
 
 
 };

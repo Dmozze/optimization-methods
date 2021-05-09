@@ -13,8 +13,8 @@ size_t MatrixProfileFormat::dim() {
     return profile.size();
 }
 
-
-MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j, AL &al_or_au) {
+template<typename AL_OR_AU>
+MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au) {
     int number_el = profile[i] - profile[i - 1];
     int number_zero = (int)i - 1 - number_el;
     if (number_zero < j ) {
@@ -43,6 +43,8 @@ MatrixProfileFormat MatrixProfileFormat::operator*(MatrixProfileFormat::T value)
                                mul_vec(this->diag, value),
                                this->profile);
 }
+
+
 
 
 
