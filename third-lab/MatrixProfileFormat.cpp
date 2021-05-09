@@ -3,7 +3,7 @@
 #include <utility>
 #include <cassert>
 
-MatrixProfileFormat::MatrixProfileFormat(AL al, AU au, Profile profile, Diag diag) :
+MatrixProfileFormat::MatrixProfileFormat(AL al, AU au, Diag diag, Profile profile) :
                                          al(std::move(al)),
                                          au(std::move(au)),
                                          profile(std::move(profile)),
@@ -13,9 +13,6 @@ size_t MatrixProfileFormat::dim() {
     return profile.size();
 }
 
-MatrixProfileFormat::T get_el_in_matrix() {
-
-}
 
 MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j, AL &al_or_au) {
     int number_el = profile[i] - profile[i - 1];
@@ -36,6 +33,15 @@ MatrixProfileFormat::T MatrixProfileFormat::operator()(size_t i, size_t j) {
     } else {
         return diag[i];
     }
+}
+
+
+
+MatrixProfileFormat MatrixProfileFormat::operator*(MatrixProfileFormat::T value) {
+    return MatrixProfileFormat(mul_vec(this->al, value),
+                               mul_vec(this->au, value),
+                               mul_vec(this->diag, value),
+                               this->profile);
 }
 
 

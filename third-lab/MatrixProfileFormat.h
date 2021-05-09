@@ -20,10 +20,19 @@ class MatrixProfileFormat {
 
     MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL &al_or_au);
 
+    template<typename Type>
+    Type mul_vec(Type &vec, T value) {
+        Type newVec = vec;
+        for (auto &i : newVec) {
+            i *= value;
+        }
+        return newVec;
+    }
+
 public:
 
 
-    MatrixProfileFormat(AL al, AU au, Profile profile, Diag diag);
+    MatrixProfileFormat(AL al, AU au, Diag diag, Profile profile);
 
     size_t dim();
 
