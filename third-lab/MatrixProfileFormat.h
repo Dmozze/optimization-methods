@@ -8,19 +8,26 @@ class MatrixProfileFormat {
     using AL = std::vector<T>;
     using AU = AL;
     using Profile = std::vector<int>;
+    using Diag = AL;
+
 
     AL al{};
     AU au{};
     Profile profile{};
+    Diag diag;
+
+    T zero = 0.0L;
+
+    MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL &al_or_au);
 
 public:
 
 
-    MatrixProfileFormat(AL al, AU au, Profile profile);
+    MatrixProfileFormat(AL al, AU au, Profile profile, Diag diag);
 
     size_t dim();
 
-    T& operator ()(size_t i, size_t j);
+    T operator ()(size_t i, size_t j);
 
     MatrixProfileFormat operator + (MatrixProfileFormat &a);
 
