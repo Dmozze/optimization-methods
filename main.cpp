@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <vector>
 #include <fstream>
+#include <cassert>
 
 void print(const std::string& s, information_search& inf, std::function<long double(long double)>& func) {
     std::ofstream out(s);
@@ -998,11 +999,35 @@ void second_lab_main() {
 void third_lab_main() {
 }
 
-void third_lab_test_gauss() {
-    auto a = Matrix({{2, -1}, {2, 1}});
-    auto b = Vector{{-5, -7}};
+void gauss_one_dim_test() {
+    auto a = Matrix({std::vector<long double>{2}});
+    auto b = Vector{std::vector<long double>{-5.0}};
     auto x = GaussSolve(a, b);
-    std::cout << x << std::endl;
+    std::cout << "Expected: [-2.5], Got: " << x << std::endl;
+    assert(x.size() == a.size());
+}
+
+void gauss_second_dim_test() {
+    auto x = GaussSolve({{{1, -1}, {2, 1}}},
+                        {{-5, -7}});
+    std::cout << "Expected: [-4, 1], Got: " << x << std::endl;
+    assert(x.size() == 2);
+}
+
+void gauss_third_dim_test() {
+    auto x = GaussSolve({{{1, 2, 3}, {2, -1, 2}, {1, 1, 5}}},
+                        {{1, 6, -1}});
+    std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
+    assert(x.size() == 3);
+}
+
+void third_lab_test_gauss() {
+    gauss_one_dim_test();
+    gauss_second_dim_test();
+    gauss_third_dim_test();
+    // todo: выбор элемента - нули?
+    //      n == m всегда?
+    //      неоднозначное решение - что делать?
 }
 
 int main() {
