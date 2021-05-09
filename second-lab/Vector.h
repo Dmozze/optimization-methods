@@ -2,7 +2,6 @@
 #include <vector>
 #include <ostream>
 
-
 class Vector {
     using T = long double;
     using Vector_type = std::vector<T>;
@@ -10,28 +9,27 @@ class Vector {
     Vector_type v;
 
 public:
-
     Vector(size_t n);
 
     Vector(Vector_type vec);
 
     size_t size();
 
-    T& operator[] (size_t index);
+    T& operator[](size_t index);
 
-    Vector operator + (Vector &vector);
+    Vector operator+(Vector& vector);
 
-    Vector operator - ();
+    Vector operator-();
 
-    Vector operator - (Vector &vector);
+    Vector operator-(Vector& vector);
 
-    T operator * (Vector &vector);
+    T operator*(Vector& vector);
 
-    Vector operator * (T value);
+    Vector operator*(T value);
 
     T norma();
 
-    friend std::ostream & operator<<(std::ostream &out, Vector vector) {
+    friend std::ostream& operator<<(std::ostream& out, Vector vector) {
         out << '[';
         for (size_t i = 0; i < vector.size(); i++) {
             out << vector[i];
