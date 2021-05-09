@@ -74,12 +74,11 @@ struct information_search {
 };
 
 class search_methods {
-    std::vector<long double> f;
-    const size_t number_fib = 90;
+    static constexpr size_t number_fib = 90;
+    const long double golden_const = 0.5 * (sqrtl(5) - 1);
 
     long double epsilon;
-
-    const long double golden_const = 0.5 * (sqrtl(5) - 1);
+    std::vector<long double> f;
 
     long double F(size_t n);
 
@@ -95,7 +94,7 @@ public:
         , f() {
         f.push_back(1.);
         f.push_back(1.);
-        for (int i = 0; i < number_fib; i++) {
+        for (size_t i = 0; i < number_fib; i++) {
             f.push_back(f.back() + f[f.size() - 2]);
         }
     }

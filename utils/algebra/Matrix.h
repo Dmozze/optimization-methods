@@ -13,7 +13,7 @@ public:
 
     Matrix(Matrix_type& matrix);
 
-    Matrix(std::vector<std::vector<long double>>& matrix_of_vectors);
+    Matrix(std::vector<std::vector<long double>> matrix_of_vectors);
 
     size_t size();
 

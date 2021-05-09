@@ -126,8 +126,8 @@ bool Matrix::is_positive_definite_matrix() {
     return f;
 }
 
-Matrix::Matrix(std::vector<std::vector<long double>>& matrix_of_vectors) {
-    for (std::vector<long double>& vec : matrix_of_vectors) {
-        matrix.emplace_back(vec);
+Matrix::Matrix(std::vector<std::vector<long double>> matrix_of_vectors) {
+    for (auto&& vec : matrix_of_vectors) {
+        matrix.emplace_back(std::move(vec));
     }
 }

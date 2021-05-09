@@ -7,6 +7,7 @@
 #include "second-lab/DiagonalMatrix.h"
 #include "second-lab/DiagonalQuadraticFunction.h"
 #include "second-lab/GeneratorQuadraticFunction.h"
+#include "third-lab/GaussSolver.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -398,10 +399,10 @@ void conjugate_gradient() {
     second_function_conjugate();
 }
 
-#define FOR_K_N                              \
-    for (int n = 100; n < 1000; n *= 10) {   \
-        for (int k = 1; k < 2000; k += 64) { \
-            if (n == 10000 && k > 1000)      \
+#define FOR_K_N                                 \
+    for (size_t n = 100; n < 1000; n *= 10) {   \
+        for (size_t k = 1; k < 2000; k += 64) { \
+            if (n == 10000 && k > 1000)         \
                 break;
 
 const std::string generate_quad_string = "generate_quad";
@@ -469,7 +470,7 @@ void generate_tables_descent() {
     std::cout << n << ' ' << k << '\n';
 }
 std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 std::ofstream out_k(path_gradient + std::to_string(n) + "k" + csv);
 out_k << "times;k" << std::endl;
@@ -481,7 +482,7 @@ times_k.clear();
 }
 
 std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 
 std::ofstream out_n(path_gradient + "n" + csv);
@@ -491,7 +492,6 @@ for (auto [a, b] : times_n) {
 }
 out_n.close();
 }
-;
 
 void generate_tables_steepest() {
     using vpair = std::vector<std::pair<int, int>>;
@@ -531,7 +531,7 @@ void generate_tables_steepest() {
     std::cout << n << ' ' << k << ' ' << cnt << '\n';
 }
 std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 std::ofstream out_k(path + std::to_string(n) + "k" + csv);
 out_k << "times;k" << std::endl;
@@ -543,7 +543,7 @@ times_k.clear();
 }
 
 std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 
 std::ofstream out_n(path + "n" + csv);
@@ -592,7 +592,7 @@ void generate_tables_conjugate() {
     std::cout << n << ' ' << k << '\n';
 }
 std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 std::ofstream out_k(path + std::to_string(n) + "k" + csv);
 out_k << "times;k" << std::endl;
@@ -604,7 +604,7 @@ times_k.clear();
 }
 
 std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 
 std::ofstream out_n(path + "n" + csv);
@@ -617,7 +617,7 @@ out_n.close();
 
 void good_dim_generation() {
     GeneratorQuadraticFunction gen_quad;
-    for (int n = 100; n <= 10000; n += 100) {
+    for (size_t n = 100; n <= 10000; n += 100) {
         std::ofstream out(generate_quad_string + '/' + std::to_string(n));
         DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, 100);
         Vector diagonalVec = q.hessian().get_diagonal();
@@ -643,7 +643,7 @@ void good_dim_generation() {
 void good_dim_test_descent() {
     std::vector<std::pair<int, int>> times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    for (int n = 100; n <= 10000; n += 100) {
+    for (size_t n = 100; n <= 10000; n += 100) {
         std::ifstream input(generate_quad_string + "/" + std::to_string(n));
         type_B diag(n);
         type_B b(n);
@@ -673,7 +673,7 @@ void good_dim_test_descent() {
         std::cout << n << '\n';
     }
     std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-        return a.second < b.second || a.second == b.second && a.first < b.first;
+        return a.second < b.second || (a.second == b.second && a.first < b.first);
     });
 
     std::string path_gradient = "tex/descent/";
@@ -688,7 +688,7 @@ void good_dim_test_descent() {
 void good_dim_test_steepest() {
     std::vector<std::pair<int, int>> times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    for (int n = 100; n <= 10000; n += 100) {
+    for (size_t n = 100; n <= 10000; n += 100) {
         std::ifstream input(generate_quad_string + "/" + std::to_string(n));
         type_B diag(n);
         type_B b(n);
@@ -729,7 +729,7 @@ void good_dim_test_steepest() {
 void good_dim_test_conjugate() {
     std::vector<std::pair<int, int>> times_n;
     gradient_methods<DiagonalQuadraticFunction> gm(epsilon);
-    for (int n = 100; n <= 10000; n += 100) {
+    for (size_t n = 100; n <= 10000; n += 100) {
         std::ifstream input(generate_quad_string + "/" + std::to_string(n));
         type_B diag(n);
         type_B b(n);
@@ -924,9 +924,11 @@ void generate_tables_steepest(const type_search_method& searchMethod, std::strin
     input.close();
     std::cout << n << ' ' << k << ' ' << cnt << '\n';
 }
+
 std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
+
 std::ofstream out_k(path + std::to_string(n) + "k_" + name_method + csv);
 out_k << "times;k" << std::endl;
 for (auto [a, b] : times_k) {
@@ -937,7 +939,7 @@ times_k.clear();
 }
 
 std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || a.second == b.second && a.first < b.first;
+    return a.second < b.second || (a.second == b.second && a.first < b.first);
 });
 
 std::ofstream out_n(path + "n_" + name_method + csv);
@@ -996,9 +998,17 @@ void second_lab_main() {
 void third_lab_main() {
 }
 
+void third_lab_test_gauss() {
+    auto a = Matrix({{2, -1}, {2, 1}});
+    auto b = Vector{{-5, -7}};
+    auto x = GaussSolve(a, b);
+    std::cout << x << std::endl;
+}
+
 int main() {
     //first_lab_main();
     //test_main();
     //second_lab_main();
+    third_lab_test_gauss();
     return 0;
 }

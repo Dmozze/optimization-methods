@@ -1,4 +1,5 @@
 #include <cmath>
+#include <utility>
 #include "Vector.h"
 
 Vector::Vector(size_t n) {
@@ -6,7 +7,7 @@ Vector::Vector(size_t n) {
 }
 
 Vector::Vector(Vector_type vec)
-    : v(vec) {
+    : v(std::move(vec)) {
 }
 
 size_t Vector::size() {

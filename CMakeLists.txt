@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
 project(optimization_methods)
 
+if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -flto")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG -fsanitize=address,undefined,leak")
+endif ()
+
 set(CMAKE_CXX_STANDARD 17)
 include_directories(utils)
 add_executable(optimization_methods main.cpp
@@ -14,4 +20,5 @@ add_executable(optimization_methods main.cpp
         second-lab/conjugate_gradient.cpp second-lab/GeneratorQuadraticFunction.cpp
         second-lab/DiagonalQuadraticFunction.cpp
         second-lab/DiagonalMatrix.cpp
-        third-lab/MatrixProfileFormat.cpp third-lab/LUMatrix.cpp)
+        third-lab/MatrixProfileFormat.cpp third-lab/LUMatrix.cpp
+        )
