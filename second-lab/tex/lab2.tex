@@ -74,7 +74,7 @@ $n = 10^4$ пришлось ограничится числом обусловл
  отрисовывание векторов и кривых уровня делалось только для первых 15 входных точек.
 
 \newpage
-\section{Иллуюстрации работы градиентных методов на двумерных квадратичных функцкиях}
+\section{Иллюстрации работы градиентных методов на двумерных квадратичных функцкиях}
 
 % Для отрисовки некоторых функций нам пришлось ограничить число итераций, так как 
 % в некоторых случаях были большие нагромождения. Например так
@@ -220,12 +220,26 @@ $$x_m = -\frac{3}{175},\ y_m = -\frac{43}{175},\ f(x_m, y_m) = -\frac{23}{175}$$
     
     \includegraphics{steepest3.jpg}
 
+    Также покажем другое поведение этого метода выбрав больший промежуток одномерного поиска.
+    Изменили его с промежутка $[0, 0.1]$ до промежутка $[0, 10]$.
+    И при этом произошло всего 5 итераций.
+
+    \includegraphics{steepest2_another.jpg}    
+
+    Картинка не очень наглядная, даже если увеличить масштаб, поэтому просто предоставлю таблицу
+    с последовательностью точек сходимости.
+
+    \resizebox{3.9cm}{!}{
+    \csvautotabular[separator=semicolon]{steepest.csv}
+    }
+
     \item Метод сопряженных градиентов
     
     Аналогично предыдущим методам 2 итреции.
     Найденная точка минимума $x_m = [-0.017142857143, -0.24571428571]$.
 
     \includegraphics{conjugate3.jpg}
+
 
 \end{enumerate}
 
@@ -358,7 +372,7 @@ $$x_m = -\frac{3}{175},\ y_m = -\frac{43}{175},\ f(x_m, y_m) = -\frac{23}{175}$$
             table/col sep = semicolon,
             xlabel = {$n$},
             ylabel = {$times$},
-            height = 0.45\paperheight,
+            height = 0.3\paperheight,
             width = 0.8\paperwidth,
             /pgf/number format/1000 sep={},
             legend pos={north west},
@@ -371,6 +385,48 @@ $$x_m = -\frac{3}{175},\ y_m = -\frac{43}{175},\ f(x_m, y_m) = -\frac{23}{175}$$
     \end{tikzpicture}
 \end{flushleft}
 
+
+Как мы выяснили, от размерности не зависит число итераций. Теперь выясним, измениться ли число итераций, если 
+использовать разные методы одномерной оптимизации, а не только метод Брента. Для этого зафиксировали 
+$n = 100$ и запустили метод наискорейшего спуска с каждым методом одномерной оптимизации
+с числом обусловленности от $k = 1$ до $k = 1985$ с шагом $64$. И как мы видим ниже от выбора 
+одномерной оптимизации ничего не зависит, что очевидно, так как любой метод одномерного поиска это лишь
+интерфейс, который находит минимум, и не важно как он устроен внутри.
+
+\begin{flushleft}
+    \begin{tikzpicture}
+        \begin{axis}[
+            table/col sep = semicolon,
+            xlabel = {$k$},
+            ylabel = {$times$},
+            height = 0.3\paperheight,
+            width = 0.8\paperwidth,
+            /pgf/number format/1000 sep={},
+            legend pos={north west},
+            grid=major,
+        ]
+        
+        \legend{
+            $dichotomy$,
+            $golden$,
+            $fibonacci$,
+            $parabola$,
+            $brent$
+        };
+
+        \addplot table [x={k}, y={times}]
+                  {steepest_diff/100k_dichotomy.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest_diff/100k_golden_ratio.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest_diff/100k_fibonacci.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest_diff/100k_parabolas.csv};
+        \addplot table [x={k}, y={times}]
+                  {steepest_diff/100k_combined_brent.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{flushleft}
 
 \newpage
 \section{Метод сопряженных градиентов}

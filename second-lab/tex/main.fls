@@ -413,6 +413,11 @@ INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/stee
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest3.jpg
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest3.jpg
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest3.jpg
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest2_another.jpg
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest2_another.jpg
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest2_another.jpg
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest2_another.jpg
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate3.jpg
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate3.jpg
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate3.jpg
@@ -431,6 +436,11 @@ INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/stee
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest/1000k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest/10000k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest/n_good.csv
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest_diff/100k_dichotomy.csv
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest_diff/100k_golden_ratio.csv
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest_diff/100k_fibonacci.csv
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest_diff/100k_parabolas.csv
+INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/steepest_diff/100k_combined_brent.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate/10k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate/100k.csv
 INPUT /home/andrey/Documents/Домашки/метопт/123/second-lab/tex/conjugate/1000k.csv

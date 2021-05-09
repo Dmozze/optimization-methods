@@ -960,9 +960,6 @@ void generate_tables_steepest(const type_search_method& searchMethod, std::strin
     out_n.close();
 }
 
-
-
-
 void steepest_different() {
     search_methods searchMethods(epsilon * epsilon);
     std::vector<std::pair<type_search_method, std::string>> methods;
@@ -989,7 +986,6 @@ void steepest_different() {
 
 }
 
-
 void second_lab_main() {
     //gradient_descent();
     //steepest_descent();
@@ -1010,9 +1006,16 @@ void second_lab_main() {
     steepest_different();
 }
 
+
+
+void third_lab_main() {
+
+}
+
+
 int main() {
     //first_lab_main();
     //test_main();
-    second_lab_main();
+    //second_lab_main();
     return 0;
 }
