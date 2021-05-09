@@ -1,7 +1,6 @@
 #include <iostream>
 #include "gradient_methods.h"
 
-
 //void gradient_methods::gradient_descent(QuadraticFunctionType &function, Vector &x0, T alpha) const {
 //    Vector x = x0;
 //    T f_x = function.calc(x);
@@ -30,4 +29,3 @@
 //    }
 //    std::cout << "cnt descent: " << cnt << '\n';
 //}
-

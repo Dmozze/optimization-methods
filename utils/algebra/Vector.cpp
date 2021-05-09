@@ -5,7 +5,8 @@ Vector::Vector(size_t n) {
     v.assign(n, 0.0L);
 }
 
-Vector::Vector(Vector_type vec) : v(vec) {
+Vector::Vector(Vector_type vec)
+    : v(vec) {
 }
 
 size_t Vector::size() {
@@ -16,7 +17,7 @@ Vector::T& Vector::operator[](size_t index) {
     return v[index];
 }
 
-Vector Vector::operator+(Vector &vector) {
+Vector Vector::operator+(Vector& vector) {
     Vector_type sum_v(std::max(v.size(), vector.size()));
     for (size_t i = 0; i < sum_v.size(); i++) {
         sum_v[i] = v[i] + vector[i];
@@ -24,7 +25,7 @@ Vector Vector::operator+(Vector &vector) {
     return Vector(sum_v);
 }
 
-Vector::T Vector::operator*(Vector &vector) {
+Vector::T Vector::operator*(Vector& vector) {
     T scalar_prod = 0.0L;
     for (size_t i = 0; i < std::min(v.size(), vector.size()); i++) {
         scalar_prod += v[i] * vector[i];
@@ -40,7 +41,7 @@ Vector Vector::operator-() {
     return Vector(neg);
 }
 
-Vector Vector::operator-(Vector &vector) {
+Vector Vector::operator-(Vector& vector) {
     Vector this_(this->v);
     Vector neg_vec(-vector);
     return this_ + neg_vec;
@@ -59,6 +60,3 @@ Vector::T Vector::norma() {
     T square_norma = this_ * this_;
     return sqrtl(square_norma);
 }
-
-
-

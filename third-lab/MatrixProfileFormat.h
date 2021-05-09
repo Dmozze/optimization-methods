@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "../second-lab/Vector.h"
+#include <algebra/Vector.h>
 
 class MatrixProfileFormat {
 protected:

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Vector.h"
-#include "Matrix.h"
+#include <algebra/Vector.h>
+#include <algebra/Matrix.h>
 #include "DiagonalMatrix.h"
 
 class DiagonalQuadraticFunction {
-
     using T = long double;
     DiagonalMatrix A;
     Vector b;
@@ -16,17 +15,15 @@ class DiagonalQuadraticFunction {
     std::vector<T> value_calc_history;
     std::vector<Vector> value_gradient_history;
 
-
 public:
-
     // A - диагональная матрица ввиде вектора
-    DiagonalQuadraticFunction(DiagonalMatrix &A, Vector &b, T c);
+    DiagonalQuadraticFunction(DiagonalMatrix& A, Vector& b, T c);
 
-    T calc(Vector &x);
+    T calc(Vector& x);
 
-    T calc_without_history(Vector &x);
+    T calc_without_history(Vector& x);
 
-    Vector gradient(Vector &x);
+    Vector gradient(Vector& x);
 
     DiagonalMatrix hessian();
 
@@ -62,6 +59,3 @@ public:
         return c;
     }
 };
-
-
-

@@ -7,9 +7,10 @@
 
 class range {
     std::vector<std::pair<long double, long double>> range_history;
-public:
 
-    range(long double l, long double r) : range_history() {
+public:
+    range(long double l, long double r)
+        : range_history() {
         range_history.emplace_back(l, r);
     }
     long double delta() const {
@@ -27,7 +28,7 @@ public:
     void update_range(long double l, long double r) {
         range_history.emplace_back(l, r);
     }
-    void print(std::ofstream &out, std::function<long double(long double)> &func) {
+    void print(std::ofstream& out, std::function<long double(long double)>& func) {
         out << "iter;left;right;ratio;f(left);f(right)" << std::endl;
         for (size_t i = 0; i < range_history.size(); i++) {
             out << i + 1 << ';';
@@ -42,7 +43,7 @@ public:
             out << ';' << func(l) << ';' << func(r) << std::endl;
         }
     }
-    void print(std::ostream &out, std::function<long double(long double)> &func) {
+    void print(std::ostream& out, std::function<long double(long double)>& func) {
         out << "iter;left;right;ratio;f(left);f(right)" << std::endl;
         for (size_t i = 0; i < range_history.size(); i++) {
             out << i + 1 << ';';
@@ -64,12 +65,12 @@ struct information_search {
     long double value;
     int times;
     range r;
-    information_search(long double point, long double value, int times, range &r)
-    :
-    point(point),
-    value(value),
-    times(times),
-    r(r) {}
+    information_search(long double point, long double value, int times, range& r)
+        : point(point)
+        , value(value)
+        , times(times)
+        , r(r) {
+    }
 };
 
 class search_methods {
@@ -82,15 +83,16 @@ class search_methods {
 
     long double F(size_t n);
 
-    static long double calc_u(const long double &x1, const long double &f_x1,
-                       const long double &x2, const long double &f_x2,
-                       const long double &x3, const long double &f_x3);
+    static long double calc_u(const long double& x1, const long double& f_x1,
+                              const long double& x2, const long double& f_x2,
+                              const long double& x3, const long double& f_x3);
 
-    information_search research_parabolas_(std::function<long double(long double)> &func, range r, long double &current_mid, long double step) const;
+    information_search research_parabolas_(std::function<long double(long double)>& func, range r, long double& current_mid, long double step) const;
 
 public:
-
-    explicit search_methods(long double epsilon) : epsilon(epsilon), f() {
+    explicit search_methods(long double epsilon)
+        : epsilon(epsilon)
+        , f() {
         f.push_back(1.);
         f.push_back(1.);
         for (int i = 0; i < number_fib; i++) {
@@ -98,18 +100,18 @@ public:
         }
     }
 
-    information_search dichotomy(std::function<long double(long double)> &func, range r) const;
+    information_search dichotomy(std::function<long double(long double)>& func, range r) const;
 
-    information_search golden_ratio(std::function<long double(long double)> &func, range r) const;
+    information_search golden_ratio(std::function<long double(long double)>& func, range r) const;
 
-    information_search fibonacci(std::function<long double(long double)> &func, range r);
+    information_search fibonacci(std::function<long double(long double)>& func, range r);
 
-    information_search parabolas(std::function<long double(long double)> &func, range r) const;
+    information_search parabolas(std::function<long double(long double)>& func, range r) const;
 
-    void research_parabolas(std::function<long double(long double)> &func, range r, long double step) const;
+    void research_parabolas(std::function<long double(long double)>& func, range r, long double step) const;
 
-    information_search combined_brent(std::function<long double(long double)> &func, range r) const;
+    information_search combined_brent(std::function<long double(long double)>& func, range r) const;
 
     static std::function<long double(long double)>
-    find_cnt_func(std::function<long double(long double)> &func, size_t &cnt);
+    find_cnt_func(std::function<long double(long double)>& func, size_t& cnt);
 };

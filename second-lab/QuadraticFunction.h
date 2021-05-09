@@ -1,9 +1,7 @@
 #pragma once
-#include "Matrix.h"
-
+#include <algebra/Matrix.h>
 
 class QuadraticFunction {
-
     using T = long double;
     Matrix A;
     Vector b;
@@ -14,17 +12,15 @@ class QuadraticFunction {
     std::vector<T> value_calc_history;
     std::vector<Vector> value_gradient_history;
 
-
 public:
-
     // A - симметричная положительно определенная матрица.
-    QuadraticFunction(Matrix &A, Vector &b, T c);
+    QuadraticFunction(Matrix& A, Vector& b, T c);
 
-    T calc(Vector &x);
+    T calc(Vector& x);
 
-    T calc_without_history(Vector &x);
+    T calc_without_history(Vector& x);
 
-    Vector gradient(Vector &x);
+    Vector gradient(Vector& x);
 
     Matrix hessian();
 
@@ -59,7 +55,4 @@ public:
     T get_c() {
         return c;
     }
-
 };
-
-

@@ -2,10 +2,9 @@
 #include <random>
 #include <iomanip>
 
-
 std::pair<long double, long double>
-research_find_mid(const std::function<long double(long double)> &func, const range &r, const long double &f_x1,
-                  const long double &f_x2, long double &mid, const long double step) {
+research_find_mid(const std::function<long double(long double)>& func, const range& r, const long double& f_x1,
+                  const long double& f_x2, long double& mid, const long double step) {
     mid += step;
     long double f_mid = func(mid);
     while (mid < r.right() && !(f_mid < f_x2 && f_mid < f_x1)) {
@@ -18,7 +17,7 @@ research_find_mid(const std::function<long double(long double)> &func, const ran
     return {mid, f_mid};
 }
 
-information_search search_methods::research_parabolas_(std::function<long double(long double)> &func, range r, long double &current_mid, long double step) const {
+information_search search_methods::research_parabolas_(std::function<long double(long double)>& func, range r, long double& current_mid, long double step) const {
     size_t cnt = 0;
     const std::function<long double(long double)> func_cnt = search_methods::find_cnt_func(func, cnt);
     long double x1 = r.left();
@@ -35,7 +34,7 @@ information_search search_methods::research_parabolas_(std::function<long double
     while (true) {
         long double u = calc_u(x1, f_x1, x2, f_x2, x3, f_x3);
         long double f_u = func_cnt(u);
-        if (std::abs(u - x2) < epsilon){
+        if (std::abs(u - x2) < epsilon) {
             x_min = u;
             f_min = f_u;
             break;
@@ -67,7 +66,7 @@ information_search search_methods::research_parabolas_(std::function<long double
     return answer;
 }
 
-void search_methods::research_parabolas(std::function<long double(long double)> &func, range r,
+void search_methods::research_parabolas(std::function<long double(long double)>& func, range r,
                                         long double step) const {
     std::ostringstream s;
     s << std::setprecision(15) << epsilon;
@@ -84,4 +83,3 @@ void search_methods::research_parabolas(std::function<long double(long double)> 
     }
     out.close();
 }
-

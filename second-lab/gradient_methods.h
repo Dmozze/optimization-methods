@@ -2,22 +2,20 @@
 #include <utility>
 #include <vector>
 #include <iostream>
-#include "Vector.h"
+#include <algebra/Vector.h>
 #include "QuadraticFunction.h"
 #include "../first-lab/search-metods.h"
 
-
-template<typename QuadraticFunctionType>
+template <typename QuadraticFunctionType>
 class gradient_methods {
     using T = long double;
     T epsilon;
 
-
 public:
+    gradient_methods(T epsilon)
+        : epsilon(epsilon){};
 
-    gradient_methods(T epsilon) : epsilon(epsilon) {};
-
-    size_t gradient_descent(QuadraticFunctionType &function, Vector &x0, T alpha) const {
+    size_t gradient_descent(QuadraticFunctionType& function, Vector& x0, T alpha) const {
         Vector x = x0;
         T f_x = function.calc(x);
         size_t cnt = 0;
@@ -44,9 +42,9 @@ public:
     }
 
     using type_search_method =
-            std::function<information_search(std::function<T(T)>&, range)>;
+        std::function<information_search(std::function<T(T)>&, range)>;
 
-    size_t steepest_descent(QuadraticFunctionType &function, Vector x0, const type_search_method& searchMethod) const {
+    size_t steepest_descent(QuadraticFunctionType& function, Vector x0, const type_search_method& searchMethod) const {
         size_t cnt = 0;
         while (true) {
             Vector gradient = function.gradient(x0);
@@ -72,16 +70,16 @@ public:
         return cnt;
     }
 
-    size_t steepest_descent(QuadraticFunctionType &function, Vector x0) const {
+    size_t steepest_descent(QuadraticFunctionType& function, Vector x0) const {
         // Инициализирую методы одномерной оптимизации
         search_methods searchMethods(epsilon * epsilon);
-        type_search_method combined_brent_method = [&] (std::function<T(T)> &function1, range r) {
+        type_search_method combined_brent_method = [&](std::function<T(T)>& function1, range r) {
             return searchMethods.combined_brent(function1, std::move(r));
         };
         return steepest_descent(function, x0, combined_brent_method);
     }
 
-    size_t conjugate_gradient(QuadraticFunctionType &function, Vector &x0) const {
+    size_t conjugate_gradient(QuadraticFunctionType& function, Vector& x0) const {
         std::vector<Vector> p;
         Vector gradient0 = function.gradient(x0);
         p.emplace_back(gradient0 * (-1.0L));
@@ -122,6 +120,4 @@ public:
         }
         return cnt;
     }
-
 };
-

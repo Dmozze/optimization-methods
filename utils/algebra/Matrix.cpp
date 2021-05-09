@@ -5,18 +5,19 @@ Matrix::Matrix(size_t n) {
     matrix.assign(n, Vector(n));
 }
 
-Matrix::Matrix(Matrix::Matrix_type &matrix) : matrix(matrix) {
+Matrix::Matrix(Matrix::Matrix_type& matrix)
+    : matrix(matrix) {
 }
 
 size_t Matrix::size() {
     return matrix.size();
 }
 
-Vector &Matrix::operator[](size_t index) {
+Vector& Matrix::operator[](size_t index) {
     return matrix[index];
 }
 
-Matrix Matrix::operator+(Matrix &a) {
+Matrix Matrix::operator+(Matrix& a) {
     Matrix_type sum(size(), Vector(size()));
     for (size_t i = 0; i < size(); i++) {
         for (size_t j = 0; j < size(); j++) {
@@ -36,7 +37,7 @@ Matrix Matrix::operator-() {
     return Matrix(neg);
 }
 
-Matrix Matrix::operator-(Matrix &matrix1) {
+Matrix Matrix::operator-(Matrix& matrix1) {
     Matrix this_(this->matrix);
     Matrix neg(-matrix1);
     return this_ + neg;
@@ -52,7 +53,7 @@ Matrix Matrix::operator*(Matrix::T value) {
     return Matrix(matrixProd);
 }
 
-Vector Matrix::operator*(Vector &vector) {
+Vector Matrix::operator*(Vector& vector) {
     Vector answer(size());
     for (size_t i = 0; i < size(); i++) {
         for (size_t j = 0; j < size(); j++) {
@@ -62,7 +63,7 @@ Vector Matrix::operator*(Vector &vector) {
     return answer;
 }
 
-Matrix Matrix::operator*(Matrix &matrix1) {
+Matrix Matrix::operator*(Matrix& matrix1) {
     Matrix_type prod(size(), Vector(size()));
     Matrix this_(this->matrix);
     for (size_t i = 0; i < size(); i++) {
@@ -80,9 +81,6 @@ Matrix Matrix::transpose() {
     }
     return Matrix(transposeMatrix);
 }
-
-
-
 
 Matrix::T Matrix::determinant() {
     Matrix this_(matrix);
@@ -128,14 +126,8 @@ bool Matrix::is_positive_definite_matrix() {
     return f;
 }
 
-Matrix::Matrix(std::vector<std::vector<long double>> &matrix_of_vectors) {
-    for (std::vector<long double> &vec : matrix_of_vectors) {
+Matrix::Matrix(std::vector<std::vector<long double>>& matrix_of_vectors) {
+    for (std::vector<long double>& vec : matrix_of_vectors) {
         matrix.emplace_back(vec);
     }
 }
-
-
-
-
-
-
