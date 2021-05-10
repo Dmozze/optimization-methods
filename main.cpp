@@ -1120,11 +1120,26 @@ void test_lu_big_2() {
     print_lu(lu);
 }
 
+void test_lu_big_3() {
+
+//    13 0	  0	  0	 0
+//    0	 4	 47	 55	 4
+//    0	16	193	220	16
+//    0	20	235	283	20
+//    0	24	282	330	26
+
+    LUMatrix lu({0, 16, 20, 24, 235, 282, 330},
+                {0, 47, 55, 4, 220, 16, 20},
+                {13, 4, 193, 283, 26},
+                {0, 0, 3, 5, 6, 6});
+    print_lu(lu);
+}
+
 //</lu>
 
 void third_lab_main() {
     //third_lab_test_gauss();
-    test_lu_big_1();
+    test_lu_big_3();
 }
 
 
