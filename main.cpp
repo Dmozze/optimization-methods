@@ -1042,8 +1042,7 @@ void third_lab_test_gauss() {
 
 //<lu>
 
-void test_lu() {
-    LUMatrix lu({0, 6}, {0, 3}, {1, 4, 2}, {0, 0, 1, 1});
+void print_lu(LUMatrix &lu) {
     for (size_t i = 1; i <= lu.dim(); i++) {
         for (size_t j = 1; j <= lu.dim(); j++) {
             std::cout << lu(i, j) << ' ';
@@ -1066,16 +1065,26 @@ void test_lu() {
         }
         std::cout << '\n';
     }
+}
 
+void test_lu() {
+    LUMatrix lu({0, 6}, {0, 3}, {1, 4, 2}, {0, 0, 1, 1});
+    print_lu(lu);
+}
 
-
+void test_lu_big() {
+    LUMatrix lu({0, 1, 1, 0, 4, 0, 6, 0, 0, 2, 3, 7, 4, 0, 9, 0},
+                {0, 2, 6, 0, 7, 0, 9, 0, 0, 3, 1, 4, 5, 0, 3, 0},
+                {4, 6, 1, 4, 7, 5, 6, 8, 6},
+                {0, 0, 0, 1, 3, 5, 8, 11, 15, 15});
+    print_lu(lu);
 }
 
 //</lu>
 
 void third_lab_main() {
     //third_lab_test_gauss();
-    test_lu();
+    test_lu_big();
 }
 
 

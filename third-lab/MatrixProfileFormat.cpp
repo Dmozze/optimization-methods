@@ -51,8 +51,8 @@ void MatrixProfileFormat::set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_o
     if (num_zero < j) {
         int k = profile[i - 1] + j - num_zero;
         al_or_au[k] = value;
-    } else if (value != 0.0L) {
-        assert(num_zero >= j && value == 0.0L);
+    } else {
+        assert(value == 0.0L);
     }
 }
 
