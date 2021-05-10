@@ -1034,8 +1034,8 @@ void lu_third_dim_test() {
     auto x = LUSolve(LUMatrix({0, 2, 3, 2},
                               {0, 2, 1, 1},
                               {1, -1, 5},
-                              {0, 2, 3, 3}), {{0, 1, 6, -1}});
-    std::cout << "Expected: [0, 4, 0, -1], Got: " << x << std::endl;
+                              {0, 2, 3, 3}), {{1, 6, -1}});
+    std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
 }
 void third_lab_test_gauss() {
     gauss_one_dim_test();
