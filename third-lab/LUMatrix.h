@@ -15,6 +15,10 @@ public:
         toLUFormat();
     }
 
+    explicit LUMatrix(Matrix matrix) : MatrixProfileFormat(std::move(matrix)) {
+        toLUFormat();
+    }
+
     T L(size_t i, size_t j);
 
     T U(size_t i, size_t j);

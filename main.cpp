@@ -10,6 +10,7 @@
 #include "third-lab/GaussSolver.h"
 #include "third-lab/LUMatrix.h"
 #include "third-lab/LUSolver.h"
+#include "third-lab/HilbertMatrix.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -1150,10 +1151,31 @@ void lu_tests() {
 }
 //</lu>
 
+void hilbert_format_dim_5() {
+    Matrix hilbert5 = hilbertMatrixGenerator(5);
+    LUMatrix hilbert5_lu = LUMatrix(hilbert5);
+
+    for (size_t i = 0; i < 5; i++) {
+        for (size_t j = 0; j < 5; j++) {
+            std::cout << hilbert5[i][j] << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+    print_lu(hilbert5_lu);
+
+
+}
+
+
+void hilbert_format_tests() {
+    hilbert_format_dim_5();
+}
+
 void third_lab_main() {
     //third_lab_test_gauss();
-    lu_tests();
-
+//    lu_tests();
+    hilbert_format_tests();
 }
 
 

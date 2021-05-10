@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <algebra/Vector.h>
+#include <algebra/Matrix.h>
 
 class MatrixProfileFormat {
 protected:
@@ -32,8 +33,12 @@ private:
     template<typename AL_OR_AU>
     void set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au, T value);
 
+    MatrixProfileFormat toProfileFormat(Matrix matrix);
+
 public:
     MatrixProfileFormat(AL al, AU au, Diag diag, Profile profile);
+
+    explicit MatrixProfileFormat(Matrix matrix);
 
     size_t dim();
 
