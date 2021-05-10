@@ -81,7 +81,7 @@ MatrixProfileFormat MatrixProfileFormat::toProfileFormat(Matrix matrix) {
         newDiag.push_back(matrix[i][i]);
     }
     for (size_t i = 1; i < newProfile.size(); i++) {
-        newProfile[i] = newProfile[i - 1] + (int)i - 1;
+        newProfile[i] = newProfile[i - 1] + (int) i - 1;
     }
     return MatrixProfileFormat(newAl, newAu, newDiag, newProfile);
 }
