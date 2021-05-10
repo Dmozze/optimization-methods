@@ -21,4 +21,4 @@ add_executable(optimization_methods main.cpp
         second-lab/DiagonalQuadraticFunction.cpp
         second-lab/DiagonalMatrix.cpp
         third-lab/MatrixProfileFormat.cpp third-lab/LUMatrix.cpp
-        )
+        third-lab/LUSolver.h)

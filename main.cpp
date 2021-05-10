@@ -9,6 +9,7 @@
 #include "second-lab/GeneratorQuadraticFunction.h"
 #include "third-lab/GaussSolver.h"
 #include "third-lab/LUMatrix.h"
+#include "third-lab/LUSolver.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -1022,12 +1023,20 @@ void gauss_second_dim_test() {
 }
 
 void gauss_third_dim_test() {
-    auto x = GaussSolve({{{1, 2, 3}, {2, -1, 2}, {1, 1, 5}}},
+    auto x = GaussSolve({{{1, 2, 3},
+                          {2, -1, 2},
+                          {1, 1, 5}}},
                         {{1, 6, -1}});
     std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
     assert(x.size() == 3);
 }
-
+void lu_third_dim_test() {
+    auto x = LUSolve(LUMatrix({0, 2, 3, 2},
+                              {0, 2, 1, 1},
+                              {1, -1, 5},
+                              {0, 2, 3, 3}), {{0, 1, 6, -1}});
+    std::cout << "Expected: [0, 4, 0, -1], Got: " << x << std::endl;
+}
 void third_lab_test_gauss() {
     gauss_one_dim_test();
     gauss_second_dim_test();
@@ -1135,11 +1144,19 @@ void test_lu_big_3() {
     print_lu(lu);
 }
 
+void lu_tests() {
+//    test_lu();
+//    test_lu_big_1();
+//    test_lu_big_2();
+//    test_lu_big_3();
+    lu_third_dim_test();
+}
 //</lu>
 
 void third_lab_main() {
     //third_lab_test_gauss();
-    test_lu_big_3();
+    lu_tests();
+
 }
 
 
