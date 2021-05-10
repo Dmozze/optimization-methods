@@ -5,7 +5,7 @@
 
 void LUMatrix::toLUFormat() {
     for (size_t i = 1; i <= dim(); i++) {
-        for (size_t j = i + 1; j <= i + number_of_elements(i); j++) {
+        for (size_t j = i + 1; j <= dim(); j++) {
             for (size_t k = i + 1; k <= dim(); k++) {
                 set(j, k, a(j, k) - a(i, k) * a(j, i) / a(i, i));;
             }

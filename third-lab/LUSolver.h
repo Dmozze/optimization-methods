@@ -1,4 +1,5 @@
 #pragma once
+
 #include <algebra/Vector.h>
 #include "LUMatrix.h"
 #include <iostream>
@@ -13,7 +14,7 @@ inline Vector LUSolve(LUMatrix lu, Vector b) {
         }
     }
 
-    for (size_t i = x.size() - 1; ; i--) {
+    for (size_t i = x.size() - 1;; i--) {
         for (size_t j = i + 1; j < x.size(); j++) {
             x[i] -= lu.U(i + 1, j + 1) * x[j];
         }
