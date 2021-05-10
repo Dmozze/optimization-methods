@@ -11,10 +11,10 @@ protected:
     using Diag = AL;
 
     T zero = 0.0L;
+    Profile profile{};
 private:
     AL al{};
     AU au{};
-    Profile profile{};
     Diag diag;
 
     template <typename AL_OR_AU>
@@ -40,6 +40,8 @@ public:
     T operator()(size_t i, size_t j);
 
     void set(size_t i, size_t j, T value);
+
+    int number_of_elements(size_t i);
 
     MatrixProfileFormat operator+(MatrixProfileFormat& a);
 
