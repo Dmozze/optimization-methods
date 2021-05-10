@@ -1041,9 +1041,6 @@ void third_lab_test_gauss() {
     gauss_one_dim_test();
     gauss_second_dim_test();
     gauss_third_dim_test();
-    // todo: выбор элемента - нули?
-    //      n == m всегда?
-    //      неоднозначное решение - что делать?
 }
 
 //</gauss>
