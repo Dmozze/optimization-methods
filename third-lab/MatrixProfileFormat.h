@@ -10,13 +10,12 @@ protected:
     using Profile = std::vector<int>;
     using Diag = AL;
 
+    T zero = 0.0L;
 private:
     AL al{};
     AU au{};
     Profile profile{};
     Diag diag;
-
-    T zero = 0.0L;
 
     template <typename AL_OR_AU>
     MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL_OR_AU& al_or_au);
@@ -30,12 +29,17 @@ private:
         return newVec;
     }
 
+    template<typename AL_OR_AU>
+    void set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au, T value);
+
 public:
     MatrixProfileFormat(AL al, AU au, Diag diag, Profile profile);
 
     size_t dim();
 
     T operator()(size_t i, size_t j);
+
+    void set(size_t i, size_t j, T value);
 
     MatrixProfileFormat operator+(MatrixProfileFormat& a);
 

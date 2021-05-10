@@ -11,7 +11,7 @@ MatrixProfileFormat::MatrixProfileFormat(AL al, AU au, Diag diag, Profile profil
 }
 
 size_t MatrixProfileFormat::dim() {
-    return profile.size();
+    return profile.size() - 1;
 }
 
 template <typename AL_OR_AU>
@@ -19,7 +19,8 @@ MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j,
     int number_el = profile[i] - profile[i - 1];
     int number_zero = (int)i - 1 - number_el;
     if (number_zero < j) {
-        return al_or_au[profile[i - 1] + j - number_zero];
+        int k = profile[i - 1] + j - number_zero;
+        return al_or_au[k];
     } else {
         return zero;
     }
@@ -31,7 +32,7 @@ MatrixProfileFormat::T MatrixProfileFormat::operator()(size_t i, size_t j) {
     } else if (i > j) {
         return get_el_in_matrix(i, j, al);
     } else {
-        return diag[i];
+        return diag[i - 1];
     }
 }
 
@@ -41,3 +42,28 @@ MatrixProfileFormat MatrixProfileFormat::operator*(MatrixProfileFormat::T value)
                                mul_vec(this->diag, value),
                                this->profile);
 }
+
+
+template<typename AL_OR_AU>
+void MatrixProfileFormat::set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au, T value) {
+    int num_el = profile[i] - profile[i - 1];
+    int num_zero = (int)i - 1 - num_el;
+    if (num_zero < j) {
+        int k = profile[i - 1] + j - num_zero;
+        al_or_au[k] = value;
+    } else if (value != 0.0L) {
+        assert(num_zero >= j && value == 0.0L);
+    }
+}
+
+
+void MatrixProfileFormat::set(size_t i, size_t j, MatrixProfileFormat::T value) {
+    if (i == j) {
+        diag[i - 1] = value;
+    } else if (i > j) {
+        set_value_in_matrix(i, j, al, value);
+    } else {
+        set_value_in_matrix(j, i, au, value);
+    }
+}
+

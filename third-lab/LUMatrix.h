@@ -14,4 +14,9 @@ public:
                               std::move(profile)) {
         toLUFormat();
     }
+
+    T L(size_t i, size_t j);
+
+    T U(size_t i, size_t j);
+
 };

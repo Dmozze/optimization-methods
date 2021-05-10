@@ -8,6 +8,7 @@
 #include "second-lab/DiagonalQuadraticFunction.h"
 #include "second-lab/GeneratorQuadraticFunction.h"
 #include "third-lab/GaussSolver.h"
+#include "third-lab/LUMatrix.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -15,7 +16,7 @@
 #include <fstream>
 #include <cassert>
 
-void print(const std::string& s, information_search& inf, std::function<long double(long double)>& func) {
+void print(const std::string &s, information_search &inf, std::function<long double(long double)> &func) {
     std::ofstream out(s);
     out << std::setprecision(11);
     inf.r.print(out, func);
@@ -31,11 +32,11 @@ const std::string brent = "brent";
 const std::string csv = ".csv";
 const std::string path = "tex/tables/";
 
-void print_cnt(const std::string& s, const std::vector<std::pair<long double, int>>& vec) {
+void print_cnt(const std::string &s, const std::vector<std::pair<long double, int>> &vec) {
     std::ofstream out(path + s + csv);
     out << std::setprecision(15);
     out << "log;cnt" << std::endl;
-    for (auto [log_eps, cnt] : vec) {
+    for (auto[log_eps, cnt] : vec) {
         out << log_eps << ';' << cnt << std::endl;
     }
     out.flush();
@@ -68,15 +69,19 @@ void first_lab_main() {
         std::cout << epsilon << ' ' << log_epsilon << '\n';
         search_methods sm(epsilon);
         information_search dichotomy_answer = sm.dichotomy(func, r);
-        std::cout << "dichotomy: " << dichotomy_answer.point << ' ' << dichotomy_answer.value << ' ' << dichotomy_answer.times << std::endl;
+        std::cout << "dichotomy: " << dichotomy_answer.point << ' ' << dichotomy_answer.value << ' '
+                  << dichotomy_answer.times << std::endl;
         information_search fib_answer = sm.fibonacci(func, r);
-        std::cout << "fibonacci: " << fib_answer.point << ' ' << fib_answer.value << ' ' << fib_answer.times << std::endl;
+        std::cout << "fibonacci: " << fib_answer.point << ' ' << fib_answer.value << ' ' << fib_answer.times
+                  << std::endl;
         information_search golden_answer = sm.golden_ratio(func, r);
-        std::cout << "golden: " << golden_answer.point << ' ' << golden_answer.value << ' ' << golden_answer.times << std::endl;
+        std::cout << "golden: " << golden_answer.point << ' ' << golden_answer.value << ' ' << golden_answer.times
+                  << std::endl;
         information_search parabolas = sm.parabolas(func, r);
         std::cout << "parabolas: " << parabolas.point << ' ' << parabolas.value << ' ' << parabolas.times << std::endl;
         information_search brent_answer = sm.combined_brent(func, r);
-        std::cout << "brent: " << brent_answer.point << ' ' << brent_answer.value << ' ' << brent_answer.times << std::endl;
+        std::cout << "brent: " << brent_answer.point << ' ' << brent_answer.value << ' ' << brent_answer.times
+                  << std::endl;
         std::cout << parabolas.value - dichotomy_answer.value << std::endl;
         std::cout << fib_answer.value - dichotomy_answer.value << std::endl;
         std::cout << golden_answer.value - dichotomy_answer.value << std::endl;
@@ -248,9 +253,9 @@ void first_function() {
 }
 
 void second_function() {
-    type_A a = {{2, 0, 0},
+    type_A a = {{2, 0,  0},
                 {0, 20, 0},
-                {0, 0, 6}};
+                {0, 0,  6}};
     type_B b = {23, 17, 1};
     type_B x0 = {0, 0, 0};
     T c = 12;
@@ -295,9 +300,9 @@ void first_function_steepest() {
 }
 
 void second_function_steepest() {
-    type_A a = {{2, 0, 0},
+    type_A a = {{2, 0,  0},
                 {0, 20, 0},
-                {0, 0, 6}};
+                {0, 0,  6}};
     type_B b = {23, 17, 1};
     type_B x0 = {0, 0, 0};
     T c = 12;
@@ -352,9 +357,9 @@ void first_function_conjugate() {
 }
 
 void second_function_conjugate() {
-    type_A a = {{2, 0, 0},
+    type_A a = {{2, 0,  0},
                 {0, 20, 0},
-                {0, 0, 6}};
+                {0, 0,  6}};
     type_B b = {23, 17, 1};
     type_B x0 = {0, 0, 0};
     T c = 12;
@@ -407,30 +412,31 @@ void conjugate_gradient() {
                 break;
 
 const std::string generate_quad_string = "generate_quad";
+
 void generator_quad() {
     GeneratorQuadraticFunction gen_quad;
     FOR_K_N
-    std::ofstream out(generate_quad_string + '/' + std::to_string(n) + "_" + std::to_string(k));
-    DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, k);
-    Vector diagonalVec = q.hessian().get_diagonal();
-    Vector b = q.get_b();
-    // out << n << ' ' << k << '\n';
-    for (size_t i = 0; i < diagonalVec.size(); i++) {
-        out << diagonalVec[i] << ' ';
+            std::ofstream out(generate_quad_string + '/' + std::to_string(n) + "_" + std::to_string(k));
+            DiagonalQuadraticFunction q = gen_quad.gen_diag_quad(n, k);
+            Vector diagonalVec = q.hessian().get_diagonal();
+            Vector b = q.get_b();
+            // out << n << ' ' << k << '\n';
+            for (size_t i = 0; i < diagonalVec.size(); i++) {
+                out << diagonalVec[i] << ' ';
+            }
+            out << '\n';
+            for (size_t i = 0; i < b.size(); i++) {
+                out << b[i] << ' ';
+            }
+            out << '\n';
+            Vector X0 = gen_quad.generateVector(n);
+            for (size_t i = 0; i < X0.size(); i++) {
+                out << X0[i] << ' ';
+            }
+            out << std::endl;
+            out.close();
+        }
     }
-    out << '\n';
-    for (size_t i = 0; i < b.size(); i++) {
-        out << b[i] << ' ';
-    }
-    out << '\n';
-    Vector X0 = gen_quad.generateVector(n);
-    for (size_t i = 0; i < X0.size(); i++) {
-        out << X0[i] << ' ';
-    }
-    out << std::endl;
-    out.close();
-}
-}
 }
 
 void generate_tables_descent() {
@@ -441,57 +447,57 @@ void generate_tables_descent() {
     std::string path_gradient = "tex/descent/";
 
     FOR_K_N
-    std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
-    type_B diag(n);
-    type_B b(n);
-    type_B x0(n);
-    T l = 1e9;
-    T L = -1e9;
-    for (size_t i = 0; i < n; i++) {
-        input >> diag[i];
-        l = std::min(l, diag[i]);
-        L = std::max(L, diag[i]);
-    }
-    for (size_t i = 0; i < n; i++) {
-        input >> b[i];
-    }
-    for (size_t i = 0; i < n; i++) {
-        input >> x0[i];
-    }
-    Vector Diag(diag);
-    Vector B(b);
-    Vector X0(x0);
-    DiagonalMatrix DiagM(Diag);
-    DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+            std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
+            type_B diag(n);
+            type_B b(n);
+            type_B x0(n);
+            T l = 1e9;
+            T L = -1e9;
+            for (size_t i = 0; i < n; i++) {
+                input >> diag[i];
+                l = std::min(l, diag[i]);
+                L = std::max(L, diag[i]);
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> b[i];
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> x0[i];
+            }
+            Vector Diag(diag);
+            Vector B(b);
+            Vector X0(x0);
+            DiagonalMatrix DiagM(Diag);
+            DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
-    size_t cnt = gm.gradient_descent(quad, X0, 2.0L / (l + L));
-    times_k.emplace_back(cnt, k);
-    times_n.emplace_back(cnt, n);
-    input.close();
-    std::cout << n << ' ' << k << '\n';
-}
-std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
-std::ofstream out_k(path_gradient + std::to_string(n) + "k" + csv);
-out_k << "times;k" << std::endl;
-for (auto [a, b] : times_k) {
-    out_k << a << ';' << b << std::endl;
-}
-out_k.close();
-times_k.clear();
-}
+            size_t cnt = gm.gradient_descent(quad, X0, 2.0L / (l + L));
+            times_k.emplace_back(cnt, k);
+            times_n.emplace_back(cnt, n);
+            input.close();
+            std::cout << n << ' ' << k << '\n';
+        }
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || (a.second == b.second && a.first < b.first);
+        });
+        std::ofstream out_k(path_gradient + std::to_string(n) + "k" + csv);
+        out_k << "times;k" << std::endl;
+        for (auto[a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
+    }
 
-std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
+    std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
+        return a.second < b.second || (a.second == b.second && a.first < b.first);
+    });
 
-std::ofstream out_n(path_gradient + "n" + csv);
-out_n << "times;n" << std::endl;
-for (auto [a, b] : times_n) {
-    out_n << a << ';' << b << std::endl;
-}
-out_n.close();
+    std::ofstream out_n(path_gradient + "n" + csv);
+    out_n << "times;n" << std::endl;
+    for (auto[a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
 }
 
 void generate_tables_steepest() {
@@ -502,57 +508,57 @@ void generate_tables_steepest() {
     std::string path = "tex/steepest/";
 
     FOR_K_N
-    std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
-    type_B diag(n);
-    type_B b(n);
-    type_B x0(n);
-    T l = 1e9;
-    T L = -1e9;
-    for (size_t i = 0; i < n; i++) {
-        input >> diag[i];
-        l = std::min(l, diag[i]);
-        L = std::max(L, diag[i]);
-    }
-    for (size_t i = 0; i < n; i++) {
-        input >> b[i];
-    }
-    for (size_t i = 0; i < n; i++) {
-        input >> x0[i];
-    }
-    Vector Diag(diag);
-    Vector B(b);
-    Vector X0(x0);
-    DiagonalMatrix DiagM(Diag);
-    DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+            std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
+            type_B diag(n);
+            type_B b(n);
+            type_B x0(n);
+            T l = 1e9;
+            T L = -1e9;
+            for (size_t i = 0; i < n; i++) {
+                input >> diag[i];
+                l = std::min(l, diag[i]);
+                L = std::max(L, diag[i]);
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> b[i];
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> x0[i];
+            }
+            Vector Diag(diag);
+            Vector B(b);
+            Vector X0(x0);
+            DiagonalMatrix DiagM(Diag);
+            DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
-    size_t cnt = gm.steepest_descent(quad, X0);
-    times_k.emplace_back(cnt, k);
-    times_n.emplace_back(cnt, n);
-    input.close();
-    std::cout << n << ' ' << k << ' ' << cnt << '\n';
-}
-std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
-std::ofstream out_k(path + std::to_string(n) + "k" + csv);
-out_k << "times;k" << std::endl;
-for (auto [a, b] : times_k) {
-    out_k << a << ';' << b << std::endl;
-}
-out_k.close();
-times_k.clear();
-}
+            size_t cnt = gm.steepest_descent(quad, X0);
+            times_k.emplace_back(cnt, k);
+            times_n.emplace_back(cnt, n);
+            input.close();
+            std::cout << n << ' ' << k << ' ' << cnt << '\n';
+        }
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || (a.second == b.second && a.first < b.first);
+        });
+        std::ofstream out_k(path + std::to_string(n) + "k" + csv);
+        out_k << "times;k" << std::endl;
+        for (auto[a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
+    }
 
-std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
+    std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
+        return a.second < b.second || (a.second == b.second && a.first < b.first);
+    });
 
-std::ofstream out_n(path + "n" + csv);
-out_n << "times;n" << std::endl;
-for (auto [a, b] : times_n) {
-    out_n << a << ';' << b << std::endl;
-}
-out_n.close();
+    std::ofstream out_n(path + "n" + csv);
+    out_n << "times;n" << std::endl;
+    for (auto[a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
 }
 
 void generate_tables_conjugate() {
@@ -563,57 +569,57 @@ void generate_tables_conjugate() {
     std::string path = "tex/conjugate/";
 
     FOR_K_N
-    std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
-    type_B diag(n);
-    type_B b(n);
-    type_B x0(n);
-    T l = 1e9;
-    T L = -1e9;
-    for (size_t i = 0; i < n; i++) {
-        input >> diag[i];
-        l = std::min(l, diag[i]);
-        L = std::max(L, diag[i]);
-    }
-    for (size_t i = 0; i < n; i++) {
-        input >> b[i];
-    }
-    for (size_t i = 0; i < n; i++) {
-        input >> x0[i];
-    }
-    Vector Diag(diag);
-    Vector B(b);
-    Vector X0(x0);
-    DiagonalMatrix DiagM(Diag);
-    DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+            std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
+            type_B diag(n);
+            type_B b(n);
+            type_B x0(n);
+            T l = 1e9;
+            T L = -1e9;
+            for (size_t i = 0; i < n; i++) {
+                input >> diag[i];
+                l = std::min(l, diag[i]);
+                L = std::max(L, diag[i]);
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> b[i];
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> x0[i];
+            }
+            Vector Diag(diag);
+            Vector B(b);
+            Vector X0(x0);
+            DiagonalMatrix DiagM(Diag);
+            DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
 
-    size_t cnt = gm.conjugate_gradient(quad, X0);
-    times_k.emplace_back(cnt, k);
-    times_n.emplace_back(cnt, n);
-    input.close();
-    std::cout << n << ' ' << k << '\n';
-}
-std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
-std::ofstream out_k(path + std::to_string(n) + "k" + csv);
-out_k << "times;k" << std::endl;
-for (auto [a, b] : times_k) {
-    out_k << a << ';' << b << std::endl;
-}
-out_k.close();
-times_k.clear();
-}
+            size_t cnt = gm.conjugate_gradient(quad, X0);
+            times_k.emplace_back(cnt, k);
+            times_n.emplace_back(cnt, n);
+            input.close();
+            std::cout << n << ' ' << k << '\n';
+        }
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || (a.second == b.second && a.first < b.first);
+        });
+        std::ofstream out_k(path + std::to_string(n) + "k" + csv);
+        out_k << "times;k" << std::endl;
+        for (auto[a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
+    }
 
-std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
+    std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
+        return a.second < b.second || (a.second == b.second && a.first < b.first);
+    });
 
-std::ofstream out_n(path + "n" + csv);
-out_n << "times;n" << std::endl;
-for (auto [a, b] : times_n) {
-    out_n << a << ';' << b << std::endl;
-}
-out_n.close();
+    std::ofstream out_n(path + "n" + csv);
+    out_n << "times;n" << std::endl;
+    for (auto[a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
+    }
+    out_n.close();
 }
 
 void good_dim_generation() {
@@ -680,7 +686,7 @@ void good_dim_test_descent() {
     std::string path_gradient = "tex/descent/";
     std::ofstream out_n(path_gradient + "n_good" + csv);
     out_n << "times;n" << std::endl;
-    for (auto [a, b] : times_n) {
+    for (auto[a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
     }
     out_n.close();
@@ -721,7 +727,7 @@ void good_dim_test_steepest() {
     std::string path_gradient = "tex/steepest/";
     std::ofstream out_n(path_gradient + "n_good" + csv);
     out_n << "times;n" << std::endl;
-    for (auto [a, b] : times_n) {
+    for (auto[a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
     }
     out_n.close();
@@ -762,7 +768,7 @@ void good_dim_test_conjugate() {
     std::string path_gradient = "tex/conjugate/";
     std::ofstream out_n(path_gradient + "n_good" + csv);
     out_n << "times;n" << std::endl;
-    for (auto [a, b] : times_n) {
+    for (auto[a, b] : times_n) {
         out_n << a << ';' << b << std::endl;
     }
     out_n.close();
@@ -802,6 +808,7 @@ void test_draw_1_steepest(QuadraticFunction func, Vector X0, T L) {
     }
     out.close();
 }
+
 void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
     gradient_methods<QuadraticFunction> gm(epsilon * 0.001);
     std::cout << gm.conjugate_gradient(func, X0);
@@ -820,7 +827,7 @@ void test_draw_1_conjugate(QuadraticFunction func, Vector X0) {
 }
 
 void test_draw_1() {
-    type_A a = {{2, -1},
+    type_A a = {{2,  -1},
                 {-1, 8}};
 
     type_B b = {2, 1};
@@ -853,7 +860,7 @@ void test_draw_2() {
 
 void test_draw_3() {
     type_A a = {{44, 1},
-                {1, 4}};
+                {1,  4}};
 
     type_B b = {1, 1};
     type_B x0 = {13, 1};
@@ -884,9 +891,9 @@ void test_draw_4() {
 }
 
 using type_search_method =
-    std::function<information_search(std::function<T(T)>&, range)>;
+std::function<information_search(std::function<T(T)> &, range)>;
 
-void generate_tables_steepest(const type_search_method& searchMethod, std::string& name_method) {
+void generate_tables_steepest(const type_search_method &searchMethod, std::string &name_method) {
     using vpair = std::vector<std::pair<int, int>>;
     vpair times_k;
     vpair times_n;
@@ -894,61 +901,61 @@ void generate_tables_steepest(const type_search_method& searchMethod, std::strin
     std::string path = "tex/steepest_diff/";
 
     FOR_K_N
-    std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
-    type_B diag(n);
-    type_B b(n);
-    type_B x0(n);
-    T l = 1e9;
-    T L = -1e9;
-    for (size_t i = 0; i < n; i++) {
-        input >> diag[i];
-        l = std::min(l, diag[i]);
-        L = std::max(L, diag[i]);
+            std::ifstream input(generate_quad_string + "/" + std::to_string(n) + "_" + std::to_string(k));
+            type_B diag(n);
+            type_B b(n);
+            type_B x0(n);
+            T l = 1e9;
+            T L = -1e9;
+            for (size_t i = 0; i < n; i++) {
+                input >> diag[i];
+                l = std::min(l, diag[i]);
+                L = std::max(L, diag[i]);
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> b[i];
+            }
+            for (size_t i = 0; i < n; i++) {
+                input >> x0[i];
+            }
+            Vector Diag(diag);
+            Vector B(b);
+            Vector X0(x0);
+            DiagonalMatrix DiagM(Diag);
+            DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
+
+            size_t cnt = gm.steepest_descent(quad, X0, searchMethod);
+            times_k.emplace_back(cnt, k);
+            if (k == 129) {
+                times_n.emplace_back(cnt, n);
+            }
+            input.close();
+            std::cout << n << ' ' << k << ' ' << cnt << '\n';
+        }
+
+        std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
+            return a.second < b.second || (a.second == b.second && a.first < b.first);
+        });
+
+        std::ofstream out_k(path + std::to_string(n) + "k_" + name_method + csv);
+        out_k << "times;k" << std::endl;
+        for (auto[a, b] : times_k) {
+            out_k << a << ';' << b << std::endl;
+        }
+        out_k.close();
+        times_k.clear();
     }
-    for (size_t i = 0; i < n; i++) {
-        input >> b[i];
+
+    std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
+        return a.second < b.second || (a.second == b.second && a.first < b.first);
+    });
+
+    std::ofstream out_n(path + "n_" + name_method + csv);
+    out_n << "times;n" << std::endl;
+    for (auto[a, b] : times_n) {
+        out_n << a << ';' << b << std::endl;
     }
-    for (size_t i = 0; i < n; i++) {
-        input >> x0[i];
-    }
-    Vector Diag(diag);
-    Vector B(b);
-    Vector X0(x0);
-    DiagonalMatrix DiagM(Diag);
-    DiagonalQuadraticFunction quad(DiagM, B, 0.0L);
-
-    size_t cnt = gm.steepest_descent(quad, X0, searchMethod);
-    times_k.emplace_back(cnt, k);
-    if (k == 129) {
-        times_n.emplace_back(cnt, n);
-    }
-    input.close();
-    std::cout << n << ' ' << k << ' ' << cnt << '\n';
-}
-
-std::sort(times_k.begin(), times_k.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
-
-std::ofstream out_k(path + std::to_string(n) + "k_" + name_method + csv);
-out_k << "times;k" << std::endl;
-for (auto [a, b] : times_k) {
-    out_k << a << ';' << b << std::endl;
-}
-out_k.close();
-times_k.clear();
-}
-
-std::sort(times_n.begin(), times_n.end(), [](auto a, auto b) {
-    return a.second < b.second || (a.second == b.second && a.first < b.first);
-});
-
-std::ofstream out_n(path + "n_" + name_method + csv);
-out_n << "times;n" << std::endl;
-for (auto [a, b] : times_n) {
-    out_n << a << ';' << b << std::endl;
-}
-out_n.close();
+    out_n.close();
 }
 
 void steepest_different() {
@@ -963,15 +970,15 @@ void steepest_different() {
     //    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
     //        return searchMethods.fibonacci(function1, std::move(r));
     //    }, "fibonacci");
-    methods.emplace_back([&](std::function<T(T)>& function1, range r) {
-        return searchMethods.parabolas(function1, std::move(r));
-    },
+    methods.emplace_back([&](std::function<T(T)> &function1, range r) {
+                             return searchMethods.parabolas(function1, std::move(r));
+                         },
                          "parabolas");
     //    methods.emplace_back([&] (std::function<T(T)> &function1, range r) {
     //        return searchMethods.combined_brent(function1, std::move(r));
     //    }, "combined_brent");
 
-    for (auto [method, name_method] : methods) {
+    for (auto[method, name_method] : methods) {
         generate_tables_steepest(method, name_method);
     }
 }
@@ -996,8 +1003,8 @@ void second_lab_main() {
     steepest_different();
 }
 
-void third_lab_main() {
-}
+
+//<gauss>
 
 void gauss_one_dim_test() {
     auto a = Matrix({std::vector<long double>{2}});
@@ -1030,10 +1037,54 @@ void third_lab_test_gauss() {
     //      неоднозначное решение - что делать?
 }
 
+//</gauss>
+
+
+//<lu>
+
+void test_lu() {
+    LUMatrix lu({0, 6}, {0, 3}, {1, 4, 2}, {0, 0, 1, 1});
+    for (size_t i = 1; i <= lu.dim(); i++) {
+        for (size_t j = 1; j <= lu.dim(); j++) {
+            std::cout << lu(i, j) << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+    for (size_t i = 1; i <= lu.dim(); i++) {
+        for (size_t j = 1; j <= lu.dim(); j++) {
+            std::cout << lu.L(i, j) << ' ';
+        }
+        std::cout << '\n';
+    }
+
+
+    std::cout << '\n';
+    for (size_t i = 1; i <= lu.dim(); i++) {
+        for (size_t j = 1; j <= lu.dim(); j++) {
+            std::cout << lu.U(i, j) << ' ';
+        }
+        std::cout << '\n';
+    }
+
+
+
+}
+
+//</lu>
+
+void third_lab_main() {
+    //third_lab_test_gauss();
+    test_lu();
+}
+
+
+
+
 int main() {
     //first_lab_main();
     //test_main();
     //second_lab_main();
-    third_lab_test_gauss();
+    third_lab_main();
     return 0;
 }
