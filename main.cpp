@@ -1072,7 +1072,7 @@ void test_lu() {
     print_lu(lu);
 }
 
-void test_lu_big() {
+void test_lu_big_1() {
     LUMatrix lu({0, 1, 1, 0, 4, 0, 6, 0, 0, 2, 3, 7, 4, 0, 9, 0},
                 {0, 2, 6, 0, 7, 0, 9, 0, 0, 3, 1, 4, 5, 0, 3, 0},
                 {4, 6, 1, 4, 7, 5, 6, 8, 6},
@@ -1080,11 +1080,19 @@ void test_lu_big() {
     print_lu(lu);
 }
 
+void test_lu_big_2() {
+    LUMatrix lu({0, 12, 0, 4, 0, 5, 0, 52, 6, 7, 15, 6, 63, 99, 80, 0},
+                {0, 6,  0, 9, 0, 3, 0, 18, 6, 5, 12, 2,  4,  9,  9, 0},
+                {5, 6, 1, 15, 43, 30, 27, 16, 66, 7},
+                {0, 0, 0, 0, 2, 4, 7, 10, 11, 15});
+    print_lu(lu);
+}
+
 //</lu>
 
 void third_lab_main() {
     //third_lab_test_gauss();
-    test_lu_big();
+    test_lu_big_2();
 }
 
 
