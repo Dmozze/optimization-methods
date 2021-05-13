@@ -6,13 +6,12 @@
 const size_t NUMBER_OF_TESTS = 20;
 const size_t SIZE = 20;
 const long double DENSITY = 1; // SIZE * 1 / (2 * density) cells will fill up
-const long double MAX_VALUE = 100;
 
 std::random_device r;
 
 std::default_random_engine e1(r());
 std::uniform_int_distribution<uint32_t> uniform_dist_int(0, SIZE);
-std::uniform_real_distribution<long double> uniform_dist_real(0, MAX_VALUE);
+std::uniform_int_distribution<int32_t> uniform_dist_value(-4, 0);
 
 
 
@@ -39,7 +38,7 @@ std::vector<long double> generate_ia(size_t matrix_size = SIZE){
 std::vector<long double> fill_up(size_t vec_size) {
     std::vector <long double> result(vec_size);
     for (long double & i : result){
-        i = uniform_dist_real(e1);
+        i = uniform_dist_value(e1);
     }
     return result;
 }
