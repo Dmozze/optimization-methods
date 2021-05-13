@@ -47,10 +47,7 @@ std::vector<long double> fill_up(size_t vec_size) {
 void gen_test(size_t number_of_test, size_t n = SIZE) {
     std::vector<long double> ai = generate_ia(n);
     std::vector<long double> di = fill_up(n);
-    size_t size_for_triangles = 0;
-    for (long double i : ai){
-        size_for_triangles += i;
-    }
+    size_t size_for_triangles = static_cast<int32_t>(ai.back());
     std::vector<long double> al = fill_up(size_for_triangles);
     std::vector<long double> au = fill_up(size_for_triangles);
     std::string result_name = "test_" + std::to_string(number_of_test);
