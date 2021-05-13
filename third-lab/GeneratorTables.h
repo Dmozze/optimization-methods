@@ -9,7 +9,7 @@
 #include "MatrixGenerator.h"
 #include <cmath>
 // todo: insert absolute path on your system
-static const std::string DIR = "/home/vorkdenis/Desktop/study/metopt/optimization-methods/third-lab/tests/profile/";
+static const std::string DIR = "tests/profile/";
 static const std::string TEST = "test_";
 static const std::string AL = "al";
 static const std::string AU = "au";
