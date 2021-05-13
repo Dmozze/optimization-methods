@@ -8,6 +8,7 @@
 #include <vector>
 #include "MatrixGenerator.h"
 #include <cmath>
+#include <iomanip>
 // todo: insert absolute path on your system
 static const std::string DIR = "tests/profile/";
 static const std::string TEST = "test_";
@@ -69,8 +70,10 @@ inline void put_result_to_table(int k, LUMatrix const& matrix, Vector f, std::of
     Vector x = LUSolve(matrix, std::move(f));
     Vector iota = get_iota_vector(matrix.dim());
 
-    long double norma = x.norma();
+    long double norma = iota.norma();
     long double norma_difference = (iota - x).norma();
+    std::cout << std::setprecision(8);
+    table_stream << std::setprecision(8);
     std::cout << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
     table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
