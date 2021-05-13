@@ -40,7 +40,7 @@ public:
 
     explicit MatrixProfileFormat(Matrix matrix);
 
-    size_t dim();
+    size_t dim() const;
 
     T operator()(size_t i, size_t j);
 

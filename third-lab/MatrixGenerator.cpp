@@ -50,7 +50,7 @@ void gen_test(size_t number_of_test, size_t n = SIZE) {
     std::vector<long double> al = fill_up(size_for_triangles);
     std::vector<long double> au = fill_up(size_for_triangles);
     std::string result_name = "test_" + std::to_string(number_of_test);
-    write_vec_to_file(result_name + "di" + ".txt", di);
+    //write_vec_to_file(result_name + "di" + ".txt", di);
     write_vec_to_file(result_name + "al" + ".txt", al);
     write_vec_to_file(result_name + "au" + ".txt", au);
     write_vec_to_file(result_name + "ai" + ".txt", ai);

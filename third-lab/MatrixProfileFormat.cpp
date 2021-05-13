@@ -7,7 +7,7 @@ MatrixProfileFormat::MatrixProfileFormat(AL al, AU au, Diag diag, Profile profil
         : al(std::move(al)), au(std::move(au)), profile(std::move(profile)), diag(std::move(diag)) {
 }
 
-size_t MatrixProfileFormat::dim() {
+size_t MatrixProfileFormat::dim() const {
     return profile.size() - 1;
 }
 
@@ -87,4 +87,14 @@ MatrixProfileFormat MatrixProfileFormat::toProfileFormat(Matrix matrix) {
 }
 
 MatrixProfileFormat::MatrixProfileFormat(Matrix matrix) : MatrixProfileFormat(toProfileFormat(std::move(matrix))) {
+}
+
+Vector MatrixProfileFormat::operator*(Vector &vector) {
+    Vector ans(vector.size());
+    for (size_t i = 1; i <= dim(); i++) {
+        for (size_t j = 1; j <= dim(); j++) {
+            ans[i - 1] += this->operator()(i, j) * vector[i - 1];
+        }
+    }
+    return ans;
 }
