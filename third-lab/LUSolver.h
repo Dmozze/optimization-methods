@@ -4,7 +4,7 @@
 #include "LUMatrix.h"
 #include <iostream>
 
-inline Vector LUSolve(LUMatrix lu, Vector b) {
+inline Vector LUSolve(const LUMatrix &lu, Vector b) {
     Vector x(b.size());
 
     for (size_t i = 0; i < x.size(); i++) {

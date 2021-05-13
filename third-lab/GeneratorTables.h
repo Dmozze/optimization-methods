@@ -6,7 +6,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-
+#include "MatrixGenerator.cpp"
 
 #define DIR "tests/profile/"
 #define TEST "test_"
@@ -32,6 +32,7 @@ inline std::vector<T> read_vec(string &file_name) {
     while (stream >> el) {
         answer.push_back(el);
     }
+    stream.close();
     return answer;
 }
 
@@ -60,8 +61,17 @@ inline vector<T> generate_f(MatrixProfileFormat &matrix) {
     return matrix * iota_vec;
 }
 
+inline void put_result_to_table(int k, LUMatrix &matrix, Vector &f, std::ofstream& table_stream) {
+    Vector x = LUSolve(matrix, std::move(f));
+    Vector iota = get_iota_vector(n);
 
-inline void generate_problem_and_solve(int i,) {
+    long double norma = x.norma();
+    long double norma_difference = (iota - x).norma();
+
+    table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << endl;
+}
+
+inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream) {
     using T = long double;
     using VT = std::vector<T>;
     std::vector<int> profile = read_vec(get_file_name(i, AI));
@@ -72,20 +82,24 @@ inline void generate_problem_and_solve(int i,) {
 
     MatrixProfileFormat matrix(al, au, diag, profile);
 
-    calculate_diag_elements<T>(matrix);
+    calculate_diag_elements<T>(matrix, k);
 
     VT f = generate_f<T>(matrix);
 
+    LUMatrix matrix_lu(matrix);
+
+    put_result_to_table(k, matrix_lu, f, table_stream);
 }
 
-inline void put_result_to_table(int k, LUMatrix matrix, Vector f, std::ofstream& table_stream) {
-    Vector x = LUSolve(std::move(matrix), std::move(f));
-    Vector iota = get_iota_vector(n);
 
-    long double norma = x.norma();
-    long double norma_difference = (iota - x).norma();
-
-    table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << endl;
+inline void run_tests_for_generate_problems() {
+    std::ofstream table_stream("tables/lu/table.csv");
+    for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
+        for (int k = 1; k <= 7; k++) {
+            generate_problem_and_solve(i, k, table_stream);
+        }
+    }
+    table_stream.close();
 }
 
 

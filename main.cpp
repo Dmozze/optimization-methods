@@ -12,6 +12,7 @@
 #include "third-lab/LUSolver.h"
 #include "third-lab/HilbertMatrix.h"
 #include "third-lab/MatrixGenerator.cpp"
+#include "third-lab/GeneratorTables.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -1043,11 +1044,11 @@ void gauss_one_more_test() {
 }
 
 void lu_third_dim_test() {
-    auto x = LUSolve(LUMatrix({0, 2, 3, 2},
-                              {0, 2, 1, 1},
-                              {1, -1, 5},
-                              {0, 2, 3, 3}),
-                     {{1, 6, -1}});
+    auto lu = LUMatrix({0, 2, 3, 2},
+                       {0, 2, 1, 1},
+                       {1, -1, 5},
+                       {0, 2, 3, 3});
+    auto x = LUSolve(lu, {{1, 6, -1}});
     std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
 }
 void third_lab_test_gauss() {
@@ -1172,10 +1173,11 @@ void hilbert_format_tests() {
 }
 
 void third_lab_main() {
-    generate_tests();
+   // generate_tests();
     //third_lab_test_gauss();
     //    lu_tests();
     // hilbert_format_tests();
+    run_tests_for_generate_problems();
 }
 
 int main() {

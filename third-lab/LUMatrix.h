@@ -19,8 +19,8 @@ public:
         toLUFormat();
     }
 
-    T L(size_t i, size_t j);
+    T L(size_t i, size_t j) const;
 
-    T U(size_t i, size_t j);
+    T U(size_t i, size_t j) const;
 
 };

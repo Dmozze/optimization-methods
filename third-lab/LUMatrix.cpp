@@ -14,9 +14,9 @@ void LUMatrix::toLUFormat() {
     }
 }
 
-MatrixProfileFormat::T LUMatrix::L(size_t i, size_t j) {
+MatrixProfileFormat::T LUMatrix::L(size_t i, size_t j) const {
     if (i > j) {
-        return a(i, j);
+        return this->operator()(i, j);
     } else if (i == j) {
         return 1.0L;
     } else {
@@ -24,7 +24,7 @@ MatrixProfileFormat::T LUMatrix::L(size_t i, size_t j) {
     }
 }
 
-MatrixProfileFormat::T LUMatrix::U(size_t i, size_t j) {
+MatrixProfileFormat::T LUMatrix::U(size_t i, size_t j) const {
     if (i <= j) {
         return this->operator()(i, j);
     } else {
