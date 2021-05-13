@@ -4,10 +4,14 @@
 
 #include "MatrixSparseFormat.h"
 
+#include <utility>
+
 MatrixSparseFormat::MatrixSparseFormat(MatrixSparseFormat::AL al, MatrixSparseFormat::AU au,
                                        MatrixSparseFormat::Diag diag, MatrixSparseFormat::Profile profile,
-                                       MatrixSparseFormat::Indexes indexes) : al(al), au(au), diag(diag),
-                                                                              profile(profile), indexes(indexes) {}
+                                       MatrixSparseFormat::Indexes indexes) : al(std::move(al)), au(std::move(au)),
+                                                                              diag(std::move(diag)),
+                                                                              profile(std::move(profile)),
+                                                                              indexes(std::move(indexes)) {}
 
 size_t MatrixSparseFormat::dim() {
     return diag.size();
@@ -24,7 +28,6 @@ size_t MatrixSparseFormat::search_index(size_t i, size_t j) {
     }
     return answer;
 }
-
 
 
 MatrixSparseFormat::T MatrixSparseFormat::operator()(size_t i, size_t j) {
