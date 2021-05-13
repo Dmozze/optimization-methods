@@ -11,6 +11,7 @@
 #include "third-lab/LUMatrix.h"
 #include "third-lab/LUSolver.h"
 #include "third-lab/HilbertMatrix.h"
+#include "third-lab/MatrixGenerator.cpp"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -1171,7 +1172,8 @@ void hilbert_format_tests() {
 }
 
 void third_lab_main() {
-    third_lab_test_gauss();
+    generate_tests();
+    //third_lab_test_gauss();
     //    lu_tests();
     // hilbert_format_tests();
 }

@@ -30,6 +30,9 @@ std::vector<long double> generate_ia(size_t matrix_size = SIZE){
     for (size_t i = 1; i < result.size(); i++){
         result[i] = static_cast<uint32_t>(uniform_dist_int(e1)* DENSITY) % (i + 1);
     }
+    for (size_t i = 1; i < result.size(); i++) {
+        result[i] += result[i - 1];
+    }
     return result;
 }
 
@@ -58,8 +61,8 @@ void gen_test(size_t number_of_test, size_t n = SIZE) {
 }
 
 
-int main () {
-    for (size_t i = 1; i < NUMBER_OF_TESTS; i++){
-        gen_test(i, i * 5);
+void generate_tests() {
+    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++){
+        gen_test(i, i * 50);
     }
 }

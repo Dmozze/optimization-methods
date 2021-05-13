@@ -40,7 +40,7 @@ MatrixSparseFormat::T MatrixSparseFormat::operator()(size_t i, size_t j) {
     }
 }
 
-//i < j
+//i > j
 template<typename AL_OR_AU>
 MatrixSparseFormat::T MatrixSparseFormat::get_element(size_t i, size_t j, AL_OR_AU &al_or_au) {
     size_t index = search_index(i, j);
