@@ -12,7 +12,7 @@
 #include "third-lab/LUSolver.h"
 #include "third-lab/HilbertMatrix.h"
 #include "third-lab/MatrixGenerator.h"
-//#include "third-lab/GeneratorTables.h"
+#include "third-lab/GeneratorTables.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -1173,11 +1173,11 @@ void hilbert_format_tests() {
 }
 
 void third_lab_main() {
-    generate_tests();
+    //generate_tests();
     //third_lab_test_gauss();
     //    lu_tests();
     // hilbert_format_tests();
-    //run_tests_for_generate_problems();
+    run_tests_for_generate_problems();
 }
 
 int main() {

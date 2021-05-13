@@ -50,6 +50,9 @@ inline void calculate_diag_elements(MatrixProfileFormat& matrix, int k) {
                 res -= matrix(i, j);
             }
         }
+        if (res == 0) {
+            res++;
+        }
         matrix.set(i, i, res);
     }
     matrix.set(1, 1, matrix(1, 1) + powl(10.0L, -k));
@@ -64,11 +67,11 @@ inline std::vector<T> generate_f(MatrixProfileFormat& matrix) {
 
 inline void put_result_to_table(int k, LUMatrix const& matrix, Vector f, std::ofstream& table_stream) {
     Vector x = LUSolve(matrix, std::move(f));
-    Vector iota = get_iota_vector(k);
+    Vector iota = get_iota_vector(matrix.dim());
 
     long double norma = x.norma();
     long double norma_difference = (iota - x).norma();
-
+    std::cout << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
     table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
 

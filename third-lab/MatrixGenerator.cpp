@@ -21,8 +21,8 @@ void write_vec_to_file(const std::string& file_name, const std::vector<long doub
 }
 
 std::vector<long double> generate_ia(size_t matrix_size) {
-    std::vector<long double> result(matrix_size + 1);
-    for (size_t i = 1; i < result.size(); i++) {
+    std::vector<long double> result(matrix_size + 1, 0);
+    for (size_t i = 2; i < result.size(); i++) {
         result[i] = static_cast<uint32_t>(uniform_dist_int(e1) * DENSITY) % (i + 1);
     }
     for (size_t i = 1; i < result.size(); i++) {
@@ -32,10 +32,11 @@ std::vector<long double> generate_ia(size_t matrix_size) {
 }
 
 std::vector<long double> fill_up(size_t vec_size) {
-    std::vector<long double> result(vec_size);
+    std::vector<long double> result(vec_size + 1);
     for (long double& i : result) {
         i = uniform_dist_value(e1);
     }
+    result[0] = 0.0L;
     return result;
 }
 

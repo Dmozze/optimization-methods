@@ -17,7 +17,7 @@ class MatrixSparseFormat {
     Profile profile;
     Indexes indexes;
 
-    // i < j
+    // i > j
     size_t search_index(size_t i, size_t j);
 
     MatrixSparseFormat::T zero = 0.0L;
