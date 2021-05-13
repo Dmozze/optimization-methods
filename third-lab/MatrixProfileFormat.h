@@ -13,16 +13,17 @@ protected:
 
     T zero = 0.0L;
     Profile profile{};
+
 private:
     AL al{};
     AU au{};
     Diag diag;
 
     template <typename AL_OR_AU>
-    MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL_OR_AU& al_or_au);
+    MatrixProfileFormat::T get_el_in_matrix(size_t i, size_t j, AL_OR_AU& al_or_au) const;
 
     template <typename Type>
-    Type mul_vec(Type& vec, T value) {
+    Type mul_vec(Type const& vec, T value) const {
         Type newVec = vec;
         for (auto& i : newVec) {
             i *= value;
@@ -30,8 +31,8 @@ private:
         return newVec;
     }
 
-    template<typename AL_OR_AU>
-    void set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au, T value);
+    template <typename AL_OR_AU>
+    void set_value_in_matrix(size_t i, size_t j, AL_OR_AU& al_or_au, T value);
 
     MatrixProfileFormat toProfileFormat(Matrix matrix);
 
@@ -42,7 +43,7 @@ public:
 
     size_t dim() const;
 
-    T operator()(size_t i, size_t j);
+    T operator()(size_t i, size_t j) const;
 
     void set(size_t i, size_t j, T value);
 
@@ -54,7 +55,9 @@ public:
 
     MatrixProfileFormat operator-(MatrixProfileFormat& matrix1);
 
-    MatrixProfileFormat operator*(T value);
+    MatrixProfileFormat operator*(T value) const;
 
-    Vector operator*(Vector& vector);
+    Vector operator*(Vector const& vector) const;
+
+    std::vector<long double> operator*(std::vector<long double> const& vector) const;
 };

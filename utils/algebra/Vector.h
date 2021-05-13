@@ -13,8 +13,9 @@ public:
 
     Vector(Vector_type vec);
 
-    size_t size();
+    size_t size() const;
 
+    T const& operator[](size_t index) const;
     T& operator[](size_t index);
 
     Vector operator+(Vector& vector);

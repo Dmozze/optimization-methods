@@ -6,14 +6,15 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include "MatrixGenerator.cpp"
-
-#define DIR "tests/profile/"
-#define TEST "test_"
-#define AL "al"
-#define AU "au"
-#define AI "ai"
-#define TXT ".txt"
+#include "MatrixGenerator.h"
+#include <cmath>
+// todo: insert absolute path on your system
+static const std::string DIR = "/home/vorkdenis/Desktop/study/metopt/optimization-methods/third-lab/tests/profile/";
+static const std::string TEST = "test_";
+static const std::string AL = "al";
+static const std::string AU = "au";
+static const std::string AI = "ai";
+static const std::string TXT = ".txt";
 
 inline Vector get_iota_vector(size_t n) {
     Vector iota(n);
@@ -24,8 +25,8 @@ inline Vector get_iota_vector(size_t n) {
     return iota;
 }
 
-template<typename T>
-inline std::vector<T> read_vec(string &file_name) {
+template <typename T>
+inline std::vector<T> read_vec(std::string const& file_name) {
     std::ifstream stream(file_name);
     std::vector<T> answer;
     T el;
@@ -36,12 +37,12 @@ inline std::vector<T> read_vec(string &file_name) {
     return answer;
 }
 
-inline string get_file_name(int i, string &type) {
+inline std::string get_file_name(int i, std::string const& type) {
     return DIR + TEST + std::to_string(i) + type + TXT;
 }
 
-template<typename T>
-inline void calculate_diag_elements(MatrixProfileFormat &matrix, int k) {
+template <typename T>
+inline void calculate_diag_elements(MatrixProfileFormat& matrix, int k) {
     for (size_t i = 1; i <= matrix.dim(); i++) {
         T res = 0;
         for (size_t j = 1; j <= matrix.dim(); j++) {
@@ -51,32 +52,32 @@ inline void calculate_diag_elements(MatrixProfileFormat &matrix, int k) {
         }
         matrix.set(i, i, res);
     }
-    matrix.set(1, 1, matrix(1, 1) + std::powl(10.0L, -k));
+    matrix.set(1, 1, matrix(1, 1) + powl(10.0L, -k));
 }
 
-template<typename T>
-inline vector<T> generate_f(MatrixProfileFormat &matrix) {
+template <typename T>
+inline std::vector<T> generate_f(MatrixProfileFormat& matrix) {
     std::vector<T> iota_vec(matrix.dim());
     std::iota(iota_vec.begin(), iota_vec.end(), 1.0L);
     return matrix * iota_vec;
 }
 
-inline void put_result_to_table(int k, LUMatrix &matrix, Vector &f, std::ofstream& table_stream) {
+inline void put_result_to_table(int k, LUMatrix const& matrix, Vector f, std::ofstream& table_stream) {
     Vector x = LUSolve(matrix, std::move(f));
-    Vector iota = get_iota_vector(n);
+    Vector iota = get_iota_vector(k);
 
     long double norma = x.norma();
     long double norma_difference = (iota - x).norma();
 
-    table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << endl;
+    table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
 
-inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream) {
+inline void generate_problem_and_solve(int i, int k, std::ofstream& table_stream) {
     using T = long double;
     using VT = std::vector<T>;
-    std::vector<int> profile = read_vec(get_file_name(i, AI));
-    VT al = read_vec(get_file_name(i, AL));
-    VT au = read_vec(get_file_name(i, AU));
+    std::vector<int> profile = read_vec<int>(get_file_name(i, AI));
+    VT al = read_vec<long double>(get_file_name(i, AL));
+    VT au = read_vec<long double>(get_file_name(i, AU));
 
     VT diag(profile.size() - 1, 0);
 
@@ -91,7 +92,6 @@ inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream
     put_result_to_table(k, matrix_lu, f, table_stream);
 }
 
-
 inline void run_tests_for_generate_problems() {
     std::ofstream table_stream("tables/lu/table.csv");
     for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
@@ -101,5 +101,3 @@ inline void run_tests_for_generate_problems() {
     }
     table_stream.close();
 }
-
-

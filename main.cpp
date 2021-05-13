@@ -11,7 +11,7 @@
 #include "third-lab/LUMatrix.h"
 #include "third-lab/LUSolver.h"
 #include "third-lab/HilbertMatrix.h"
-#include "third-lab/MatrixGenerator.cpp"
+#include "third-lab/MatrixGenerator.h"
 #include "third-lab/GeneratorTables.h"
 #include <functional>
 #include <cmath>

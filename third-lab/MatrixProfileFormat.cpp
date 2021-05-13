@@ -4,17 +4,20 @@
 #include <cassert>
 
 MatrixProfileFormat::MatrixProfileFormat(AL al, AU au, Diag diag, Profile profile)
-        : al(std::move(al)), au(std::move(au)), profile(std::move(profile)), diag(std::move(diag)) {
+    : al(std::move(al))
+    , au(std::move(au))
+    , profile(std::move(profile))
+    , diag(std::move(diag)) {
 }
 
 size_t MatrixProfileFormat::dim() const {
     return profile.size() - 1;
 }
 
-template<typename AL_OR_AU>
-MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au) {
+template <typename AL_OR_AU>
+MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j, AL_OR_AU& al_or_au) const {
     int number_el = profile[i] - profile[i - 1];
-    int number_zero = (int) i - 1 - number_el;
+    int number_zero = (int)i - 1 - number_el;
     if (number_zero < j) {
         int k = profile[i - 1] + j - number_zero;
         return al_or_au[k];
@@ -23,7 +26,7 @@ MatrixProfileFormat::T MatrixProfileFormat::get_el_in_matrix(size_t i, size_t j,
     }
 }
 
-MatrixProfileFormat::T MatrixProfileFormat::operator()(size_t i, size_t j) {
+MatrixProfileFormat::T MatrixProfileFormat::operator()(size_t i, size_t j) const {
     if (i < j) {
         return get_el_in_matrix(j, i, au);
     } else if (i > j) {
@@ -33,18 +36,17 @@ MatrixProfileFormat::T MatrixProfileFormat::operator()(size_t i, size_t j) {
     }
 }
 
-MatrixProfileFormat MatrixProfileFormat::operator*(MatrixProfileFormat::T value) {
+MatrixProfileFormat MatrixProfileFormat::operator*(MatrixProfileFormat::T value) const {
     return MatrixProfileFormat(mul_vec(this->al, value),
                                mul_vec(this->au, value),
                                mul_vec(this->diag, value),
                                this->profile);
 }
 
-
-template<typename AL_OR_AU>
-void MatrixProfileFormat::set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_or_au, T value) {
+template <typename AL_OR_AU>
+void MatrixProfileFormat::set_value_in_matrix(size_t i, size_t j, AL_OR_AU& al_or_au, T value) {
     int num_el = profile[i] - profile[i - 1];
-    int num_zero = (int) i - 1 - num_el;
+    int num_zero = (int)i - 1 - num_el;
     if (num_zero < j) {
         int k = profile[i - 1] + j - num_zero;
         al_or_au[k] = value;
@@ -52,7 +54,6 @@ void MatrixProfileFormat::set_value_in_matrix(size_t i, size_t j, AL_OR_AU &al_o
         assert(value == 0.0L);
     }
 }
-
 
 void MatrixProfileFormat::set(size_t i, size_t j, MatrixProfileFormat::T value) {
     if (i == j) {
@@ -81,15 +82,16 @@ MatrixProfileFormat MatrixProfileFormat::toProfileFormat(Matrix matrix) {
         newDiag.push_back(matrix[i][i]);
     }
     for (size_t i = 1; i < newProfile.size(); i++) {
-        newProfile[i] = newProfile[i - 1] + (int) i - 1;
+        newProfile[i] = newProfile[i - 1] + (int)i - 1;
     }
     return MatrixProfileFormat(newAl, newAu, newDiag, newProfile);
 }
 
-MatrixProfileFormat::MatrixProfileFormat(Matrix matrix) : MatrixProfileFormat(toProfileFormat(std::move(matrix))) {
+MatrixProfileFormat::MatrixProfileFormat(Matrix matrix)
+    : MatrixProfileFormat(toProfileFormat(std::move(matrix))) {
 }
 
-Vector MatrixProfileFormat::operator*(Vector &vector) {
+Vector MatrixProfileFormat::operator*(Vector const& vector) const {
     Vector ans(vector.size());
     for (size_t i = 1; i <= dim(); i++) {
         for (size_t j = 1; j <= dim(); j++) {
@@ -98,3 +100,15 @@ Vector MatrixProfileFormat::operator*(Vector &vector) {
     }
     return ans;
 }
+
+
+std::vector<long double> MatrixProfileFormat::operator*(std::vector<long double> const& vector) const {
+    std::vector<long double> ans(vector.size());
+    for (size_t i = 1; i <= dim(); i++) {
+        for (size_t j = 1; j <= dim(); j++) {
+            ans[i - 1] += this->operator()(i, j) * vector[i - 1];
+        }
+    }
+    return ans;
+}
+

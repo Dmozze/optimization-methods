@@ -10,8 +10,12 @@ Vector::Vector(Vector_type vec)
     : v(std::move(vec)) {
 }
 
-size_t Vector::size() {
+size_t Vector::size() const {
     return v.size();
+}
+
+Vector::T const& Vector::operator[](size_t index) const {
+    return v[index];
 }
 
 Vector::T& Vector::operator[](size_t index) {

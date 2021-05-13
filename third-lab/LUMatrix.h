@@ -19,6 +19,11 @@ public:
         toLUFormat();
     }
 
+
+    explicit LUMatrix(MatrixProfileFormat profileMatrix) : MatrixProfileFormat(std::move(profileMatrix)) {
+        toLUFormat();
+    }
+
     T L(size_t i, size_t j) const;
 
     T U(size_t i, size_t j) const;
