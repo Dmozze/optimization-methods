@@ -134,7 +134,7 @@ inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream
         invert_problem(matrix);
     }
 
-
+    generate_f_and_put_res(k,table_stream, matrix);
 }
 
 inline void run_tests_for_generate_problems() {
