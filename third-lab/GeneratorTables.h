@@ -60,7 +60,7 @@ inline void calculate_diag_elements(MatrixProfileFormat& matrix, int k) {
 }
 
 template <typename T>
-inline std::vector<T> generate_f(MatrixProfileFormat& matrix) {
+inline std::vector<T> generate_f(const MatrixProfileFormat& matrix) {
     std::vector<T> iota_vec(matrix.dim());
     std::iota(iota_vec.begin(), iota_vec.end(), 1.0L);
     return matrix * iota_vec;
@@ -78,6 +78,18 @@ inline void put_result_to_table(int k, LUMatrix const& matrix, Vector f, std::of
     table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
 
+inline void put_result_to_table(LUMatrix const& matrix, Vector f, std::ofstream& table_stream) {
+    Vector x = LUSolve(matrix, std::move(f));
+    Vector iota = get_iota_vector(matrix.dim());
+
+    long double norma = iota.norma();
+    long double norma_difference = (iota - x).norma();
+    std::cout << std::setprecision(8);
+    table_stream << std::setprecision(8);
+    std::cout << matrix.dim() << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
+    table_stream << matrix.dim() << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
+}
+
 inline void invert_problem(MatrixProfileFormat &matrix) {
     for (int i = 1; i <= matrix.dim(); i++) {
         for (int j = 1; j <= matrix.dim(); j++) {
@@ -88,9 +100,26 @@ inline void invert_problem(MatrixProfileFormat &matrix) {
     }
 }
 
+using T = long double;
+using VT = std::vector<T>;
+
+inline void generate_f_and_put_res(int k, std::ofstream &table_stream, const MatrixProfileFormat &matrix) {
+    VT f = generate_f<T>(matrix);
+
+    LUMatrix matrix_lu(matrix);
+
+    put_result_to_table(k, matrix_lu, f, table_stream);
+}
+
+inline void generate_f_and_put_res(std::ofstream &table_stream, const MatrixProfileFormat &matrix) {
+    VT f = generate_f<T>(matrix);
+
+    LUMatrix matrix_lu(matrix);
+
+    put_result_to_table(matrix_lu, f, table_stream);
+}
+
 inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream, bool invert) {
-    using T = long double;
-    using VT = std::vector<T>;
     std::vector<int> profile = read_vec<int>(get_file_name(i, AI));
     VT al = read_vec<long double>(get_file_name(i, AL));
     VT au = read_vec<long double>(get_file_name(i, AU));
@@ -105,11 +134,7 @@ inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream
         invert_problem(matrix);
     }
 
-    VT f = generate_f<T>(matrix);
 
-    LUMatrix matrix_lu(matrix);
-
-    put_result_to_table(k, matrix_lu, f, table_stream);
 }
 
 inline void run_tests_for_generate_problems() {
@@ -129,4 +154,15 @@ inline void run_tests_for_generate_problems_invert() {
             generate_problem_and_solve(i, k, table_stream_invert, true);
         }
     }
+    table_stream_invert.close();
+}
+
+inline void run_tests_for_hilbert_matrix() {
+    std::ofstream table_stream_hilbert("tables/lu/table_hilbert.csv");
+
+    for (size_t i = 50; i <= 1000; i += 50) {
+        MatrixProfileFormat matrix = hilbert_matrix_generator_profile_format(i);
+        generate_f_and_put_res(table_stream_hilbert, matrix);
+    }
+    table_stream_hilbert.close();
 }

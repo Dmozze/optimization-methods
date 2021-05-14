@@ -1155,7 +1155,7 @@ void lu_tests() {
 //</lu>
 
 void hilbert_format_dim_5() {
-    Matrix hilbert5 = hilbertMatrixGenerator(5);
+    Matrix hilbert5 = hilbert_matrix_generator(5);
     LUMatrix hilbert5_lu = LUMatrix(hilbert5);
 
     for (size_t i = 0; i < 5; i++) {
@@ -1177,7 +1177,7 @@ void third_lab_main() {
     //third_lab_test_gauss();
     //    lu_tests();
     // hilbert_format_tests();
-    run_tests_for_generate_problems();
+    run_tests_for_hilbert_matrix();
 }
 
 int main() {
