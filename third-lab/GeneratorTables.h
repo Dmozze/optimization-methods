@@ -78,7 +78,17 @@ inline void put_result_to_table(int k, LUMatrix const& matrix, Vector f, std::of
     table_stream << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
 
-inline void generate_problem_and_solve(int i, int k, std::ofstream& table_stream) {
+inline void invert_problem(MatrixProfileFormat &matrix) {
+    for (int i = 1; i <= matrix.dim(); i++) {
+        for (int j = 1; j <= matrix.dim(); j++) {
+            if (i != j) {
+                matrix.set(i, j, -matrix(i, j));
+            }
+        }
+    }
+}
+
+inline void generate_problem_and_solve(int i, int k, std::ofstream &table_stream, bool invert) {
     using T = long double;
     using VT = std::vector<T>;
     std::vector<int> profile = read_vec<int>(get_file_name(i, AI));
@@ -91,6 +101,10 @@ inline void generate_problem_and_solve(int i, int k, std::ofstream& table_stream
 
     calculate_diag_elements<T>(matrix, k);
 
+    if (invert) {
+        invert_problem(matrix);
+    }
+
     VT f = generate_f<T>(matrix);
 
     LUMatrix matrix_lu(matrix);
@@ -102,8 +116,17 @@ inline void run_tests_for_generate_problems() {
     std::ofstream table_stream("tables/lu/table.csv");
     for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
         for (int k = 1; k <= 7; k++) {
-            generate_problem_and_solve(i, k, table_stream);
+            generate_problem_and_solve(i, k, table_stream, false);
         }
     }
     table_stream.close();
+}
+
+inline void run_tests_for_generate_problems_invert() {
+    std::ofstream table_stream_invert("tables/lu/table_invert.csv");
+    for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
+        for (int k = 1; k <= 7; k++) {
+            generate_problem_and_solve(i, k, table_stream_invert, true);
+        }
+    }
 }
