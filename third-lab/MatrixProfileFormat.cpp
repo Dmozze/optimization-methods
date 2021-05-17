@@ -95,7 +95,7 @@ Vector MatrixProfileFormat::operator*(Vector const& vector) const {
     Vector ans(vector.size());
     for (size_t i = 1; i <= dim(); i++) {
         for (size_t j = 1; j <= dim(); j++) {
-            ans[i - 1] += this->operator()(i, j) * vector[i - 1];
+            ans[i - 1] += this->operator()(i, j) * vector[j - 1];
         }
     }
     return ans;
@@ -106,7 +106,7 @@ std::vector<long double> MatrixProfileFormat::operator*(std::vector<long double>
     std::vector<long double> ans(vector.size());
     for (size_t i = 1; i <= dim(); i++) {
         for (size_t j = 1; j <= dim(); j++) {
-            ans[i - 1] += this->operator()(i, j) * vector[i - 1];
+            ans[i - 1] += this->operator()(i, j) * vector[j - 1];
         }
     }
     return ans;

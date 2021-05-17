@@ -105,7 +105,6 @@ inline void put_result_to_table_lu_solve(int k, LUMatrix const& matrix, Vector f
 inline void put_result_to_table_gauss_solve(Matrix matrix, Vector f, std::ofstream& table_stream) {
     Vector iota = get_iota_vector(matrix.size());
     Vector x = GaussSolve(matrix, std::move(f));
-
     long double norma = iota.norma();
     long double norma_difference = (iota - x).norma();
     std::cout << std::setprecision(8);
