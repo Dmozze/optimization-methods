@@ -1194,8 +1194,8 @@ void third_lab_main() {
     // lu_tests();
     //    hilbert_format_tests();
     // run_tests_for_hilbert_matrix();
-//    run_tests_lu();
-//    run_tests_gauss();
+    run_tests_lu();
+    // run_tests_gauss();
     run_tests_gauss_same_as_lu();
 }
 

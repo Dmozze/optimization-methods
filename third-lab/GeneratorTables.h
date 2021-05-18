@@ -111,6 +111,17 @@ inline void put_result_to_table_gauss_solve(Matrix matrix, Vector f, std::ofstre
     table_stream << matrix.size() << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
 
+inline void put_result_to_table_gauss_solve_with_k(Matrix matrix, Vector f, int k, std::ofstream& table_stream) {
+    Vector iota = get_iota_vector(matrix.size());
+    Vector x = GaussSolve(matrix, std::move(f));
+    long double norma = iota.norma();
+    long double norma_difference = (iota - x).norma();
+    std::cout << std::setprecision(8);
+    table_stream << std::setprecision(8);
+    std::cout << matrix.size() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
+    table_stream << matrix.size() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
+}
+
 inline void put_result_to_table(LUMatrix const& matrix, Vector f, std::ofstream& table_stream) {
     Vector x = LUSolve(matrix, std::move(f));
     Vector iota = get_iota_vector(matrix.dim());
@@ -170,7 +181,7 @@ inline void generate_problem_lu_format_and_solve(int i, int k, std::ofstream& ta
     generate_f_and_put_res(k, table_stream, matrix);
 }
 
-inline void generate_problem_gauss_same_as_lu_format_and_solve(int test_number, std::ofstream& table_stream) {
+inline void generate_problem_gauss_same_as_lu_format_and_solve(int test_number, int k, std::ofstream& table_stream) {
     std::vector<int> profile = read_vec<int>(get_file_name(test_number, AI));
     VT al = read_vec<long double>(get_file_name(test_number, AL));
     VT au = read_vec<long double>(get_file_name(test_number, AU));
@@ -178,6 +189,7 @@ inline void generate_problem_gauss_same_as_lu_format_and_solve(int test_number, 
     VT diag(profile.size() - 1, 0);
 
     MatrixProfileFormat matrix(al, au, diag, profile);
+    calculate_diag_elements<T>(matrix, k);
     std::vector<std::vector<long double>> converted_matrix(matrix.dim());
     for (size_t i = 0; i != matrix.dim(); ++i) {
         converted_matrix[i].resize(matrix.dim());
@@ -186,7 +198,7 @@ inline void generate_problem_gauss_same_as_lu_format_and_solve(int test_number, 
         }
     }
     Vector f = generate_f<T>(matrix);
-    put_result_to_table_gauss_solve(converted_matrix, f, table_stream);
+    put_result_to_table_gauss_solve_with_k(converted_matrix, f, k, table_stream);
 }
 
 inline void generate_problem_gauss_format_and_solve(size_t n, std::ofstream& table_stream) {
@@ -209,7 +221,9 @@ inline void run_tests_lu() {
 inline void run_tests_gauss_same_as_lu() {
     std::ofstream table_stream("tables/gauss/table.csv");
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-        generate_problem_gauss_same_as_lu_format_and_solve(i, table_stream);
+        for (int k = 1; k <= 7; k++) {
+            generate_problem_gauss_same_as_lu_format_and_solve(i, k, table_stream);
+        }
     }
     table_stream.close();
 }

@@ -5,7 +5,7 @@
 #include "MatrixGenerator.h"
 
 namespace {
-    std::default_random_engine e1(19);
+    std::default_random_engine e1(322);
     std::uniform_int_distribution<uint32_t> uniform_dist_int(0, SIZE);
     std::uniform_int_distribution<int32_t> uniform_dist_value(-4, 0);
     std::uniform_int_distribution<int32_t> uniform_dist_gauss_value(-10, 10);
