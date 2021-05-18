@@ -255,3 +255,21 @@ inline void run_tests_for_hilbert_matrix() {
     }
     table_stream_hilbert.close();
 }
+
+inline void run_tests_for_hilbert_matrix_gauss() {
+    std::ofstream table_stream_hilbert("tables/gauss/table_hilbert.csv");
+
+    for (size_t i = 50; i <= 1000; i += 50) {
+        MatrixProfileFormat matrix = hilbert_matrix_generator_profile_format(i);
+        std::vector<std::vector<long double>> converted_matrix(matrix.dim());
+        for (size_t i = 0; i != matrix.dim(); ++i) {
+            converted_matrix[i].resize(matrix.dim());
+            for (size_t j = 0; j != matrix.dim(); ++j) {
+                converted_matrix[i][j] = matrix(i + 1, j + 1);
+            }
+        }
+        Vector f = generate_f<T>(matrix);
+        put_result_to_table_gauss_solve(converted_matrix, f, table_stream_hilbert);
+    }
+    table_stream_hilbert.close();
+}
