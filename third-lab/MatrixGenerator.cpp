@@ -5,8 +5,7 @@
 #include "MatrixGenerator.h"
 
 namespace {
-    std::random_device r;
-    std::default_random_engine e1(r());
+    std::default_random_engine e1(19);
     std::uniform_int_distribution<uint32_t> uniform_dist_int(0, SIZE);
     std::uniform_int_distribution<int32_t> uniform_dist_value(-4, 0);
     std::uniform_int_distribution<int32_t> uniform_dist_gauss_value(-10, 10);
@@ -74,7 +73,7 @@ void gen_test(size_t number_of_test, size_t n) {
     std::vector<long double> al = fill_up(size_for_triangles);
     std::vector<long double> au = fill_up(size_for_triangles);
     std::string result_name = "tests/profile/test_" + std::to_string(number_of_test);
-    //write_vec_to_file(result_name + "di" + ".txt", di);
+    write_vec_to_file(result_name + "di" + ".txt", di);
     write_vec_to_file(result_name + "al" + ".txt", al);
     write_vec_to_file(result_name + "au" + ".txt", au);
     write_vec_to_file(result_name + "ai" + ".txt", ai);

@@ -1054,9 +1054,9 @@ void lu_third_dim_test() {
 
 void test_multiply_matrix() {
     auto matrix = MatrixProfileFormat({0, 2, 1, 1},
-                       {0, 2, 3, 2},
-                       {1, -1, 5},
-                       {0, 0, 1, 3});
+                                      {0, 2, 3, 2},
+                                      {1, -1, 5},
+                                      {0, 0, 1, 3});
     Vector vec({4, 0, -1});
     Vector mul_vec = matrix * vec;
     for (size_t i = 0; i < mul_vec.size(); i++) {
@@ -1064,7 +1064,6 @@ void test_multiply_matrix() {
     }
     std::cout << std::endl;
 }
-
 
 void third_lab_test_gauss() {
     gauss_one_dim_test();
@@ -1161,12 +1160,12 @@ void test_lu_big_3() {
 }
 
 void lu_tests() {
-//    test_multiply_matrix();
-//    test_lu();
-//    test_lu_big_1();
-//    test_lu_big_2();
-//    test_lu_big_3();
-//    lu_third_dim_test();
+    //    test_multiply_matrix();
+    //    test_lu();
+    //    test_lu_big_1();
+    //    test_lu_big_2();
+    //    test_lu_big_3();
+    //    lu_third_dim_test();
 }
 //</lu>
 
@@ -1189,13 +1188,15 @@ void hilbert_format_tests() {
 }
 
 void third_lab_main() {
-//    generate_tests_gauss();
-//    third_lab_test_gauss();
-//    lu_tests();
-//    hilbert_format_tests();
-    run_tests_for_hilbert_matrix();
-    run_tests_lu();
-    run_tests_gauss();
+    generate_tests();
+    // generate_tests_gauss();
+    //  third_lab_test_gauss();
+    // lu_tests();
+    //    hilbert_format_tests();
+    // run_tests_for_hilbert_matrix();
+//    run_tests_lu();
+//    run_tests_gauss();
+    run_tests_gauss_same_as_lu();
 }
 
 int main() {

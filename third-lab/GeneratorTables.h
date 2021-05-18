@@ -39,7 +39,7 @@ inline std::vector<T> read_vec(std::string const& file_name) {
     return answer;
 }
 
-template<typename T>
+template <typename T>
 inline Matrix read_matrix(std::string const& file_name, size_t n) {
     std::ifstream stream(file_name);
     std::vector<std::vector<T>> answer(n, std::vector<T>(n));
@@ -88,8 +88,6 @@ inline Vector generate_f(Matrix& matrix) {
     return matrix * iota;
 }
 
-
-
 inline void put_result_to_table_lu_solve(int k, LUMatrix const& matrix, Vector f, std::ofstream& table_stream) {
     Vector x = LUSolve(matrix, std::move(f));
     Vector iota = get_iota_vector(matrix.dim());
@@ -125,7 +123,7 @@ inline void put_result_to_table(LUMatrix const& matrix, Vector f, std::ofstream&
     table_stream << matrix.dim() << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
 }
 
-inline void invert_problem(MatrixProfileFormat &matrix) {
+inline void invert_problem(MatrixProfileFormat& matrix) {
     for (int i = 1; i <= matrix.dim(); i++) {
         for (int j = 1; j <= matrix.dim(); j++) {
             if (i != j) {
@@ -138,7 +136,7 @@ inline void invert_problem(MatrixProfileFormat &matrix) {
 using T = long double;
 using VT = std::vector<T>;
 
-inline void generate_f_and_put_res(int k, std::ofstream &table_stream, const MatrixProfileFormat &matrix) {
+inline void generate_f_and_put_res(int k, std::ofstream& table_stream, const MatrixProfileFormat& matrix) {
     VT f = generate_f<T>(matrix);
 
     LUMatrix matrix_lu(matrix);
@@ -146,7 +144,7 @@ inline void generate_f_and_put_res(int k, std::ofstream &table_stream, const Mat
     put_result_to_table_lu_solve(k, matrix_lu, f, table_stream);
 }
 
-inline void generate_f_and_put_res(std::ofstream &table_stream, const MatrixProfileFormat &matrix) {
+inline void generate_f_and_put_res(std::ofstream& table_stream, const MatrixProfileFormat& matrix) {
     VT f = generate_f<T>(matrix);
 
     LUMatrix matrix_lu(matrix);
@@ -154,7 +152,7 @@ inline void generate_f_and_put_res(std::ofstream &table_stream, const MatrixProf
     put_result_to_table(matrix_lu, f, table_stream);
 }
 
-inline void generate_problem_lu_format_and_solve(int i, int k, std::ofstream &table_stream, bool invert) {
+inline void generate_problem_lu_format_and_solve(int i, int k, std::ofstream& table_stream, bool invert) {
     std::vector<int> profile = read_vec<int>(get_file_name(i, AI));
     VT al = read_vec<long double>(get_file_name(i, AL));
     VT au = read_vec<long double>(get_file_name(i, AU));
@@ -169,10 +167,29 @@ inline void generate_problem_lu_format_and_solve(int i, int k, std::ofstream &ta
         invert_problem(matrix);
     }
 
-    generate_f_and_put_res(k,table_stream, matrix);
+    generate_f_and_put_res(k, table_stream, matrix);
 }
 
-inline void generate_problem_gauss_format_and_solve(size_t n, std::ofstream &table_stream) {
+inline void generate_problem_gauss_same_as_lu_format_and_solve(int test_number, std::ofstream& table_stream) {
+    std::vector<int> profile = read_vec<int>(get_file_name(test_number, AI));
+    VT al = read_vec<long double>(get_file_name(test_number, AL));
+    VT au = read_vec<long double>(get_file_name(test_number, AU));
+
+    VT diag(profile.size() - 1, 0);
+
+    MatrixProfileFormat matrix(al, au, diag, profile);
+    std::vector<std::vector<long double>> converted_matrix(matrix.dim());
+    for (size_t i = 0; i != matrix.dim(); ++i) {
+        converted_matrix[i].resize(matrix.dim());
+        for (size_t j = 0; j != matrix.dim(); ++j) {
+            converted_matrix[i][j] = matrix(i + 1, j + 1);
+        }
+    }
+    Vector f = generate_f<T>(matrix);
+    put_result_to_table_gauss_solve(converted_matrix, f, table_stream);
+}
+
+inline void generate_problem_gauss_format_and_solve(size_t n, std::ofstream& table_stream) {
     Matrix matrix = read_matrix<T>(DIR_GAUSS + std::to_string(n) + TXT, n);
     Vector f = generate_f<T>(matrix);
 
@@ -185,6 +202,14 @@ inline void run_tests_lu() {
         for (int k = 1; k <= 7; k++) {
             generate_problem_lu_format_and_solve(i, k, table_stream, false);
         }
+    }
+    table_stream.close();
+}
+
+inline void run_tests_gauss_same_as_lu() {
+    std::ofstream table_stream("tables/gauss/table.csv");
+    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+        generate_problem_gauss_same_as_lu_format_and_solve(i, table_stream);
     }
     table_stream.close();
 }
@@ -216,4 +241,3 @@ inline void run_tests_for_hilbert_matrix() {
     }
     table_stream_hilbert.close();
 }
-
