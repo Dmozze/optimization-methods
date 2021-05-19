@@ -46,3 +46,23 @@
 
 
 \section{LU-разложение}
+
+Пусть дана матрица A. Для LU-разложения мы воспользовались вот такими передходами
+$$a_{ik} \leftarrow a_{jk} - a_{ik}a_{ji}/a_{ii}, \ j = (i + 1)..n, \ k = (i + 1)..n$$
+$$a_{ji} \leftarrow a_{ji}/a_{ii}, \ j = (i + 1)..n$$
+Под главной диагонолью хранилась матрица $L$, над диагональю матрица $U$.
+
+\csvautotabular[separator=semicolon]{lu/table.csv}
+
+% \begin{tabular}{l|l|l|l}%
+%     \bfseries $n$ & \bfseries $k$ & \bfseries $|x_k - x^*|$ & \bfseries $|x_k - x^*|/|x^*|$% specify table head
+%     \csvreader[head to column names]{lu/table.csv}{}% use head of csv as column names
+%     {\\\hline\csvcoli&\csvcolii}% specify your coloumns here
+% \end{tabular}
+
+\pgfplotstabletypeset[col sep=semicolon,
+     columns={$n$,$k$, $|x_k - x^*|$,  $|x_k - x^*|/|x^*|$},
+    ]{lu/table.csv}
+
+
+\section{Метод Гаусса}
