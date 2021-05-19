@@ -70,7 +70,7 @@ void search_methods::research_parabolas(std::function<long double(long double)>&
                                         long double step) const {
     std::ostringstream s;
     s << std::setprecision(15) << epsilon;
-    std::ofstream out("tex/tables/research_parabolas" + s.str() + ".csv");
+    std::ofstream out("tex/tex/research_parabolas" + s.str() + ".csv");
     out << std::setprecision(15);
     out << "point;cnt" << std::endl;
     long double current_mid = r.left();

@@ -209,7 +209,7 @@ inline void generate_problem_gauss_format_and_solve(size_t n, std::ofstream& tab
 }
 
 inline void run_tests_lu() {
-    std::ofstream table_stream("tables/lu/table.csv");
+    std::ofstream table_stream("tex/lu/table.csv");
     for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
         for (int k = 1; k <= 7; k++) {
             generate_problem_lu_format_and_solve(i, k, table_stream, false);
@@ -219,7 +219,7 @@ inline void run_tests_lu() {
 }
 
 inline void run_tests_gauss_same_as_lu() {
-    std::ofstream table_stream("tables/gauss/table.csv");
+    std::ofstream table_stream("tex/gauss/table.csv");
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
         for (int k = 1; k <= 7; k++) {
             generate_problem_gauss_same_as_lu_format_and_solve(i, k, table_stream);
@@ -229,7 +229,7 @@ inline void run_tests_gauss_same_as_lu() {
 }
 
 inline void run_tests_gauss() {
-    std::ofstream table_stream("tables/gauss/table.csv");
+    std::ofstream table_stream("tex/gauss/table.csv");
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
         generate_problem_gauss_format_and_solve(i * 50, table_stream);
     }
@@ -237,7 +237,7 @@ inline void run_tests_gauss() {
 }
 
 inline void run_tests_for_generate_problems_invert() {
-    std::ofstream table_stream_invert("tables/lu/table_invert.csv");
+    std::ofstream table_stream_invert("tex/lu/table_invert.csv");
     for (int i = 1; i <= NUMBER_OF_TESTS; i++) {
         for (int k = 1; k <= 7; k++) {
             generate_problem_lu_format_and_solve(i, k, table_stream_invert, true);
@@ -247,7 +247,7 @@ inline void run_tests_for_generate_problems_invert() {
 }
 
 inline void run_tests_for_hilbert_matrix() {
-    std::ofstream table_stream_hilbert("tables/lu/table_hilbert.csv");
+    std::ofstream table_stream_hilbert("tex/lu/table_hilbert.csv");
 
     for (size_t i = 50; i <= 1000; i += 50) {
         MatrixProfileFormat matrix = hilbert_matrix_generator_profile_format(i);
@@ -257,7 +257,7 @@ inline void run_tests_for_hilbert_matrix() {
 }
 
 inline void run_tests_for_hilbert_matrix_gauss() {
-    std::ofstream table_stream_hilbert("tables/gauss/table_hilbert.csv");
+    std::ofstream table_stream_hilbert("tex/gauss/table_hilbert.csv");
 
     for (size_t i = 50; i <= 1000; i += 50) {
         MatrixProfileFormat matrix = hilbert_matrix_generator_profile_format(i);

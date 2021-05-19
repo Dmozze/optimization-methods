@@ -34,7 +34,7 @@ const std::string gold = "golden";
 const std::string parab = "parabola";
 const std::string brent = "brent";
 const std::string csv = ".csv";
-const std::string path = "tex/tables/";
+const std::string path = "tex/tex/";
 
 void print_cnt(const std::string& s, const std::vector<std::pair<long double, int>>& vec) {
     std::ofstream out(path + s + csv);
