@@ -1188,16 +1188,16 @@ void hilbert_format_tests() {
 }
 
 void third_lab_main() {
-//    generate_tests();
+    // generate_tests();
     // generate_tests_gauss();
     //  third_lab_test_gauss();
     // lu_tests();
     //    hilbert_format_tests();
     run_tests_for_hilbert_matrix();
-    run_tests_for_hilbert_matrix_gauss();
-      run_tests_lu();
-     run_tests_gauss();
-       run_tests_gauss_same_as_lu();
+    // run_tests_for_hilbert_matrix_gauss();
+    // run_tests_lu();
+    //    run_tests_gauss();
+    //  run_tests_gauss_same_as_lu();
 }
 
 int main() {
