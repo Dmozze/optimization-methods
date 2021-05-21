@@ -2,35 +2,35 @@
 
 
 #include <vector>
+#include <algebra/Vector.h>
 
 class MatrixSparseFormat {
     using T = long double;
-    using AL = std::vector<T>;
-    using AU = AL;
-    using Diag = AL;
+    using ALU = std::vector<T>;
+    using Diag = ALU;
     using Profile = std::vector<int>;
     using Indexes = std::vector<size_t>;
 
-    AL al;
-    AU au;
+    ALU alu;
     Diag diag;
     Profile profile;
     Indexes indexes;
 
-    // i > j
-    size_t search_index(size_t i, size_t j);
+    size_t search_index(size_t i, size_t j) const;
 
     MatrixSparseFormat::T zero = 0.0L;
 
-    template<typename AL_OR_AU>
-    MatrixSparseFormat::T get_element(size_t i, size_t j, AL_OR_AU &al_or_au);
+    MatrixSparseFormat::T get_element(size_t i, size_t j, const ALU &alu) const;
 
 
 public:
 
-    MatrixSparseFormat(AL al, AU au, Diag diag, Profile profile, Indexes indexes);
+    MatrixSparseFormat(ALU alu, Diag diag, Profile profile, Indexes indexes);
 
-    size_t dim();
+    size_t dim() const;
 
-    T operator()(size_t i, size_t j);
+    T operator()(size_t i, size_t j) const;
+
+    Vector operator*(Vector const& vector) const;
+
 };

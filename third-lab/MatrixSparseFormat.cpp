@@ -6,19 +6,18 @@
 
 #include <utility>
 
-MatrixSparseFormat::MatrixSparseFormat(MatrixSparseFormat::AL al, MatrixSparseFormat::AU au,
-                                       MatrixSparseFormat::Diag diag, MatrixSparseFormat::Profile profile,
-                                       MatrixSparseFormat::Indexes indexes) : al(std::move(al)), au(std::move(au)),
-                                                                              diag(std::move(diag)),
-                                                                              profile(std::move(profile)),
-                                                                              indexes(std::move(indexes)) {}
+MatrixSparseFormat::MatrixSparseFormat(ALU alu, Diag diag, Profile profile, Indexes indexes)
+        : alu(std::move(alu)),
+          diag(std::move(diag)),
+          profile(std::move(profile)),
+          indexes(std::move(indexes)) {}
 
-size_t MatrixSparseFormat::dim() {
+size_t MatrixSparseFormat::dim() const {
     return diag.size();
 }
 
 // i > j
-size_t MatrixSparseFormat::search_index(size_t i, size_t j) {
+size_t MatrixSparseFormat::search_index(size_t i, size_t j) const {
     int number_of_elements = profile[i] - profile[i - 1];
     size_t answer = profile[i - 1] + 1;
     for (int J = (number_of_elements + 1) / 2; J > 0; J /= 2) {
@@ -30,25 +29,35 @@ size_t MatrixSparseFormat::search_index(size_t i, size_t j) {
 }
 
 
-MatrixSparseFormat::T MatrixSparseFormat::operator()(size_t i, size_t j) {
+MatrixSparseFormat::T MatrixSparseFormat::operator()(size_t i, size_t j) const {
     if (i == j) {
         return diag[i - 1];
     } else if (i < j) {
-        return get_element(j, i, au);
-    } else {
-        return get_element(i, j, al);
+        std::swap(i, j);
     }
+    return get_element(i, j, alu);
 }
 
-//i > j
-template<typename AL_OR_AU>
-MatrixSparseFormat::T MatrixSparseFormat::get_element(size_t i, size_t j, AL_OR_AU &al_or_au) {
+// i > j
+MatrixSparseFormat::T MatrixSparseFormat::get_element(size_t i, size_t j, const ALU &alu1) const {
     size_t index = search_index(i, j);
-    if (indexes[index] == j) {
-        return al_or_au[indexes[index]];
+    if (index < indexes.size() && indexes[index] == j) {
+        return alu1[index];
     } else {
         return zero;
     }
+}
+
+Vector MatrixSparseFormat::operator*(const Vector &vector) const {
+    Vector answer(vector.size());
+
+    for (size_t i = 1; i <= dim(); i++) {
+        for (size_t j = 1; j <= dim(); j++) {
+            answer[i - 1] += this->operator()(i, j) * vector[j - 1];
+        }
+    }
+
+    return answer;
 }
 
 

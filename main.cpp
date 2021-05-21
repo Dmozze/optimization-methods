@@ -13,6 +13,8 @@
 #include "third-lab/HilbertMatrix.h"
 #include "third-lab/MatrixGenerator.h"
 #include "third-lab/GeneratorTables.h"
+#include "third-lab/MatrixSparseFormat.h"
+#include "third-lab/ConjugateSolver.h"
 #include <functional>
 #include <cmath>
 #include <iomanip>
@@ -1029,7 +1031,7 @@ void gauss_third_dim_test() {
                           {2, -1, 2},
                           {1, 1, 5}}},
                         {{1, 6, -1}});
-    std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
+        std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
     assert(x.size() == 3);
 }
 
@@ -1187,17 +1189,47 @@ void hilbert_format_tests() {
     hilbert_format_dim_5();
 }
 
+void conjugate_test_3() {
+    MatrixSparseFormat matrix({0, 2, 1, 1}, {1, -1, 5}, {0, 0, 1, 3}, {0, 1, 1, 2});
+//    std::cout << matrix(1, 1) << '\n';
+//    std::cout << matrix(2, 1) << '\n';
+//    std::cout << matrix(1, 3) << '\n';
+//    std::cout << matrix(2, 3) << '\n';
+    Vector f({3, 7, -1});
+    Vector x0(3);
+    long double epsilon_conjugate = 1e-7;
+    std::cout << ConjugateSolve(matrix, f, epsilon_conjugate, x0);
+    std::cout << '\n';
+    std::cout << x0 << '\n';
+}
+
+void conjugate_test_3_() {
+    MatrixSparseFormat matrix({0, 4}, {3, -3, 5}, {0, 0, 1, 1}, {0, 1});
+    std::cout << matrix(1, 1) << '\n';
+    std::cout << matrix(2, 1) << '\n';
+    std::cout << matrix(1, 3) << '\n';
+    std::cout << matrix(2, 3) << '\n';
+    Vector f({1, 5, 9});
+    Vector x0(3);
+    long double epsilon_conjugate = 1e-7;
+    std::cout << ConjugateSolve(matrix, f, epsilon_conjugate, x0);
+    std::cout << '\n';
+    std::cout << x0 << '\n';
+}
+
 void third_lab_main() {
+//    conjugate_test_3();
+    conjugate_test_3_();
 //    generate_tests();
-    // generate_tests_gauss();
-    //  third_lab_test_gauss();
-    // lu_tests();
-    //    hilbert_format_tests();
-    run_tests_for_hilbert_matrix();
-    run_tests_for_hilbert_matrix_gauss();
-      run_tests_lu();
-     run_tests_gauss();
-       run_tests_gauss_same_as_lu();
+//    generate_tests_gauss();
+//    third_lab_test_gauss();
+//    lu_tests();
+//    hilbert_format_tests();
+//    run_tests_for_hilbert_matrix();
+//    run_tests_for_hilbert_matrix_gauss();
+//    run_tests_lu();
+//    run_tests_gauss();
+//    run_tests_gauss_same_as_lu();
 }
 
 int main() {

@@ -23,4 +23,4 @@ add_executable(optimization_methods main.cpp
         third-lab/MatrixProfileFormat.cpp third-lab/LUMatrix.cpp
         third-lab/LUSolver.h third-lab/HilbertMatrix.h third-lab/GeneratorTables.h
         third-lab/MatrixSparseFormat.cpp third-lab/MatrixSparseFormat.h
-        third-lab/MatrixGenerator.cpp)
+        third-lab/MatrixGenerator.cpp third-lab/ConjugateSolver.h)
