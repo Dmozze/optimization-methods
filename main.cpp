@@ -1218,6 +1218,7 @@ void conjugate_test_3_() {
 }
 
 void third_lab_main() {
+<<<<<<< HEAD
 //    conjugate_test_3();
     conjugate_test_3_();
 //    generate_tests();
@@ -1230,6 +1231,18 @@ void third_lab_main() {
 //    run_tests_lu();
 //    run_tests_gauss();
 //    run_tests_gauss_same_as_lu();
+=======
+    // generate_tests();
+    // generate_tests_gauss();
+    //  third_lab_test_gauss();
+    // lu_tests();
+    //    hilbert_format_tests();
+    run_tests_for_hilbert_matrix();
+    // run_tests_for_hilbert_matrix_gauss();
+    // run_tests_lu();
+    //    run_tests_gauss();
+    //  run_tests_gauss_same_as_lu();
+>>>>>>> 57110ae4eedf5852ed3afcc4c85cb93b6fd92125
 }
 
 int main() {
