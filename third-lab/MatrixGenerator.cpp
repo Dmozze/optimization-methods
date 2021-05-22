@@ -14,8 +14,15 @@ namespace {
 
 } // namespace
 
-
 void write_vec_to_file(const std::string& file_name, const std::vector<long double>& output) {
+    std::ofstream out(file_name);
+    for (long double i : output) {
+        out << i << " ";
+    }
+    out.close();
+}
+
+void write_vec_to_file(const std::string& file_name, const std::vector<int32_t>& output) {
     std::ofstream out(file_name);
     for (long double i : output) {
         out << i << " ";
@@ -60,8 +67,8 @@ std::vector<std::vector<long double>> generate_gauss_matrix(size_t matrix_size) 
     return result;
 }
 
-std::vector<std::vector<std::pair<long double, std::pair<size_t, size_t>>>> generate_conjugate_matrix(size_t matrix_size, size_t density) {
-    std::vector<std::vector<std::pair<long double, std::pair<size_t, size_t>>>> result(matrix_size);
+std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> generate_conjugate_matrix(size_t matrix_size, size_t density) {
+    std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> result(matrix_size);
     for (size_t i = 0; i < matrix_size; i++) {
         result.emplace_back();
         for (size_t j = 0; j < i; j++) {
@@ -81,7 +88,6 @@ std::vector<long double> fill_up(size_t vec_size) {
     result[0] = 0.0L;
     return result;
 }
-
 void gen_test(size_t number_of_test, size_t n) {
     std::vector<long double> ai = generate_ia(n);
     std::vector<long double> di = fill_up(n);
@@ -97,9 +103,9 @@ void gen_test(size_t number_of_test, size_t n) {
 
 void gen_conjugate_test(size_t n, size_t density){
     auto matrix = generate_conjugate_matrix(n, density);
-    std::vector <long double> alu(1, 0);
-    std::vector <long double> profile(1, 0);
-    std::vector <long double> indexes(1, 0);
+    std::vector <int32_t> alu(1, 0);
+    std::vector <int32_t> profile(1, 0);
+    std::vector <int32_t> indexes(1, 0);
     for (const auto& vec : matrix){
         profile.push_back(vec.size() + profile.back());
         for (auto elem : vec){
@@ -125,15 +131,7 @@ void generate_tests_gauss() {
 
 void generate_tests_conjugate() {
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-        gen_conjugate_test(50 * i, 15 * i);
-    }
-
-    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-        gen_conjugate_test(500 * i, static_cast<size_t>(10 * std::exp(1.0L * std::sqrt(i))));
-    }
-
-    for (size_t i = 1; i <= NUMBER_OF_TESTS / 2; i++) {
-        gen_conjugate_test(10000 * i, static_cast<size_t>(100 * std::exp(1.0L * std::sqrt(i))));
+        gen_conjugate_test(50 * i, 100 * i);
     }
 }
 
