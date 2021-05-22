@@ -104,7 +104,7 @@ void gen_conjugate_test(size_t n, size_t density){
         profile.push_back(vec.size() + profile.back());
         for (auto elem : vec){
             alu.push_back(elem.first);
-            indexes.push_back(elem.second.second);
+            indexes.push_back(elem.second.second + 1);
         }
     }
     write_vec_to_file("tests/conjugate/" + std::to_string(n) + "_" + std::to_string(density) + "alu" + ".txt", alu);
