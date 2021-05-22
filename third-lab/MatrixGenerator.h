@@ -17,3 +17,5 @@ void gen_test(size_t number_of_test, size_t n = SIZE);
 void generate_tests();
 
 void generate_tests_gauss();
+
+void generate_tests_conjugate();
