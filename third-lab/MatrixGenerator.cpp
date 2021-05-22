@@ -125,7 +125,15 @@ void generate_tests_gauss() {
 
 void generate_tests_conjugate() {
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-        gen_conjugate_test(50 * i, uniform_dist_conjugate(e1) % (i * 50));
+        gen_conjugate_test(50 * i, 15 * i);
+    }
+
+    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+        gen_conjugate_test(500 * i, static_cast<size_t>(10 * std::exp(1.0L * std::sqrt(i))));
+    }
+
+    for (size_t i = 1; i <= NUMBER_OF_TESTS / 2; i++) {
+        gen_conjugate_test(10000 * i, static_cast<size_t>(100 * std::exp(1.0L * std::sqrt(i))));
     }
 }
 

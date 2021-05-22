@@ -277,3 +277,8 @@ inline void run_tests_for_hilbert_matrix_gauss() {
     }
     table_stream_hilbert.close();
 }
+
+void run_tests_conjugate() {
+    std::ofstream table_stream("tex/conjugate/table.csv");
+
+}

@@ -1217,9 +1217,20 @@ void conjugate_test_3_() {
     std::cout << x0 << '\n';
 }
 
+void conjugate_test_5() {
+    MatrixSparseFormat matrix({0, 3, 5, 1, 1}, {1, 3, 4, 1, 1}, {0, 0, 0, 1, 2, 4}, {0, 1, 2, 1, 2});
+    std::cout << matrix(1, 1) << '\n';
+    std::cout << matrix(2, 1) << '\n';
+    std::cout << matrix(1, 3) << '\n';
+    std::cout << matrix(2, 3) << '\n';
+    std::cout << matrix(2, 4) << '\n';
+    std::cout << matrix(1, 5) << '\n';
+    std::cout << matrix(2, 5) << '\n';
+}
+
 void third_lab_main() {
 //    conjugate_test_3();
-    conjugate_test_3_();
+//    conjugate_test_5();
 //    generate_tests();
 //    generate_tests_gauss();
 //    third_lab_test_gauss();
@@ -1230,6 +1241,7 @@ void third_lab_main() {
 //    run_tests_lu();
 //    run_tests_gauss();
 //    run_tests_gauss_same_as_lu();
+    generate_tests_conjugate();
 }
 
 int main() {
