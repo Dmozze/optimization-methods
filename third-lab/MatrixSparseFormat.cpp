@@ -49,19 +49,26 @@ MatrixSparseFormat::T MatrixSparseFormat::get_element(size_t i, size_t j, const 
 }
 
 Vector MatrixSparseFormat::operator*(const Vector &vector) const {
-    Vector answer(vector.size());
-
+    Vector ans(vector.size());
     for (size_t i = 1; i <= dim(); i++) {
         for (size_t j = 1; j <= dim(); j++) {
-            answer[i - 1] += this->operator()(i, j) * vector[j - 1];
+            ans[i - 1] += this->operator()(i, j) * vector[j - 1];
         }
     }
-
-    return answer;
+    return ans;
 }
 
 void MatrixSparseFormat::set_diag_element(const size_t index_diag_element, MatrixSparseFormat::T set_element) {
     diag[index_diag_element] = set_element;
+}
+
+void MatrixSparseFormat::print(std::ostream &out) const {
+    for (size_t i = 1; i <= dim(); i++) {
+        for (size_t j = 1; j <= dim(); j++) {
+            out << this->operator()(i, j) << ' ';
+        }
+        out << std::endl;
+    }
 }
 
 

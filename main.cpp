@@ -1229,7 +1229,8 @@ void conjugate_test_5() {
 }
 
 void conjugate_test_6() {
-    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 3});
+    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 4});
+    matrix.print(std::cout);
     Vector f({-4, 21, 30, 31, -3});
     Vector x0(5);
     long double conjugate_epsilon = 1e-7;
@@ -1239,7 +1240,7 @@ void conjugate_test_6() {
 }
 
 void conjugate_test_7() {
-    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 3});
+    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 4});
     Vector f({0, 13, 14, 21, -5});
     Vector x0(5);
     long double conjugate_epsilon = 1e-7;

@@ -34,4 +34,6 @@ public:
     Vector operator*(Vector const& vector) const;
 
     void set_diag_element(size_t index_diag_element, T set_element);
+
+    void print(std::ostream &out) const;
 };
