@@ -1228,6 +1228,26 @@ void conjugate_test_5() {
     std::cout << matrix(2, 5) << '\n';
 }
 
+void conjugate_test_6() {
+    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 3});
+    Vector f({-4, 21, 30, 31, -3});
+    Vector x0(5);
+    long double conjugate_epsilon = 1e-7;
+    std::cout << ConjugateSolve(matrix, f, epsilon, x0) << std::endl;
+    std::cout << x0 << std::endl;
+    // Expected: [1, 2, 3, 4, 5]
+}
+
+void conjugate_test_7() {
+    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 3});
+    Vector f({0, 13, 14, 21, -5});
+    Vector x0(5);
+    long double conjugate_epsilon = 1e-7;
+    std::cout << ConjugateSolve(matrix, f, epsilon, x0) << std::endl;
+    std::cout << x0 << std::endl;
+    // Expected: [1, 2, 1, 2, 1]
+}
+
 void third_lab_main() {
 //    conjugate_test_3();
 //    conjugate_test_5();
@@ -1241,8 +1261,11 @@ void third_lab_main() {
 //    run_tests_lu();
 //    run_tests_gauss();
 //    run_tests_gauss_same_as_lu();
-    generate_tests_conjugate();
+//    generate_tests_conjugate();
+    conjugate_test_6();
+    conjugate_test_7();
 }
+
 
 int main() {
     //first_lab_main();
