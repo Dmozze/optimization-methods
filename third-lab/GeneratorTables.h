@@ -7,6 +7,7 @@
 #include <fstream>
 #include <vector>
 #include "MatrixGenerator.h"
+#include "MatrixSparseFormat.h"
 #include <cmath>
 #include <iomanip>
 
@@ -278,7 +279,36 @@ inline void run_tests_for_hilbert_matrix_gauss() {
     table_stream_hilbert.close();
 }
 
+template<typename T>
+void calculate_diag(MatrixSparseFormat &matrix) {
+    for (size_t i = 1; i <= matrix.dim(); i++) {
+        for (size_t j = 1; j <= matrix.dim(); j++) {
+
+        }
+    }
+}
+
+template<typename T>
+MatrixSparseFormat read_sparse_matrix(size_t n, size_t density) {
+    const std::string dir = "tests/conjugate/" + std::to_string(n) + "_" + std::to_string(density);
+    std::vector<T> alu = read_vec<T>(dir + "alu.txt");
+    std::vector<T> indexes = read_vec<T>(dir + "indexes.txt");
+    std::vector<T> profile = read_vec<T>(dir + "profile.txt");
+    std::vector<T> diag(n, 0);
+    MatrixSparseFormat answer(alu, diag, profile, indexes);
+
+}
+
 void run_tests_conjugate() {
     std::ofstream table_stream("tex/conjugate/table.csv");
-
+    table_stream << "$n$;Количество итераций;$||x_k - x^*||$;$||x_k - x^*||/||x^*||$;$cond(A)$";
+    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        gen_conjugate_test(50 * i, 100 * i);
+    }
+    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        gen_conjugate_test(500 * i, 1000 * i);
+    }
+    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        gen_conjugate_test(5000 * i, 100000 * i);
+    }
 }

@@ -60,6 +60,10 @@ Vector MatrixSparseFormat::operator*(const Vector &vector) const {
     return answer;
 }
 
+void MatrixSparseFormat::set_diag_element(const size_t index_diag_element, MatrixSparseFormat::T set_element) {
+    diag[index_diag_element] = set_element;
+}
+
 
 
 

@@ -3,7 +3,7 @@
 #include "MatrixSparseFormat.h"
 
 
-inline int ConjugateSolve(MatrixSparseFormat A, Vector f, long double epsilon, Vector &x) {
+inline int ConjugateSolve(MatrixSparseFormat const & A, Vector f, long double epsilon, Vector &x) {
     Vector A_x = A * x;
     Vector r = f - A_x;
     Vector z = r;
@@ -13,14 +13,16 @@ inline int ConjugateSolve(MatrixSparseFormat A, Vector f, long double epsilon, V
             break;
         }
         cnt++;
-        Vector A_z = A * z;
-        long double r_square = r * r;
-        long double alpha = r_square / (A_z * z);
+        auto A_z = A * z;
+        auto Az_z = A_z * z;
+        auto r_r = r * r;
+        auto alpha = r_r / Az_z;
         auto alpha_z = z * alpha;
         x = x + alpha_z;
-        auto alpha_A_z = A_z * alpha;
-        r = r - alpha_A_z;
-        long double betta = (r * r) / r_square;
+        auto alpha_Az = A_z * alpha;
+        r = r - alpha_Az;
+        auto r1_r1 = r * r;
+        auto betta = r1_r1 / r_r;
         auto betta_z = z * betta;
         z = r + betta_z;
     }
