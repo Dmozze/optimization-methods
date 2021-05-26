@@ -68,7 +68,7 @@ std::vector<std::vector<long double>> generate_gauss_matrix(size_t matrix_size) 
 }
 
 std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> generate_conjugate_matrix(size_t matrix_size, size_t density) {
-    std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> result(matrix_size);
+    std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> result;
     for (size_t i = 0; i < matrix_size; i++) {
         result.emplace_back();
         for (size_t j = 0; j < i; j++) {
