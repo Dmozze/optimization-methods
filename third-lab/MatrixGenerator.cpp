@@ -69,17 +69,17 @@ std::vector<std::vector<long double>> generate_gauss_matrix(size_t matrix_size) 
 
 std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> generate_conjugate_matrix(size_t matrix_size, size_t density) {
     std::vector<std::vector<std::pair<int32_t, std::pair<size_t, size_t>>>> result;
-    for (size_t i = 0; i < matrix_size; i++) {
+    for (size_t i = 0; i < matrix_size; i++){
         result.emplace_back();
+        int32_t one_million_percents = i > 0 ? uniform_dist_conjugate(e1) % i : 0;
         for (size_t j = 0; j < i; j++) {
-            if (!(uniform_dist_conjugate(e1) % density)){
+            if (one_million_percents == j || !(uniform_dist_conjugate(e1) % density)){
                 result.back().push_back({uniform_dist_conjugate_value(e1),{i,j}});
             }
         }
     }
     return result;
 }
-
 std::vector<long double> fill_up(size_t vec_size) {
     std::vector<long double> result(vec_size + 1);
     for (long double& i : result) {
