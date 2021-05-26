@@ -8,10 +8,15 @@ inline int ConjugateSolve(MatrixSparseFormat const & A, Vector f, long double ep
     Vector r = f - A_x;
     Vector z = r;
     int cnt = 0;
+//    bool flag = false;
     while (true) {
-        if (r.norma() < epsilon * f.norma()) {
-            break;
-        }
+//        if (cnt ==  100) {
+//            break;
+//        }
+//        std::cout << "x: " << x << std::endl;
+//        std::cout << "r: " << r << std::endl;
+//        std::cout << "z: " << z << std::endl;
+//        std::cout << std::endl;
         cnt++;
         auto A_z = A * z;
         auto Az_z = A_z * z;
@@ -25,6 +30,12 @@ inline int ConjugateSolve(MatrixSparseFormat const & A, Vector f, long double ep
         auto betta = r1_r1 / r_r;
         auto betta_z = z * betta;
         z = r + betta_z;
+//        if (flag) {
+//            break;
+//        }
+        if (r.norma()  < epsilon) {
+            break;
+        }
     }
     return cnt;
 }

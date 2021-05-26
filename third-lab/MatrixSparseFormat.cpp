@@ -59,7 +59,7 @@ Vector MatrixSparseFormat::operator*(const Vector &vector) const {
 }
 
 void MatrixSparseFormat::set_diag_element(const size_t index_diag_element, MatrixSparseFormat::T set_element) {
-    diag[index_diag_element] = set_element;
+    diag[index_diag_element - 1] = set_element;
 }
 
 void MatrixSparseFormat::print(std::ostream &out) const {

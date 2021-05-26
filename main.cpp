@@ -1230,7 +1230,6 @@ void conjugate_test_5() {
 
 void conjugate_test_6() {
     MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 4});
-    matrix.print(std::cout);
     Vector f({-4, 21, 30, 31, -3});
     Vector x0(5);
     long double conjugate_epsilon = 1e-7;
@@ -1249,7 +1248,18 @@ void conjugate_test_7() {
     // Expected: [1, 2, 1, 2, 1]
 }
 
+void conjugate_test_8() {
+    MatrixSparseFormat matrix({0, 3, 1, -1, -3}, {1, 4, 8, 11, 2}, {0, 0, 0, 1, 2, 4}, {0, 2, 2, 1, 4});
+    matrix.print(std::cout);
+    std::vector<long double> iot(5);
+    std::iota(iot.begin(), iot.end(), 1);
+    Vector iot_v(iot);
+    auto mul = matrix * iot;
+    std::cout << mul << '\n';
+}
+
 void third_lab_main() {
+    run_tests_conjugate();
 //    conjugate_test_3();
 //    conjugate_test_5();
 //    generate_tests();
@@ -1263,8 +1273,9 @@ void third_lab_main() {
 //    run_tests_gauss();
 //    run_tests_gauss_same_as_lu();
 //    generate_tests_conjugate();
-    conjugate_test_6();
-    conjugate_test_7();
+//    conjugate_test_6();
+//    conjugate_test_7();
+//    conjugate_test_8();
 }
 
 

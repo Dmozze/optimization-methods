@@ -8,6 +8,7 @@
 #include <vector>
 #include "MatrixGenerator.h"
 #include "MatrixSparseFormat.h"
+#include "ConjugateSolver.h"
 #include <cmath>
 #include <iomanip>
 
@@ -283,20 +284,56 @@ template<typename T>
 void calculate_diag(MatrixSparseFormat &matrix) {
     for (size_t i = 1; i <= matrix.dim(); i++) {
         for (size_t j = 1; j <= matrix.dim(); j++) {
-
+            matrix.set_diag_element(i, matrix(i, i) - matrix(i, j));
         }
     }
+    matrix.set_diag_element(1, matrix(1, 1) + 1);
 }
 
 template<typename T>
 MatrixSparseFormat read_sparse_matrix(size_t n, size_t density) {
     const std::string dir = "tests/conjugate/" + std::to_string(n) + "_" + std::to_string(density);
     std::vector<T> alu = read_vec<T>(dir + "alu.txt");
-    std::vector<T> indexes = read_vec<T>(dir + "indexes.txt");
-    std::vector<T> profile = read_vec<T>(dir + "profile.txt");
+    std::vector<size_t> indexes = read_vec<size_t>(dir + "indexes.txt");
+    std::vector<int> profile = read_vec<int>(dir + "profile.txt");
     std::vector<T> diag(n, 0);
     MatrixSparseFormat answer(alu, diag, profile, indexes);
+    calculate_diag<T>(answer);
+    return answer;
+}
 
+Vector get_x_star(size_t n) {
+    std::vector<long double> iot(n);
+    std::iota(iot.begin(), iot.end(), 1);
+    Vector ans(iot);
+    return ans;
+}
+
+Vector gen_f_conjugate(MatrixSparseFormat &matrix) {
+    return matrix * get_x_star(matrix.dim());
+}
+
+void solve_problem_conjugate(size_t n, size_t density, std::ofstream &table_stream) {
+    MatrixSparseFormat matrixSparseFormat = read_sparse_matrix<long double>(n, density);
+    Vector f = gen_f_conjugate(matrixSparseFormat);
+    Vector x0(n);
+    long double epsilon = 1e-7;
+    int cnt = ConjugateSolve(matrixSparseFormat, f, epsilon, x0);
+    Vector x_star = get_x_star(n);
+    Vector diff_x_star_xk = x0 - x_star;
+    Vector Ax = matrixSparseFormat * x0;
+    Vector diff_f_Ax = f - Ax;
+    auto diff_x_star_xk_norma = diff_x_star_xk.norma();
+    auto x_star_norma = x_star.norma();
+    auto diff_div1 = diff_x_star_xk_norma / x_star_norma;
+    auto diff_div2 = diff_f_Ax.norma() / f.norma();
+    table_stream << n << ";"
+                 << cnt << ";"
+                 << diff_x_star_xk_norma << ";"
+                 << diff_div1 << ";"
+                 << diff_div1 / diff_div2
+                 << std::endl;
+    std::cout << x0 << std::endl;
 }
 
 void run_tests_conjugate() {
@@ -304,6 +341,7 @@ void run_tests_conjugate() {
     table_stream << "$n$;Количество итераций;$||x_k - x^*||$;$||x_k - x^*||/||x^*||$;$cond(A)$";
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
 //        gen_conjugate_test(50 * i, 100 * i);
+        solve_problem_conjugate(50 * i, 100 * i, table_stream);
     }
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
 //        gen_conjugate_test(500 * i, 1000 * i);
