@@ -280,8 +280,8 @@ inline void run_tests_for_hilbert_matrix_gauss() {
     table_stream_hilbert.close();
 }
 
-template<typename T>
-void calculate_diag(MatrixSparseFormat &matrix) {
+template <typename T>
+void calculate_diag(MatrixSparseFormat& matrix) {
     for (size_t i = 1; i <= matrix.dim(); i++) {
         for (size_t j = 1; j <= matrix.dim(); j++) {
             matrix.set_diag_element(i, matrix(i, i) - matrix(i, j));
@@ -290,7 +290,7 @@ void calculate_diag(MatrixSparseFormat &matrix) {
     matrix.set_diag_element(1, matrix(1, 1) + 1);
 }
 
-template<typename T>
+template <typename T>
 MatrixSparseFormat read_sparse_matrix(size_t n, size_t density) {
     const std::string dir = "tests/conjugate/" + std::to_string(n) + "_" + std::to_string(density);
     std::vector<T> alu = read_vec<T>(dir + "alu.txt");
@@ -309,11 +309,11 @@ Vector get_x_star(size_t n) {
     return ans;
 }
 
-Vector gen_f_conjugate(MatrixSparseFormat &matrix) {
+Vector gen_f_conjugate(MatrixSparseFormat& matrix) {
     return matrix * get_x_star(matrix.dim());
 }
 
-void solve_problem_conjugate(size_t n, size_t density, std::ofstream &table_stream) {
+void solve_problem_conjugate(size_t n, size_t density, std::ofstream& table_stream) {
     MatrixSparseFormat matrixSparseFormat = read_sparse_matrix<long double>(n, density);
     Vector f = gen_f_conjugate(matrixSparseFormat);
     Vector x0(n);
@@ -327,6 +327,7 @@ void solve_problem_conjugate(size_t n, size_t density, std::ofstream &table_stre
     auto x_star_norma = x_star.norma();
     auto diff_div1 = diff_x_star_xk_norma / x_star_norma;
     auto diff_div2 = diff_f_Ax.norma() / f.norma();
+    std::cerr << "x* norm: " << x_star_norma << " diff_div2: " << diff_div2 << std::endl;
     table_stream << n << ";"
                  << cnt << ";"
                  << diff_x_star_xk_norma << ";"
@@ -340,13 +341,28 @@ void run_tests_conjugate() {
     std::ofstream table_stream("tex/conjugate/table.csv");
     table_stream << "$n$;Количество итераций;$||x_k - x^*||$;$||x_k - x^*||/||x^*||$;$cond(A)$";
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-//        gen_conjugate_test(50 * i, 100 * i);
+        //        gen_conjugate_test(50 * i, 100 * i);
         solve_problem_conjugate(50 * i, 100 * i, table_stream);
     }
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-//        gen_conjugate_test(500 * i, 1000 * i);
+        //        gen_conjugate_test(500 * i, 1000 * i);
     }
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-//        gen_conjugate_test(5000 * i, 100000 * i);
+        //        gen_conjugate_test(5000 * i, 100000 * i);
     }
 }
+
+//void run_hilbert_tests_conjugate() {
+//    std::ofstream table_stream("tex/conjugate/table_hilbert.csv");
+//    table_stream << "$n$;Количество итераций;$||x_k - x^*||$;$||x_k - x^*||/||x^*||$;$cond(A)$";
+//    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        //        gen_conjugate_test(50 * i, 100 * i);
+//        solve_problem_conjugate(50 * i, 100 * i, table_stream);
+//    }
+//    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        //        gen_conjugate_test(500 * i, 1000 * i);
+//    }
+//    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        //        gen_conjugate_test(5000 * i, 100000 * i);
+//    }
+//}

@@ -1031,7 +1031,7 @@ void gauss_third_dim_test() {
                           {2, -1, 2},
                           {1, 1, 5}}},
                         {{1, 6, -1}});
-        std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
+    std::cout << "Expected: [4, 0, -1], Got: " << x << std::endl;
     assert(x.size() == 3);
 }
 
@@ -1191,10 +1191,10 @@ void hilbert_format_tests() {
 
 void conjugate_test_3() {
     MatrixSparseFormat matrix({0, 2, 1, 1}, {1, -1, 5}, {0, 0, 1, 3}, {0, 1, 1, 2});
-//    std::cout << matrix(1, 1) << '\n';
-//    std::cout << matrix(2, 1) << '\n';
-//    std::cout << matrix(1, 3) << '\n';
-//    std::cout << matrix(2, 3) << '\n';
+    //    std::cout << matrix(1, 1) << '\n';
+    //    std::cout << matrix(2, 1) << '\n';
+    //    std::cout << matrix(1, 3) << '\n';
+    //    std::cout << matrix(2, 3) << '\n';
     Vector f({3, 7, -1});
     Vector x0(3);
     long double epsilon_conjugate = 1e-7;
@@ -1259,25 +1259,24 @@ void conjugate_test_8() {
 }
 
 void third_lab_main() {
+    generate_tests_conjugate();
     run_tests_conjugate();
-//    conjugate_test_3();
-//    conjugate_test_5();
-//    generate_tests();
-//    generate_tests_gauss();
-//    third_lab_test_gauss();
-//    lu_tests();
-//    hilbert_format_tests();
-//    run_tests_for_hilbert_matrix();
-//    run_tests_for_hilbert_matrix_gauss();
-//    run_tests_lu();
-//    run_tests_gauss();
-//    run_tests_gauss_same_as_lu();
-//    generate_tests_conjugate();
-//    conjugate_test_6();
-//    conjugate_test_7();
-//    conjugate_test_8();
+    //    conjugate_test_3();
+    //    conjugate_test_5();
+    //    generate_tests();
+    //    generate_tests_gauss();
+    //    third_lab_test_gauss();
+    //    lu_tests();
+    //    hilbert_format_tests();
+    //    run_tests_for_hilbert_matrix();
+    //    run_tests_for_hilbert_matrix_gauss();
+    //    run_tests_lu();
+    //    run_tests_gauss();
+    //    run_tests_gauss_same_as_lu();
+    //    conjugate_test_6();
+    //    conjugate_test_7();
+    //    conjugate_test_8();
 }
-
 
 int main() {
     //first_lab_main();
