@@ -327,14 +327,16 @@ void solve_problem_conjugate(size_t n, size_t density, std::ofstream& table_stre
     auto x_star_norma = x_star.norma();
     auto diff_div1 = diff_x_star_xk_norma / x_star_norma;
     auto diff_div2 = diff_f_Ax.norma() / f.norma();
-    std::cerr << "x* norm: " << x_star_norma << " diff_div2: " << diff_div2 << std::endl;
+    std::cerr << "n: " << n << " x* norm: " << x_star_norma << " diff_div2: " << diff_div2 << std::endl;
     table_stream << n << ";"
                  << cnt << ";"
                  << diff_x_star_xk_norma << ";"
                  << diff_div1 << ";"
                  << diff_div1 / diff_div2
                  << std::endl;
-    std::cout << x0 << std::endl;
+    if (x0.size() <= 100) {
+        std::cout << x0 << std::endl;
+    }
 }
 
 void run_tests_conjugate() {
@@ -346,9 +348,11 @@ void run_tests_conjugate() {
     }
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
         //        gen_conjugate_test(500 * i, 1000 * i);
+        solve_problem_conjugate(500 * i, 1000 * i, table_stream);
     }
     for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
         //        gen_conjugate_test(5000 * i, 100000 * i);
+        solve_problem_conjugate(5000 * i, 100000 * i, table_stream);
     }
 }
 

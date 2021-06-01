@@ -157,15 +157,15 @@ void generate_tests_gauss() {
 }
 
 void generate_tests_conjugate() {
-    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-        gen_conjugate_test(50 * i, 100 * i);
-    }
-    //    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-    //        gen_conjugate_test(500 * i, 1000 * i);
-    //    }
-    //    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
-    //        gen_conjugate_test(5000 * i, 100000 * i);
-    //    }
+//    for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+//        gen_conjugate_test(50 * i, 100 * i);
+//    }
+        for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+            gen_conjugate_test(500 * i, 1000 * i);
+        }
+        for (size_t i = 1; i <= NUMBER_OF_TESTS; i++) {
+            gen_conjugate_test(5000 * i, 100000 * i);
+        }
 }
 
 void generate_tests() {

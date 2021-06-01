@@ -51,9 +51,14 @@ MatrixSparseFormat::T MatrixSparseFormat::get_element(size_t i, size_t j, const 
 Vector MatrixSparseFormat::operator*(const Vector &vector) const {
     Vector ans(vector.size());
     for (size_t i = 1; i <= dim(); i++) {
-        for (size_t j = 1; j <= dim(); j++) {
-            ans[i - 1] += this->operator()(i, j) * vector[j - 1];
+        for (size_t j = profile[i - 1] + 1; j <= profile[i]; j++) {
+            ans[i - 1] += alu[j] * vector[indexes[j] - 1];
+            ans[indexes[j] - 1] += alu[j] * vector[i - 1];
         }
+        ans[i - 1] += diag[i - 1] * vector[i - 1];
+//        for (size_t j = 1; j <= dim(); j++) {
+//            ans[i - 1] += this->operator()(i, j) * vector[j - 1];
+//        }
     }
     return ans;
 }
