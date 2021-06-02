@@ -37,7 +37,7 @@ public:
         return CurrentX;
     }
 
-    virtual Vector CalcStep(Matrix hessianValue, Vector antigrad) = 0;
+    virtual Vector CalcStep(const Matrix& hessianValue, const Vector& antigrad) = 0;
     virtual long double CalcScaling() {
         return 1;
     }
@@ -52,7 +52,7 @@ class TNewtonMethod : public INewtonMethod {
 public:
     using INewtonMethod::INewtonMethod;
 
-    Vector CalcStep(Matrix hessianValue, Vector antigrad) override {
+    Vector CalcStep(const Matrix& hessianValue, const Vector& antigrad) override {
         return GaussSolve(hessianValue, antigrad);
     }
 };
@@ -61,7 +61,7 @@ class TOneDimNewtonMethod : public INewtonMethod {
 public:
     using INewtonMethod::INewtonMethod;
 
-    Vector CalcStep(Matrix hessianValue, Vector antigrad) override {
+    Vector CalcStep(const Matrix& hessianValue, const Vector& antigrad) override {
         return GaussSolve(hessianValue, antigrad);
     }
 
@@ -82,5 +82,19 @@ private:
             }
         }
         return x;
+    }
+};
+
+class TDescentNewtonMethod : public TOneDimNewtonMethod {
+public:
+    using TOneDimNewtonMethod::TOneDimNewtonMethod;
+
+    Vector CalcStep(const Matrix& hessianValue, const Vector& antigrad) override {
+        auto step = TOneDimNewtonMethod::CalcStep(hessianValue, antigrad);
+        if (antigrad * step < 0) {
+            return antigrad;
+        } else {
+            return step;
+        }
     }
 };

@@ -30,7 +30,7 @@ Vector Vector::operator+(Vector const& vector) const {
     return Vector(sum_v);
 }
 
-Vector::T Vector::operator*(Vector& vector) {
+Vector::T Vector::operator*(Vector const& vector) const {
     T scalar_prod = 0.0L;
     for (size_t i = 0; i < std::min(v.size(), vector.size()); i++) {
         scalar_prod += v[i] * vector[i];
@@ -52,7 +52,7 @@ Vector Vector::operator-(Vector& vector) {
     return this_ + neg_vec;
 }
 
-Vector Vector::operator*(Vector::T value) {
+Vector Vector::operator*(Vector::T value) const {
     Vector_type answer(size());
     for (size_t i = 0; i < answer.size(); i++) {
         answer[i] = this->operator[](i) * value;

@@ -31,9 +31,9 @@ public:
 
     Vector operator-(Vector& vector);
 
-    T operator*(Vector& vector);
+    T operator*(Vector const& vector) const;
 
-    Vector operator*(T value);
+    Vector operator*(T value) const;
 
     T Norm();
 

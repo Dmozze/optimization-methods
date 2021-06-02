@@ -19,6 +19,8 @@ public:
 
     Vector& operator[](size_t index);
 
+    Vector const& operator[](size_t index) const;
+
     Matrix operator+(Matrix& a);
 
     Matrix operator-();
@@ -27,7 +29,7 @@ public:
 
     Matrix operator*(T value);
 
-    Vector operator*(Vector& vector);
+    Vector operator*(Vector const& vector) const;
 
     Matrix operator*(Matrix& matrix1);
 

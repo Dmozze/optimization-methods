@@ -9,11 +9,15 @@ Matrix::Matrix(Matrix::Matrix_type& matrix)
     : matrix(matrix) {
 }
 
-size_t Matrix::size() {
+size_t Matrix::size() const {
     return matrix.size();
 }
 
 Vector& Matrix::operator[](size_t index) {
+    return matrix[index];
+}
+
+Vector const& Matrix::operator[](size_t index) const {
     return matrix[index];
 }
 
@@ -53,7 +57,7 @@ Matrix Matrix::operator*(Matrix::T value) {
     return Matrix(matrixProd);
 }
 
-Vector Matrix::operator*(Vector& vector) {
+Vector Matrix::operator*(Vector const& vector) const {
     Vector answer(size());
     for (size_t i = 0; i < size(); i++) {
         for (size_t j = 0; j < size(); j++) {
