@@ -1,7 +1,3 @@
-//
-// Created by andrey on 13.05.2021.
-//
-
 #include "MatrixSparseFormat.h"
 
 #include <utility>
@@ -56,9 +52,6 @@ Vector MatrixSparseFormat::operator*(const Vector &vector) const {
             ans[indexes[j] - 1] += alu[j] * vector[i - 1];
         }
         ans[i - 1] += diag[i - 1] * vector[i - 1];
-//        for (size_t j = 1; j <= dim(); j++) {
-//            ans[i - 1] += this->operator()(i, j) * vector[j - 1];
-//        }
     }
     return ans;
 }
