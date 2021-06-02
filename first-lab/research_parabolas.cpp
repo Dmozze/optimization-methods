@@ -1,5 +1,4 @@
 #include "search-metods.h"
-#include <random>
 #include <iomanip>
 
 std::pair<long double, long double>
@@ -17,7 +16,7 @@ research_find_mid(const std::function<long double(long double)>& func, const ran
     return {mid, f_mid};
 }
 
-information_search search_methods::research_parabolas_(std::function<long double(long double)>& func, range r, long double& current_mid, long double step) const {
+information_search search_methods::research_parabolas_(std::function<long double(long double)> const& func, range r, long double& current_mid, long double step) const {
     size_t cnt = 0;
     const std::function<long double(long double)> func_cnt = search_methods::find_cnt_func(func, cnt);
     long double x1 = r.left();
@@ -66,7 +65,7 @@ information_search search_methods::research_parabolas_(std::function<long double
     return answer;
 }
 
-void search_methods::research_parabolas(std::function<long double(long double)>& func, range r,
+void search_methods::research_parabolas(std::function<long double(long double)> const& func, range r,
                                         long double step) const {
     std::ostringstream s;
     s << std::setprecision(15) << epsilon;

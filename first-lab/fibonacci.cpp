@@ -1,6 +1,6 @@
 #include "search-metods.h"
 
-information_search search_methods::fibonacci(std::function<long double(long double)>& func, range r) {
+information_search search_methods::fibonacci(std::function<long double(long double)>const& func, range r) {
     size_t cnt;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
     auto n = static_cast<size_t>(floorl(log(sqrtl(5) * (r.right() - r.left()) / epsilon) / logl((1 + sqrtl(5)) / 2)));

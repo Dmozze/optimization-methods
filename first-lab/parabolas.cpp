@@ -36,7 +36,7 @@ long double search_methods::calc_u(const long double& x1, const long double& f_x
                     (2 * (delta_x2_x1 * delta_f2_f3 - delta_x2_x3 * delta_f2_f1));
 }
 
-information_search search_methods::parabolas(std::function<long double(long double)>& func, range r) const {
+information_search search_methods::parabolas(std::function<long double(long double)> const& func, range r) const {
     size_t cnt = 0;
     const std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
     long double x1 = r.left();

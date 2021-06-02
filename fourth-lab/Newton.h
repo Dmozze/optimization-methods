@@ -5,6 +5,7 @@
 #include <algebra/Vector.h>
 #include <algebra/Matrix.h>
 
+#include <search-metods.h>
 #include <GaussSolver.h>
 
 inline constexpr long double EPS = 1e-7;
@@ -69,12 +70,15 @@ public:
     }
 
     long double CalcScaling() override {
-        return DichotomyMinimize([this](long double a) { return Func.FuncApplier(CurrentX + P * a); }, 1, 1000);
+        auto f = [this](long double a) { return Func.FuncApplier(CurrentX + P * a); };
+        return search_methods(EPS).golden_ratio(f, {-100, 100}).point;
     }
+    // todo: не понятно ,какие границы для альфа
+    //          мне сказали, что при положительных может не сходиться, хотя это странно
 
 private:
     template <typename FuncMinimize>
-    long double DichotomyMinimize(FuncMinimize&& f, long double left, long double right) {
+    long double GoldenRatioMinimize(FuncMinimize&& f, long double left, long double right) {
         long double x = 0;
         while (std::abs(right - left) > EPS) {
             x = (left + right) / 2;

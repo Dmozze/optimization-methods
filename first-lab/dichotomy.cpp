@@ -1,6 +1,6 @@
 #include "search-metods.h"
 
-information_search search_methods::dichotomy(std::function<long double(long double)>& func, range r) const {
+information_search search_methods::dichotomy(std::function<long double(long double)>const& func, range r) const {
     size_t cnt = 0;
     std::function<long double(long double)> func_cnt = find_cnt_func(func, cnt);
     long double delta = epsilon / 2;

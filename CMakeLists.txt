@@ -9,6 +9,7 @@ endif ()
 
 set(CMAKE_CXX_STANDARD 17)
 include_directories(utils)
+include_directories(first-lab)
 include_directories(third-lab)
 add_executable(optimization_methods main.cpp
         first-lab/search-metods.cpp first-lab/dichotomy.cpp
