@@ -28,9 +28,10 @@ public:
     virtual Vector Minimize() {
         while (true) {
             auto antigrad = -Func.GradApplier(CurrentX);
-            if (antigrad.Norm() < EPS) {
+            if (antigrad.Norm() < EPS) { // todo: сравнивать дельту между шагами
                 break;
             }
+            ++IterCounter;
             P = CalcStep(Func.HessianApplier(CurrentX), antigrad);
             CurrentX += P * CalcScaling();
         }
@@ -42,13 +43,15 @@ public:
         return 1;
     }
 
+    uint64_t IterCounter = 0;
+
 protected:
     FunctionData Func;
     Vector CurrentX;
     Vector P;
 };
 
-class TNewtonMethod : public INewtonMethod {
+class TBaseNewtonMethod : public INewtonMethod {
 public:
     using INewtonMethod::INewtonMethod;
 
@@ -66,7 +69,7 @@ public:
     }
 
     long double CalcScaling() override {
-        return DichotomyMinimize([this](long double a) { return Func.FuncApplier(CurrentX + P * a); }, 0, 1000);
+        return DichotomyMinimize([this](long double a) { return Func.FuncApplier(CurrentX + P * a); }, 1, 1000);
     }
 
 private:
