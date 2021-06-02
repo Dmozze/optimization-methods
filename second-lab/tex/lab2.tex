@@ -587,7 +587,7 @@ size_t conjugate_gradient(QuadraticFunctionType &function, Vector &x0) const {
     Vector last_A_pk(x0.size());
     size_t cnt = 0;
     while (true) {
-        if (gradient0.norma() < epsilon) {
+        if (gradient0.Norm() < epsilon) {
             break;
         }
         cnt++;

@@ -9,6 +9,8 @@ class Vector {
     Vector_type v;
 
 public:
+    Vector() = default;
+
     Vector(size_t n);
 
     Vector(Vector_type vec);
@@ -18,7 +20,12 @@ public:
     T const& operator[](size_t index) const;
     T& operator[](size_t index);
 
-    Vector operator+(Vector& vector);
+    Vector operator+(Vector const& vector) const;
+
+    Vector& operator+=(Vector const& vector) {
+        *this = *this + vector;
+        return *this;
+    }
 
     Vector operator-();
 
@@ -28,7 +35,7 @@ public:
 
     Vector operator*(T value);
 
-    T norma();
+    T Norm();
 
     friend std::ostream& operator<<(std::ostream& out, Vector vector) {
         out << '[';

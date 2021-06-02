@@ -9,6 +9,7 @@ endif ()
 
 set(CMAKE_CXX_STANDARD 17)
 include_directories(utils)
+include_directories(third-lab)
 add_executable(optimization_methods main.cpp
         first-lab/search-metods.cpp first-lab/dichotomy.cpp
         first-lab/golden_ratio.cpp first-lab/fibonacci.cpp
@@ -24,3 +25,4 @@ add_executable(optimization_methods main.cpp
         third-lab/LUSolver.h third-lab/HilbertMatrix.h third-lab/GeneratorTables.h
         third-lab/MatrixSparseFormat.cpp third-lab/MatrixSparseFormat.h
         third-lab/MatrixGenerator.cpp third-lab/ConjugateSolver.h)
+add_executable(fourth-opt-lab fourth-lab.cpp)

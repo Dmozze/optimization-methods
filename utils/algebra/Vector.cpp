@@ -22,7 +22,7 @@ Vector::T& Vector::operator[](size_t index) {
     return v[index];
 }
 
-Vector Vector::operator+(Vector& vector) {
+Vector Vector::operator+(Vector const& vector) const {
     Vector_type sum_v(std::max(v.size(), vector.size()));
     for (size_t i = 0; i < sum_v.size(); i++) {
         sum_v[i] = v[i] + vector[i];
@@ -60,7 +60,7 @@ Vector Vector::operator*(Vector::T value) {
     return Vector(answer);
 }
 
-Vector::T Vector::norma() {
+Vector::T Vector::Norm() {
     Vector this_(v);
     T square_norma = this_ * this_;
     return sqrtl(square_norma);

@@ -8,7 +8,7 @@
 //    while (true) {
 //        cnt++;
 //        Vector gradient = function.gradient(x0);
-//        if (gradient.norma() < epsilon) {
+//        if (gradient.Norm() < epsilon) {
 //            break;
 //        }
 //        std::function<T(T)> F = [&](T alpha) {

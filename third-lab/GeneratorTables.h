@@ -94,8 +94,8 @@ inline void put_result_to_table_lu_solve(int k, LUMatrix const& matrix, Vector f
     Vector x = LUSolve(matrix, std::move(f));
     Vector iota = get_iota_vector(matrix.dim());
 
-    long double norma = iota.norma();
-    long double norma_difference = (iota - x).norma();
+    long double norma = iota.Norm();
+    long double norma_difference = (iota - x).Norm();
     std::cout << std::setprecision(8);
     table_stream << std::setprecision(8);
     std::cout << matrix.dim() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
@@ -105,8 +105,8 @@ inline void put_result_to_table_lu_solve(int k, LUMatrix const& matrix, Vector f
 inline void put_result_to_table_gauss_solve(Matrix matrix, Vector f, std::ofstream& table_stream) {
     Vector iota = get_iota_vector(matrix.size());
     Vector x = GaussSolve(matrix, std::move(f));
-    long double norma = iota.norma();
-    long double norma_difference = (iota - x).norma();
+    long double norma = iota.Norm();
+    long double norma_difference = (iota - x).Norm();
     std::cout << std::setprecision(8);
     table_stream << std::setprecision(8);
     std::cout << matrix.size() << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
@@ -116,8 +116,8 @@ inline void put_result_to_table_gauss_solve(Matrix matrix, Vector f, std::ofstre
 inline void put_result_to_table_gauss_solve_with_k(Matrix matrix, Vector f, int k, std::ofstream& table_stream) {
     Vector iota = get_iota_vector(matrix.size());
     Vector x = GaussSolve(matrix, std::move(f));
-    long double norma = iota.norma();
-    long double norma_difference = (iota - x).norma();
+    long double norma = iota.Norm();
+    long double norma_difference = (iota - x).Norm();
     std::cout << std::setprecision(8);
     table_stream << std::setprecision(8);
     std::cout << matrix.size() << ";" << k << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
@@ -128,8 +128,8 @@ inline void put_result_to_table(LUMatrix const& matrix, Vector f, std::ofstream&
     Vector x = LUSolve(matrix, std::move(f));
     Vector iota = get_iota_vector(matrix.dim());
 
-    long double norma = iota.norma();
-    long double norma_difference = (iota - x).norma();
+    long double norma = iota.Norm();
+    long double norma_difference = (iota - x).Norm();
     std::cout << std::setprecision(8);
     table_stream << std::setprecision(8);
     std::cout << matrix.dim() << ";" << norma_difference << ";" << norma_difference / norma << std::endl;
@@ -323,10 +323,10 @@ void solve_problem_conjugate(size_t n, size_t density, std::ofstream& table_stre
     Vector diff_x_star_xk = x0 - x_star;
     Vector Ax = matrixSparseFormat * x0;
     Vector diff_f_Ax = f - Ax;
-    auto diff_x_star_xk_norma = diff_x_star_xk.norma();
-    auto x_star_norma = x_star.norma();
+    auto diff_x_star_xk_norma = diff_x_star_xk.Norm();
+    auto x_star_norma = x_star.Norm();
     auto diff_div1 = diff_x_star_xk_norma / x_star_norma;
-    auto diff_div2 = diff_f_Ax.norma() / f.norma();
+    auto diff_div2 = diff_f_Ax.Norm() / f.Norm();
     std::cerr << "n: " << n << " x* norm: " << x_star_norma << " diff_div2: " << diff_div2 << std::endl;
     table_stream << n << ";"
                  << cnt << ";"

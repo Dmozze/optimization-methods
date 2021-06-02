@@ -8,7 +8,7 @@
 //    while (true) {
 //        cnt++;
 //        Vector gradient = function.gradient(x);
-//        T norma_gradient = gradient.norma();
+//        T norma_gradient = gradient.Norm();
 //        std::cout << norma_gradient << ' ';
 //        if (norma_gradient < epsilon) {
 //            break;

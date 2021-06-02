@@ -172,17 +172,17 @@ void test_main() {
     for (size_t i = 0; i < VV.size(); i++) {
         std::cout << VV[i] << '\n';
     }
-    std::cout << "norma VV: " << VV.norma();
+    std::cout << "Norm VV: " << VV.Norm();
     std::cout << '\n';
-    std::cout << "norma V11: " << V11.norma();
+    std::cout << "Norm V11: " << V11.Norm();
     std::cout << '\n';
-    std::cout << "norma V_pifagor: " << V_pifagor.norma();
+    std::cout << "Norm V_pifagor: " << V_pifagor.Norm();
     std::cout << '\n';
     std::cout << "V_good:\n";
     for (size_t i = 0; i < V_good.size(); i++) {
         std::cout << V_good[i] << '\n';
     }
-    std::cout << "norma V_good: " << V_good.norma() << '\n';
+    std::cout << "Norm V_good: " << V_good.Norm() << '\n';
 
     std::cout << "determinant:\n";
     std::cout << MM.determinant() << '\n';
@@ -1259,7 +1259,7 @@ void conjugate_test_8() {
 }
 
 void third_lab_main() {
-//    generate_tests_conjugate();
+    //    generate_tests_conjugate();
     run_tests_conjugate();
     //    conjugate_test_3();
     //    conjugate_test_5();
@@ -1275,7 +1275,7 @@ void third_lab_main() {
     //    run_tests_gauss_same_as_lu();
     //    conjugate_test_6();
     //    conjugate_test_7();
-//        conjugate_test_8();
+    //        conjugate_test_8();
 }
 
 int main() {

@@ -15,7 +15,7 @@
 //    int cnt = 0;
 //    while (true) {
 //        cnt++;
-//        if (gradient0.norma() < epsilon) {
+//        if (gradient0.Norm() < epsilon) {
 //            break;
 //        }
 //

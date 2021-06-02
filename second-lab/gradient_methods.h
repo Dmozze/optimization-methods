@@ -21,7 +21,7 @@ public:
         size_t cnt = 0;
         while (true) {
             Vector gradient = function.gradient(x);
-            T norma_gradient = gradient.norma();
+            T norma_gradient = gradient.Norm();
             if (norma_gradient < epsilon) {
                 break;
             }
@@ -48,7 +48,7 @@ public:
         size_t cnt = 0;
         while (true) {
             Vector gradient = function.gradient(x0);
-            if (gradient.norma() < epsilon) {
+            if (gradient.Norm() < epsilon) {
                 break;
             }
             cnt++;
@@ -91,7 +91,7 @@ public:
         Vector last_A_pk(x0.size());
         size_t cnt = 0;
         while (true) {
-            if (gradient0.norma() < epsilon) {
+            if (gradient0.Norm() < epsilon) {
                 break;
             }
             cnt++;

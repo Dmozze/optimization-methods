@@ -22,7 +22,7 @@ inline int ConjugateSolve(MatrixSparseFormat const & A, Vector f, long double ep
         auto betta = r1_r1 / r_r;
         auto betta_z = z * betta;
         z = r + betta_z;
-        if (r.norma()  < epsilon) {
+        if (r.Norm()  < epsilon) {
             break;
         }
     }
