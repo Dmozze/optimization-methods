@@ -8,9 +8,9 @@
 #include <GaussSolver.h>
 
 inline constexpr long double EPS = 1e-7;
-using Func = std::function<long double(Vector)>;
-using Grad = std::function<Vector(Vector)>;
-using Hess = std::function<Matrix(Vector)>;
+using Func = std::function<long double(Vector const&)>;
+using Grad = std::function<Vector(Vector const&)>;
+using Hess = std::function<Matrix(Vector const&)>;
 
 struct FunctionData {
     Func FuncApplier;

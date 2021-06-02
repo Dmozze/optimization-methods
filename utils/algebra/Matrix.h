@@ -15,7 +15,13 @@ public:
 
     Matrix(std::vector<std::vector<long double>> matrix_of_vectors);
 
-    size_t size();
+    Matrix(std::initializer_list<std::initializer_list<long double>> list) {
+        for (auto&& inside_list : list) {
+            matrix.emplace_back(inside_list);
+        }
+    }
+
+    size_t size() const;
 
     Vector& operator[](size_t index);
 

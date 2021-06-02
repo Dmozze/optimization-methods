@@ -11,6 +11,10 @@ class Vector {
 public:
     Vector() = default;
 
+    Vector(std::initializer_list<T> list)
+        : v(list) {
+    }
+
     Vector(size_t n);
 
     Vector(Vector_type vec);
@@ -35,6 +39,10 @@ public:
 
     Vector operator*(T value) const;
 
+    Vector_type const& data() const {
+        return v;
+    }
+    
     T Norm();
 
     friend std::ostream& operator<<(std::ostream& out, Vector vector) {

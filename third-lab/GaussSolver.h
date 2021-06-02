@@ -35,7 +35,7 @@ inline Vector GaussSolve(Matrix a, Vector b) {
     }
 
     // обратный ход
-    auto ans = Vector{a.size()};
+    auto ans = Vector(a.size());
     for (size_t i = 0; i < n; ++i) {
         if (which_column[i] != -1) {
             ans[i] = b[which_column[i]] / a[which_column[i]][i];
