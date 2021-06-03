@@ -11,7 +11,7 @@ class Matrix {
 public:
     Matrix(size_t n);
 
-    Matrix(Matrix_type& matrix);
+    Matrix(Matrix_type const& matrix);
 
     Matrix(std::vector<std::vector<long double>> matrix_of_vectors);
 
@@ -29,9 +29,9 @@ public:
 
     Matrix operator+(Matrix& a);
 
-    Matrix operator-();
+    Matrix operator-() const;
 
-    Matrix operator-(Matrix& matrix1);
+    Matrix operator-(Matrix const& matrix1) const;
 
     Matrix operator*(T value);
 

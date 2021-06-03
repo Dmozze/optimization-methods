@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "fourth-lab/Newton.h"
+#include "fourth-lab/QuasiNewton.h"
 
 namespace NewtonTests {
     static void RunNewtonMethod(INewtonMethod& method) {
@@ -93,8 +94,8 @@ namespace NewtonTests {
 using namespace NewtonTests;
 
 int main() {
-    //    TestSimpleQuadratic();
-    //    TestPseudoNonQuadratic();
+    TestSimpleQuadratic();
+    TestPseudoNonQuadratic();
     TestF1();
     TestF2();
 }

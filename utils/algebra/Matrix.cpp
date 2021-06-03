@@ -5,7 +5,7 @@ Matrix::Matrix(size_t n) {
     matrix.assign(n, Vector(n));
 }
 
-Matrix::Matrix(Matrix::Matrix_type& matrix)
+Matrix::Matrix(Matrix::Matrix_type const& matrix)
     : matrix(matrix) {
 }
 
@@ -31,7 +31,7 @@ Matrix Matrix::operator+(Matrix& a) {
     return Matrix(sum);
 }
 
-Matrix Matrix::operator-() {
+Matrix Matrix::operator-() const {
     Matrix_type neg(size(), Vector(size()));
     for (size_t i = 0; i < size(); i++) {
         for (size_t j = 0; j < size(); j++) {
@@ -41,9 +41,9 @@ Matrix Matrix::operator-() {
     return Matrix(neg);
 }
 
-Matrix Matrix::operator-(Matrix& matrix1) {
+Matrix Matrix::operator-(Matrix const& matrix1) const {
     Matrix this_(this->matrix);
-    Matrix neg(-matrix1);
+    Matrix neg = -matrix1;
     return this_ + neg;
 }
 

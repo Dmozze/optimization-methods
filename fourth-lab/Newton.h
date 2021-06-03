@@ -1,23 +1,14 @@
 #pragma once
+#include "utils.h"
+
+#include <GaussSolver.h>
+#include <search-metods.h>
+
 #include <utility>
 #include <vector>
 #include <functional>
 #include <algebra/Vector.h>
 #include <algebra/Matrix.h>
-
-#include <search-metods.h>
-#include <GaussSolver.h>
-
-inline constexpr long double EPS = 1e-7;
-using Func = std::function<long double(Vector const&)>;
-using Grad = std::function<Vector(Vector const&)>;
-using Hess = std::function<Matrix(Vector const&)>;
-
-struct FunctionData {
-    Func FuncApplier;
-    Grad GradApplier;
-    Hess HessianApplier;
-};
 
 class INewtonMethod {
 public:
@@ -26,7 +17,7 @@ public:
         , CurrentX(std::move(startX)) {
     }
 
-    virtual Vector Minimize() {
+    Vector Minimize() {
         while (true) {
             auto antigrad = -Func.GradApplier(CurrentX);
             if (antigrad.Norm() < EPS) { // todo: сравнивать дельту между шагами
