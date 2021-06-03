@@ -6,13 +6,10 @@
 
 namespace NewtonTests {
     static void RunNewtonMethod(INewtonMethod& method) {
-        std::cout << "Method name: " << typeid(method).name() << "\n"
-                  << "Found answer: ";
         auto v = method.Minimize();
-        for (auto&& el : v.data()) {
-            std::cout << el << " ";
-        }
-        std::cout << "\n";
+        std::cout << "Method name: " << typeid(method).name() << "\n"
+                  << "Found answer:  " << v;
+        std::cout << " f(x) = " << method.GetFunc().FuncApplier(v)<< "\n";
         std::cout << "Iterations: " << method.IterCounter << "\n"
                   << std::endl;
     }

@@ -3,10 +3,15 @@
 #include "utils.h"
 
 class IQuasiNewtonMethod {
+    static constexpr bool GRAPHS = true;
 public:
     explicit IQuasiNewtonMethod(FunctionData f, Vector startX)
         : Func(std::move(f))
         , CurrentX(std::move(startX)) {
+    }
+
+    FunctionData GetFunc() const {
+        return Func;
     }
 
     Vector Minimize() {
@@ -18,9 +23,14 @@ public:
         CurrentX += P * a;
         auto dx = CurrentX - prevX;
         ++IterCounter;
+        if (GRAPHS) {
+            std::cout << "(" << prevX[0] << ", " << prevX[1]
+                      << ", " << dx[0] << ", " << dx[1]
+                      << "),\n";
+        }
         while (dx.Norm() >= EPS) {
             ++IterCounter;
-           // std::cout << CurrentX << "\n";
+            // std::cout << CurrentX << "\n";
 
             auto w = Func.GradApplier(CurrentX) * -1;
             auto dw = w - prevW;
@@ -33,6 +43,11 @@ public:
             prevX = CurrentX;
             CurrentX += P * a;
             dx = CurrentX - prevX;
+            if (GRAPHS) {
+                std::cout << "(" << prevX[0] << ", " << prevX[1]
+                          << ", " << dx[0] << ", " << dx[1]
+                          << "),\n";
+            }
         }
         return CurrentX;
     }

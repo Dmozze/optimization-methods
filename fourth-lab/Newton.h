@@ -11,6 +11,8 @@
 #include <algebra/Matrix.h>
 
 class INewtonMethod {
+    static constexpr bool GRAPHS = true;
+
 public:
     explicit INewtonMethod(FunctionData f, Vector startX)
         : Func(std::move(f))
@@ -25,9 +27,18 @@ public:
             }
             ++IterCounter;
             P = CalcStep(Func.HessianApplier(CurrentX), antigrad);
+            if (GRAPHS) {
+                std::cout << "(" << CurrentX[0] << ", " << CurrentX[1]
+                          << ", " << (P * CalcScaling())[0] << ", " << (P * CalcScaling())[1]
+                          << "),\n";
+            }
             CurrentX += P * CalcScaling();
         }
         return CurrentX;
+    }
+
+    FunctionData GetFunc() const {
+        return Func;
     }
 
     virtual Vector CalcStep(const Matrix& hessianValue, const Vector& antigrad) = 0;
