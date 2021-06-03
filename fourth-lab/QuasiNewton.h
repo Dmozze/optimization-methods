@@ -4,6 +4,7 @@
 
 class IQuasiNewtonMethod {
     static constexpr bool GRAPHS = true;
+
 public:
     explicit IQuasiNewtonMethod(FunctionData f, Vector startX)
         : Func(std::move(f))
@@ -14,7 +15,7 @@ public:
         return Func;
     }
 
-    Vector Minimize() {
+    virtual Vector Minimize() {
         auto g = OneMatrix(CurrentX.size());
         auto prevW = Func.GradApplier(CurrentX) * -1;
         auto P = prevW;

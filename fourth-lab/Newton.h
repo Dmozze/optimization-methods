@@ -19,7 +19,7 @@ public:
         , CurrentX(std::move(startX)) {
     }
 
-    Vector Minimize() {
+    virtual Vector Minimize() {
         while (true) {
             auto antigrad = -Func.GradApplier(CurrentX);
             if (antigrad.Norm() < EPS) { // todo: сравнивать дельту между шагами
