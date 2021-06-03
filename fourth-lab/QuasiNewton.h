@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algebra/Vector.h>
+#include <algebra/Matrix.h>
 #include "utils.h"
 
 class IQuasiNewtonMethod {

@@ -9,7 +9,7 @@ namespace NewtonTests {
         auto v = method.Minimize();
         std::cout << "Method name: " << typeid(method).name() << "\n"
                   << "Found answer:  " << v;
-        std::cout << " f(x) = " << method.GetFunc().FuncApplier(v)<< "\n";
+        std::cout << " f(x) = " << method.GetFunc().FuncApplier(v) << "\n";
         std::cout << "Iterations: " << method.IterCounter << "\n"
                   << std::endl;
     }

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cmath>
 
+#include <algebra/Vector.h>
+#include <algebra/Matrix.h>
 #include "fourth-lab/Newton.h"
 #include "fourth-lab/QuasiNewton.h"
 
