@@ -65,3 +65,13 @@ Vector::T Vector::Norm() {
     T square_norma = this_ * this_;
     return sqrtl(square_norma);
 }
+
+Matrix Vector::operator%(const Vector &vector) const {
+    Matrix answer(vector.size());
+    for (size_t i = 0; i < vector.size(); i++) {
+        for (size_t j = 0; j < vector.size(); j++) {
+            answer[i][j] = vector[i] * vector[j];
+        }
+    }
+    return answer;
+}

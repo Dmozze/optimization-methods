@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <ostream>
+#include "Matrix.h"
 
 class Vector {
     using T = long double;
@@ -38,6 +39,8 @@ public:
     T operator*(Vector const& vector) const;
 
     Vector operator*(T value) const;
+
+    Matrix operator%(Vector const& vector) const;
 
     Vector_type const& data() const {
         return v;
