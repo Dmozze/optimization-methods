@@ -19,10 +19,7 @@ namespace NewtonTests {
 
     static void RunAllMethods(FunctionData const& func, const Vector& start = {0, 0}) {
         std::cout << "Start: ";
-        for (auto&& el : start.data()) {
-            std::cout << el << " ";
-        }
-        std::cout << "\n";
+        std::cout << start << "\n";
 
         TBaseNewtonMethod simpleNewton(func, start);
         RunNewtonMethod(simpleNewton);

@@ -12,22 +12,26 @@ public:
     Vector Minimize() {
         auto g = OneMatrix(CurrentX.size());
         auto prevW = Func.GradApplier(CurrentX) * -1;
-        long double a = search_methods(EPS).golden_ratio([&](long double a) { return Func.FuncApplier(CurrentX + prevW * a); }, {-100, 100}).point;
+        auto P = prevW;
+        auto a = search_methods(EPS).golden_ratio([this, &P](long double x) { return Func.FuncApplier(CurrentX + P * x); }, {-100, 100}).point;
         auto prevX = CurrentX;
-        CurrentX += prevW * a;
+        CurrentX += P * a;
         auto dx = CurrentX - prevX;
-        while (dx.Norm() > EPS) {
+        ++IterCounter;
+        while (dx.Norm() >= EPS) {
             ++IterCounter;
+           // std::cout << CurrentX << "\n";
 
             auto w = Func.GradApplier(CurrentX) * -1;
             auto dw = w - prevW;
             prevW = w;
+            auto v = g * dw;
+            g = CalcG(v, dw, dx, g);
 
-            g = CalcG(g * dw, dw, dx, g);
-            a = search_methods(EPS).golden_ratio([&](long double a) { return Func.FuncApplier(CurrentX + g * dw * a); }, {-100, 100}).point;
-
+            P = g * w;
+            a = search_methods(EPS).golden_ratio([this, &P](long double x) { return Func.FuncApplier(CurrentX + P * x); }, {-100, 100}).point;
             prevX = CurrentX;
-            CurrentX += g * w * a;
+            CurrentX += P * a;
             dx = CurrentX - prevX;
         }
         return CurrentX;
@@ -48,7 +52,7 @@ public:
 
     Matrix CalcG(const Vector& v, const Vector& dw, const Vector& dx, const Matrix& g) override {
         auto dxDirection = dx + v;
-        return g - VectorQuad(dxDirection) * (1 / (dw * dx));
+        return g - VectorQuad(dxDirection) * (1 / (dw * dxDirection));
     }
 
 private:
