@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <ostream>
+#include "Matrix.h"
 
 class Vector {
     using T = long double;
