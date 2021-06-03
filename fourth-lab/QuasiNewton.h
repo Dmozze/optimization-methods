@@ -21,7 +21,10 @@ public:
         auto g = OneMatrix(CurrentX.size());
         auto prevW = Func.GradApplier(CurrentX) * -1;
         auto P = prevW;
-        auto a = search_methods(EPS).golden_ratio([this, &P](long double x) { return Func.FuncApplier(CurrentX + P * x); }, {-100, 100}).point;
+        auto minimize_func = [this, &P](long double x) { return Func.FuncApplier(CurrentX + P * x); };
+        auto r = range(-1, 100);
+        auto sm = search_methods(EPS);
+        auto a = sm.golden_ratio(minimize_func, r).point;
         auto prevX = CurrentX;
         CurrentX += P * a;
         auto dx = CurrentX - prevX;
@@ -42,7 +45,7 @@ public:
             g = CalcG(v, dw, dx, g);
 
             P = g * w;
-            a = search_methods(EPS).golden_ratio([this, &P](long double x) { return Func.FuncApplier(CurrentX + P * x); }, {-100, 100}).point;
+            a = sm.golden_ratio(minimize_func, r).point;
             prevX = CurrentX;
             CurrentX += P * a;
             dx = CurrentX - prevX;
@@ -62,6 +65,20 @@ public:
 protected:
     FunctionData Func;
     Vector CurrentX;
+    static Matrix VectorQuad(const Vector& v) {
+        return VectorMulVectorT(v, v);
+    }
+
+    // x.size() == y.size() !!!!
+    static Matrix VectorMulVectorT(const Vector& x, const Vector& y) {
+        Matrix m(x.size());
+        for (size_t i = 0; i != x.size(); ++i) {
+            for (size_t j = 0; j != x.size(); ++j) {
+                m[i][j] = x[i] * y[j];
+            }
+        }
+        return m;
+    }
 };
 
 class TPowellMethod : public IQuasiNewtonMethod {
@@ -72,15 +89,9 @@ public:
         auto dxDirection = dx + v;
         return g - VectorQuad(dxDirection) * (1 / (dw * dxDirection));
     }
+};
 
-private:
-    static Matrix VectorQuad(const Vector& v) {
-        Matrix m(v.size());
-        for (size_t i = 0; i != v.size(); ++i) {
-            for (size_t j = 0; j != v.size(); ++j) {
-                m[i][j] = v[i] * v[j];
-            }
-        }
-        return m;
-    }
+class DFTMethod  {
+public:
+
 };
