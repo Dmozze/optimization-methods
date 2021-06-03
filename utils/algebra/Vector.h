@@ -40,8 +40,6 @@ public:
 
     Vector operator*(T value) const;
 
-    Matrix operator%(Vector const& vector) const;
-
     Vector_type const& data() const {
         return v;
     }
