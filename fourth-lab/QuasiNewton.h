@@ -70,7 +70,7 @@ public:
     //        return CurrentX;
     //    }
 
-    virtual Matrix CalcG(const Vector& v, const Vector& dw, const Vector& dx, const Matrix& g) = 0;
+    virtual Matrix CalcG(const Vector& s, const Vector& y, const Matrix& H) = 0;
 
     uint64_t IterCounter = 0;
 
@@ -85,23 +85,23 @@ protected:
 
     void iterate() {
         ++IterCounter;
-        auto g = Func.GradApplier(CurrentX) * -1;
-        p = G * g;
+        auto g = Func.GradApplier(CurrentX);
+        auto neg_g = g * -1;
+        p = G * neg_g;
         alpha = search_methods(EPS).golden_ratio([this](long double x) { return Func.FuncApplier(CurrentX + p * x); }, {-10, 10}).point;
-        s = p * alpha;
        // std::cout << "alpha = " << alpha << std::endl;
-        auto dx = p * alpha;
+        s = p * alpha;
         X1 = CurrentX;
-        CurrentX += dx;
-        auto w = Func.GradApplier(CurrentX) - Func.GradApplier(X1);
-        auto dx_ = dx + G * w;
-        G = G - VectorQuad(dx_) * (1 / (w * dx_));
+        CurrentX += s;
+        auto y = Func.GradApplier(CurrentX) - g;
+        G = CalcG(s, y, G);
         if (GRAPHS) {
             std::cout << "(" << X1[0] << ", " << X1[1]
-                      << ", " << dx[0] << ", " << dx[1]
+                      << ", " << s[0] << ", " << s[1]
                       << "),\n";
         }
     }
+
 
     static Matrix VectorQuad(const Vector& v) {
         return VectorMulVectorT(v, v);
@@ -123,12 +123,25 @@ class TPowellMethod : public IQuasiNewtonMethod {
 public:
     using IQuasiNewtonMethod::IQuasiNewtonMethod;
 
-    Matrix CalcG(const Vector& v, const Vector& dw, const Vector& dx, const Matrix& g) override {
-        auto dxDirection = dx + v;
-        return g - VectorQuad(dxDirection) * (1 / (dw * dxDirection));
+    Matrix CalcG(const Vector& s, const Vector& y, const Matrix& H) override {
+        auto dx_ = s + H * y;
+        return H - VectorQuad(dx_) * (1 / (y * dx_));
     }
 };
 
-class DFTMethod {
+class DFTMethod : public IQuasiNewtonMethod {
 public:
+    using IQuasiNewtonMethod::IQuasiNewtonMethod;
+
+    Matrix CalcG(const Vector& s, const Vector& y, const Matrix& H) override {
+        auto H_y = H * y;
+        auto H_y_yT_H = VectorQuad(H_y);
+        auto H_y_y = H_y * y;
+        auto s_sT = VectorQuad(s);
+        auto y_s = y * s;
+        auto divide1 = H_y_yT_H * (1.0L / H_y_y);
+        auto divide2 = s_sT * (1.0L / y_s);
+        auto H_ = H - divide1;
+        return H_ + divide2;
+    }
 };

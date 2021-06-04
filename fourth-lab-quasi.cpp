@@ -21,6 +21,9 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
 
     TPowellMethod powellNewton(func, start);
     RunNewtonMethod(powellNewton);
+
+    DFTMethod dftMethod(func, start);
+    RunNewtonMethod(dftMethod);
 }
 
 using namespace Tests;
