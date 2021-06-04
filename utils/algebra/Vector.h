@@ -15,7 +15,7 @@ public:
     Vector() = default;
 
     Vector(std::initializer_list<T> list)
-            : v(list) {
+        : v(list) {
     }
 
     Vector(size_t n);
@@ -24,32 +24,32 @@ public:
 
     size_t size() const;
 
-    T const &operator[](size_t index) const;
+    T const& operator[](size_t index) const;
 
-    T &operator[](size_t index);
+    T& operator[](size_t index);
 
-    Vector operator+(Vector const &vector) const;
+    Vector operator+(Vector const& vector) const;
 
-    Vector &operator+=(Vector const &vector) {
+    Vector& operator+=(Vector const& vector) {
         *this = *this + vector;
         return *this;
     }
 
-    Vector operator-();
+    Vector operator-() const;
 
-    Vector operator-(Vector &vector);
+    Vector operator-(Vector const& vector) const;
 
-    T operator*(Vector const &vector) const;
+    T operator*(Vector const& vector) const;
 
     Vector operator*(T value) const;
 
-    Vector_type const &data() const {
+    Vector_type const& data() const {
         return v;
     }
 
     T Norm();
 
-    friend std::ostream &operator<<(std::ostream &out, Vector vector) {
+    friend std::ostream& operator<<(std::ostream& out, Vector vector) {
         out << '[';
         for (size_t i = 0; i < vector.size(); i++) {
             out << vector[i];

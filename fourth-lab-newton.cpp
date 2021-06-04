@@ -1,8 +1,7 @@
 #include <iostream>
-#include <cmath>
+#include "fourth-lab/utils.h"
 
 #include "fourth-lab/Newton.h"
-#include "fourth-lab/QuasiNewton.h"
 
 static void RunNewtonMethod(INewtonMethod& method) {
     auto v = method.Minimize();
@@ -30,7 +29,11 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
 using namespace Tests;
 
 int main() {
-    TestF1();
-    TestF2();
-    TestF3();
+    //TestSimpleQuadratic({-5, -2});
+    //TestPseudoNonQuadratic({-100, 200});
+    //TestF1({-1.2, 1});
+    //TestF2({0, 0});
+    // TestF3({2, 3});
+    // TestF4({10, -10, 10, -10});
+    TestF5({5, 5});
 }

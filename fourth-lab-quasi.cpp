@@ -1,8 +1,6 @@
 #include <iostream>
-#include <cmath>
 
 #include <algebra/Vector.h>
-#include <algebra/Matrix.h>
 #include "fourth-lab/Newton.h"
 #include "fourth-lab/QuasiNewton.h"
 static void RunNewtonMethod(IQuasiNewtonMethod& method) {
@@ -28,7 +26,11 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
 using namespace Tests;
 
 int main() {
-    TestF1();
-    TestF2();
-    TestF3();
+    //  TestF1();
+    //TestF2({5, 5});
+    //    TestF3();
+    //  TestF3({-5, -5});
+    //    TestF4();
+    //    TestF5();
+    TestF5({5, 5});
 }

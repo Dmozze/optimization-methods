@@ -9,6 +9,8 @@ class Matrix {
     Matrix_type matrix;
 
 public:
+    Matrix() = default;
+    
     Matrix(size_t n);
 
     Matrix(Matrix_type const& matrix);

@@ -38,7 +38,7 @@ Vector::T Vector::operator*(Vector const& vector) const {
     return scalar_prod;
 }
 
-Vector Vector::operator-() {
+Vector Vector::operator-() const {
     Vector_type neg(v.size());
     for (size_t i = 0; i < neg.size(); i++) {
         neg[i] = -v[i];
@@ -46,7 +46,7 @@ Vector Vector::operator-() {
     return Vector(neg);
 }
 
-Vector Vector::operator-(Vector& vector) {
+Vector Vector::operator-(Vector const& vector) const {
     Vector this_(this->v);
     Vector neg_vec(-vector);
     return this_ + neg_vec;
