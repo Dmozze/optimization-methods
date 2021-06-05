@@ -4,8 +4,10 @@
 #include <algebra/Vector.h>
 #include <algebra/Matrix.h>
 #include <functional>
+#include <search-metods.h>
 
-inline constexpr long double EPS = 1e-2;
+static constexpr bool GRAPHS = true;
+inline constexpr long double EPS = 1e-7;
 using Func = std::function<long double(Vector const&)>;
 using Grad = std::function<Vector(Vector const&)>;
 using Hess = std::function<Matrix(Vector const&)>;
@@ -16,6 +18,72 @@ struct FunctionData {
     Hess HessianApplier;
 };
 
+static void gradient_descent(const FunctionData& function, const Vector& x0, long double alpha) {
+    Vector x = x0;
+    auto f_x = function.FuncApplier(x);
+    int cnt = 0;
+    while (true) {
+        cnt++;
+        Vector gradient = function.GradApplier(x);
+        auto norma_gradient = gradient.Norm();
+        std::cout << norma_gradient << ' ';
+        if (norma_gradient < EPS) {
+            break;
+        }
+        while (true) {
+            Vector gradient_prod_alpha = gradient * alpha;
+            Vector y = x - gradient_prod_alpha;
+            std::cout << y << ' ';
+            auto f_y = function.FuncApplier(y);
+            std::cout << f_y << '\n';
+            if (f_y < f_x) {
+                x = y;
+                f_x = f_y;
+                break;
+            }
+            alpha /= 2;
+        }
+    }
+    std::cout << "cnt descent: " << cnt << '\n';
+}
+
+static void steepest_descent(const FunctionData& function, Vector x0, long double bound) {
+    search_methods searchMethods(EPS);
+    std::cout << "Steepest descent\n";
+    int cnt = 0;
+    while (true) {
+        cnt++;
+        Vector gradient = function.GradApplier(x0);
+        if (gradient.Norm() < EPS) {
+            break;
+        }
+        auto F = [=](auto alpha) {
+            Vector grad_alpha = gradient * alpha;
+            Vector calc_vec = x0 - grad_alpha;
+            return function.FuncApplier(calc_vec);
+        };
+
+        std::cout << gradient;
+        range rang(0, bound);
+        information_search informationSearch = searchMethods.golden_ratio(F, rang);
+        auto alpha_min = informationSearch.point;
+        Vector gradient_alpha_min = gradient * alpha_min;
+        std::cout << gradient_alpha_min;
+
+        if (GRAPHS) {
+            std::cout << "(" << x0[0] << ", " << x0[1]
+                      << ", " << -gradient_alpha_min[0] << ", " << -gradient_alpha_min[1]
+                      << "),\n";
+        }
+        x0 = x0 - gradient_alpha_min;
+    }
+    //    std::vector<Vector> calc_history = function.get_calc_history();
+    //    std::vector<T> value_history = function.get_value_calc_history();
+    //    for (size_t i = 0; i < calc_history.size(); i++) {
+    //        std::cout << calc_history[i] << ' ' << value_history[i] << '\n';
+    //    }
+    std::cout << "cnt steepest: " << cnt << '\n';
+}
 static inline Matrix OneMatrix(size_t len) {
     Matrix m(len);
     for (size_t i = 0; i != m.size(); ++i) {
@@ -75,8 +143,8 @@ namespace Tests {
             {[](auto& x) { return 100 * std::pow(x[1] - x[0] * x[0], 2) + std::pow(1 - x[0], 2); },
              [](auto& x) {
                  return Vector{
-                     -400 * x[0] * (x[1] - x[0] * x[0]) - 2 * (1 - x[0]),
-                     200 * (x[1] - x[0] * x[0])};
+                     400 * x[0] * x[0] * x[0] - 400 * x[0] * x[1] - 2 + 2 * x[0],
+                     200 * x[1] - 400 * x[0] * x[0]};
              },
              [](auto& x) {
                  return Matrix{{-400 * (x[1] - x[0] * x[0]) + 800 * x[0] * x[0] + 2, -400 * x[0]},

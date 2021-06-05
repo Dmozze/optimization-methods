@@ -29,11 +29,21 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
 using namespace Tests;
 
 int main() {
-    //TestSimpleQuadratic({-5, -2});
+    // TestSimpleQuadratic({-5, -2});
+    TestPseudoNonQuadratic({0.1, 0});
     //TestPseudoNonQuadratic({-100, 200});
-    //TestF1({-1.2, 1});
-    //TestF2({0, 0});
-    // TestF3({2, 3});
-    // TestF4({10, -10, 10, -10});
-    TestF5({5, 5});
+    //    TestF1({4, 1});
+    // TestF2({-1.2, 1});
+    // TestF2({0, 0});
+    // TestF2({5, 5});
+    //    TestF3({0, 0});
+    //    TestF3({-5, -5});
+    //    TestF3({2, 3});
+
+    //  TestF4({1, 1, 1, 1});
+    //  TestF4({-1, 0, -1, 0});
+    // TestF4({1, 0, 0, 0});
+    //    TestF5({0, 0});
+    //    TestF5({5, 5});
+    //    TestF5({-1, -1});
 }

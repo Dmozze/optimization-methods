@@ -73,7 +73,9 @@ public:
 
     long double CalcScaling() override {
         auto f = [this](long double a) { return Func.FuncApplier(CurrentX + P * a); };
-        return search_methods(EPS).golden_ratio(f, {-100, 100}).point;
+        auto a = search_methods(EPS).golden_ratio(f, {-100, 100}).point;
+        std::cout << ") & " << a << std::endl;
+        return a;
     }
     // todo: не понятно ,какие границы для альфа
     //          мне сказали, что при положительных может не сходиться, хотя это странно

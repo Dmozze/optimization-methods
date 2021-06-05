@@ -2,8 +2,8 @@
 #include <algebra/Vector.h>
 #include "MatrixSparseFormat.h"
 
-
-inline int ConjugateSolve(MatrixSparseFormat const & A, Vector f, long double epsilon, Vector &x) {
+template<typename MatrixFormat>
+inline int ConjugateSolve(MatrixFormat const & A, Vector f, long double epsilon, Vector &x) {
     Vector A_x = A * x;
     Vector r = f - A_x;
     Vector z = r;

@@ -89,7 +89,7 @@ protected:
         auto neg_g = g * -1;
         p = G * neg_g;
         alpha = search_methods(EPS).golden_ratio([this](long double x) { return Func.FuncApplier(CurrentX + p * x); }, {-10, 10}).point;
-       // std::cout << "alpha = " << alpha << std::endl;
+      //  std::cout << "alpha = " << alpha << std::endl;
         s = p * alpha;
         X1 = CurrentX;
         CurrentX += s;
@@ -101,7 +101,6 @@ protected:
                       << "),\n";
         }
     }
-
 
     static Matrix VectorQuad(const Vector& v) {
         return VectorMulVectorT(v, v);
