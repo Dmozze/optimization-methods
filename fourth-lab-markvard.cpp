@@ -23,7 +23,7 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
 using namespace Tests;
 
 int main() {
-    // TestSimpleQuadratic({-5, -2});
+    TestSimpleQuadratic({-5, -2});
     TestPseudoNonQuadratic({0.1, 0});
     //TestPseudoNonQuadratic({-100, 200});
     //    TestF1({4, 1});

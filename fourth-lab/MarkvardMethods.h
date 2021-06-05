@@ -46,6 +46,7 @@ public:
     Vector Minimize() override {
         while (true) {
             while (true) {
+                ++IterCounter;
                 auto H = Func.HessianApplier(CurrentX);
                 H = OneMatrix(CurrentX.size()) * Tau + H;
                 auto g = Func.GradApplier(CurrentX) * -1;
