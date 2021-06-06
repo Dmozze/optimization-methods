@@ -16,11 +16,11 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
     std::cout << "Start: ";
     std::cout << start << "\n";
 
-    TBaseNewtonMethod simpleNewton(func, start);
-    RunNewtonMethod(simpleNewton);
+    //    TBaseNewtonMethod simpleNewton(func, start);
+    //    RunNewtonMethod(simpleNewton);
 
-    TOneDimNewtonMethod oneDimNewton(func, start);
-    RunNewtonMethod(oneDimNewton);
+    //    TOneDimNewtonMethod oneDimNewton(func, start);
+    //    RunNewtonMethod(oneDimNewton);
 
     TDescentNewtonMethod descentNewton(func, start);
     RunNewtonMethod(descentNewton);
@@ -30,7 +30,7 @@ using namespace Tests;
 
 int main() {
     // TestSimpleQuadratic({-5, -2});
-    TestPseudoNonQuadratic({0.1, 0});
+    // TestPseudoNonQuadratic({0.1, 0});
     //TestPseudoNonQuadratic({-100, 200});
     //    TestF1({4, 1});
     // TestF2({-1.2, 1});
@@ -45,5 +45,8 @@ int main() {
     // TestF4({1, 0, 0, 0});
     //    TestF5({0, 0});
     //    TestF5({5, 5});
-    //    TestF5({-1, -1});
+   // TestF2({-1, -1});
+
+    std::vector<long double> v(100, 0.5);
+    TestRozenbroke(v);
 }

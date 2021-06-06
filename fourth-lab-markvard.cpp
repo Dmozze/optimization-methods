@@ -8,7 +8,7 @@ static void RunMarkvardMethod(IMarkvardMethod& method) {
     std::cout << "Method name: " << typeid(method).name() << "\n"
               << "Found answer:  " << v;
     std::cout << " f(x) = " << method.GetFunc().FuncApplier(v) << "\n";
-    std::cout << "Iterations: " << method.IterCounter << "\n"
+    std::cout << "Iterations: " << method.IterCounter / 4 << "\n"
               << std::endl;
 }
 
@@ -18,13 +18,18 @@ void RunAllMethods(FunctionData const& func, const Vector& start) {
 
     TMarkvardFirst firstMarkvard(func, start);
     RunMarkvardMethod(firstMarkvard);
+    //
+    TMarkvardSecond sndMarkvard(func, start);
+    RunMarkvardMethod(sndMarkvard);
 }
 
 using namespace Tests;
 
 int main() {
-    TestSimpleQuadratic({-5, -2});
-    TestPseudoNonQuadratic({0.1, 0});
+    //    TestSimpleQuadratic({-5, -2});
+    //    TestPseudoNonQuadratic({0.1, 0});
+    std::vector<long double> v(100, 0.5);
+    TestRozenbroke(v);
     //TestPseudoNonQuadratic({-100, 200});
     //    TestF1({4, 1});
     // TestF2({-1.2, 1});

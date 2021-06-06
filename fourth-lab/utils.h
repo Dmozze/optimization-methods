@@ -7,7 +7,7 @@
 #include <search-metods.h>
 
 static constexpr bool GRAPHS = true;
-inline constexpr long double EPS = 1e-7;
+inline constexpr long double EPS = 5 * 1e-3;
 using Func = std::function<long double(Vector const&)>;
 using Grad = std::function<Vector(Vector const&)>;
 using Hess = std::function<Matrix(Vector const&)>;
@@ -225,5 +225,38 @@ namespace Tests {
                       (-8 * std::pow(y - 1, 2)) / (81 * std::pow(one, 3)) - (16 * std::pow(y - 1, 2)) / (81 * std::pow(two, 3)) + 2 / (9 * one * one) + 4 / (9 * two * two)}};
              }},
             start);
+    }
+
+    static void TestRozenbroke(const Vector& start = {0, 0}) {
+        std::cout << "Test rozenbroke func \n";
+        auto n = start.size();
+        RunAllMethods({[=](auto& x) {
+                           long double result = 0;
+                           for (size_t i = 0; i != n - 1; ++i) {
+                               result += 100 * std::pow(x[i + 1] - x[i] * x[i], 2) + std::pow(1 - x[i], 2);
+                           }
+                           return result;
+                       },
+                       [=](auto& x) {
+                           Vector result(x.size());
+                           for (size_t i = 0; i != n - 1; ++i) {
+                               result[i] = 2 * (200 * std::pow(x[i], 3) - 200 * x[i] * x[i + 1] + x[i] - 1);
+                           }
+                           for (size_t i = 1; i != n; ++i) {
+                               result[i] += 200 * (x[i] - std::pow(x[i - 1], 2));
+                           }
+                           return result;
+                       },
+                       [=](auto& x) {
+                           auto res = Matrix(x.size());
+                           for (size_t i = 0; i != n - 1; ++i) {
+                               res[i][i] += 1200 * std::pow(x[i], 2) - 400 * x[i + 1] + 2;
+                               res[i][i + 1] = -400 * x[i];
+                               res[i + 1][i] = -400 * x[i];
+                               res[i + 1][i + 1] = 200;
+                           }
+                           return res;
+                       }},
+                      start);
     }
 } // namespace Tests

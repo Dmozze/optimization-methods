@@ -22,9 +22,6 @@ public:
     virtual Vector Minimize() {
         while (true) {
             auto antigrad = -Func.GradApplier(CurrentX);
-            if (antigrad.Norm() < EPS) { // todo: сравнивать дельту между шагами
-                break;
-            }
             ++IterCounter;
             P = CalcStep(Func.HessianApplier(CurrentX), antigrad);
             if (GRAPHS) {
@@ -32,7 +29,11 @@ public:
                           << ", " << (P * CalcScaling())[0] << ", " << (P * CalcScaling())[1]
                           << "),\n";
             }
-            CurrentX += P * CalcScaling();
+            auto dx = P * CalcScaling();
+            CurrentX += dx;
+            if (dx.Norm() < EPS) { // todo: сравнивать дельту между шагами
+                break;
+            }
         }
         return CurrentX;
     }
@@ -73,8 +74,8 @@ public:
 
     long double CalcScaling() override {
         auto f = [this](long double a) { return Func.FuncApplier(CurrentX + P * a); };
-        auto a = search_methods(EPS).golden_ratio(f, {-100, 100}).point;
-        std::cout << ") & " << a << std::endl;
+        auto a = search_methods(EPS).golden_ratio(f, {-1000, 1000}).point;
+      //  std::cout << ") & " << a << std::endl;
         return a;
     }
     // todo: не понятно ,какие границы для альфа
